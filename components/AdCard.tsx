@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AdCard() {
   return (
-    <div className="flex flex-col gap-4 rounded-xl bg-white/60 py-7 px-8">
+    <div className="md:flex flex-col gap-4 hidden rounded-xl bg-white/60 py-7 px-8">
       <h3>Advertisement</h3>
       <div>
         <Image src="/ad.png" alt="advertisement" height={126} width={213} />
