@@ -16,10 +16,10 @@ export default function Cricket() {
       <div className="bg-[#E6E6DD] px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
 
         <div className="flex justify-center w-full mb-4 lg:justify-start">
-          <Tabs defaultValue="live" className="w-2/3 lg:w-fit">
+          <Tabs defaultValue="cricket" className="w-2/3 lg:w-fit">
             <TabsList className="flex w-full justify-between rounded-full bg-white/40">
-              <TabsTrigger className="flex-grow rounded-full" value="live">Football</TabsTrigger>
-              <TabsTrigger className="flex-grow rounded-full" value="upcoming">Cricket</TabsTrigger>
+              <TabsTrigger className="flex-grow rounded-full" value="football">Football</TabsTrigger>
+              <TabsTrigger className="flex-grow rounded-full" value="cricket">Cricket</TabsTrigger>
             </TabsList>
             {/* <TabsContent value="live" className="flex w-full flex-col gap-10">Football</TabsContent>
           <TabsContent value="upcoming">Upcoming matches</TabsContent> */}
@@ -29,8 +29,8 @@ export default function Cricket() {
         <div className="flex flex-col lg:flex-row flex-grow h-full gap-4 md:gap-10 justify-between">
 
           {/* search + links */}
-          <div className="flex flex-col justify-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full md:max-w-[300px] md:min-w-[200px]">
-            <Input type="search" className="w-2/3 md:w-fit" />
+          <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full md:max-w-[300px] md:min-w-[200px]">
+            <Input type="search" className="w-2/3 md:w-full" />
             <div className="lg:flex flex-col hidden gap-10 bg-white/60 min-h-full py-4 px-8 rounded-2xl">
               {/* tags */}
               <div className="flex flex-wrap w-full gap-4">
