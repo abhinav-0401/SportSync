@@ -9,9 +9,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Cricket() {
   return (
-    <div className="bg-[#E6E6DD] px-20 py-16 gap-20 flex flex-col w-full">
-      <div className="flex items-center w-full lg:items-start">
-        <Tabs defaultValue="live" className="">
+    <div className="bg-[#E6E6DD] px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
+
+      <div className="flex justify-center w-full mb-4 lg:justify-start">
+        <Tabs defaultValue="live" className="w-2/3 lg:w-fit">
           <TabsList className="flex w-full justify-between rounded-full bg-white/40">
             <TabsTrigger className="flex-grow rounded-full" value="live">Football</TabsTrigger>
             <TabsTrigger className="flex-grow rounded-full" value="upcoming">Cricket</TabsTrigger>
@@ -21,11 +22,11 @@ export default function Cricket() {
         </Tabs>
       </div>
 
-      <div className="flex flex-col lg:flex-row flex-grow h-full gap-10 justify-between">
+      <div className="flex flex-col lg:flex-row flex-grow h-full gap-4 md:gap-10 justify-between">
         
         {/* search + links */}
-        <div className="lg:flex lg:flex-col gap-10 min-h-full mb-16 max-w-[300px]">
-          <Input type="search" />
+        <div className="flex flex-col justify-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full md:max-w-[300px] md:min-w-[200px]">
+          <Input type="search" className="w-2/3 md:w-fit" />
           <div className="lg:flex flex-col hidden gap-10 bg-white/60 min-h-full py-4 px-8 rounded-2xl">
             {/* tags */}
             <div className="flex flex-wrap w-full gap-4">
@@ -36,7 +37,7 @@ export default function Cricket() {
             </div>
             {/* regions */}
             <div className="flex flex-col gap-6">
-              <h2 className="text-2xl font-bold">Regions</h2>
+              <h2 className="lg:text-xl xl:text-2xl font-bold">Regions</h2>
               <div className="flex flex-col w-full pl-8">
                 <ul>
                   <li>India</li>
@@ -48,7 +49,7 @@ export default function Cricket() {
             </div>
             {/* Competitions */}
             <div className="flex flex-col gap-6">
-              <h2 className="text-2xl font-bold">Competitions</h2>
+              <h2 className="lg:text-xl xl:text-2xl font-bold">Competitions</h2>
               <div className="flex flex-col w-full pl-8">
                 <ul>
                   <li>India</li>
@@ -82,7 +83,7 @@ export default function Cricket() {
         </div>
 
         {/* interest links */}
-        <div className="flex flex-col gap-10 max-w-[300px]">
+        <div className="flex flex-col w-full items-center gap-10 lg:max-w-[300px] lg:min-w-[200px]">
           
           {/* advertisement */}
           <AdCard />
