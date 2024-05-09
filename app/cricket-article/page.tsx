@@ -13,10 +13,10 @@ interface ArticleData {
 };
 
 const imgUrls: string[] = [
-  "/article-1.png",
-  "/article-2.png",
   "/article-3.png",
-  "/article-4.png",
+  "/article-3.png",
+  "/article-3.png",
+  "/article-3.png",
 ];
 
 export default function Artcile() {
@@ -33,8 +33,6 @@ export default function Artcile() {
 
   return (
     <div className="bg-[#E6E6DD]">
-      <Navbar />
-
       <div className="flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16">
 
         <div className="flex justify-center mt-4 font-bold text-4xl">

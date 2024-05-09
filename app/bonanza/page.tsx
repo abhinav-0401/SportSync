@@ -88,7 +88,7 @@ export default function Bonanza() {
           </div>
         </div>
 
-        <Footer />
+        
 
       </div>
     </div>    
