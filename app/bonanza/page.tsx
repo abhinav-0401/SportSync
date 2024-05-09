@@ -6,8 +6,6 @@ import Image from "next/image";
 export default function Bonanza() {
   return (
     <div className="flex flex-col bg-[#E6E6DD]">
-      <Navbar />
-
       <div className="bg-[#E6E6DD] px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-20 flex min-w-[100vw] flex-col">
 
         <header className="flex flex-col items-center text-2xl sm:text-3xl lg:text-4xl font-bold">

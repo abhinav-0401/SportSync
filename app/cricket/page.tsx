@@ -1,3 +1,4 @@
+"use client"
 import AdCard from "@/components/AdCard";
 import DayMatchList from "@/components/DayMatchList";
 import FeaturedCard from "@/components/FeaturedCard";
@@ -7,16 +8,22 @@ import Tag from "@/components/tag";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useRouter } from "next/navigation";
 
 export default function Cricket() {
+  const router = useRouter();
+
+  const handleTabChange = (tab: any) => {
+    console.log(tab);
+    router.push(`/${tab}`);
+  };
   return (
     <div className="bg-[#E6E6DD]">
-      <Navbar />
 
       <div className="bg-[#E6E6DD] px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
 
         <div className="flex justify-center w-full mb-4 lg:justify-start">
-          <Tabs defaultValue="cricket" className="w-2/3 lg:w-fit">
+          <Tabs defaultValue="cricket" className="w-2/3 lg:w-fit" onValueChange={handleTabChange}>
             <TabsList className="flex w-full justify-between rounded-full bg-white/40">
               <TabsTrigger className="flex-grow rounded-full" value="football">Football</TabsTrigger>
               <TabsTrigger className="flex-grow rounded-full" value="cricket">Cricket</TabsTrigger>
