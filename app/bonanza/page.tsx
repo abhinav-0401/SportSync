@@ -1,39 +1,44 @@
+import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function Bonanza() {
   return (
-    <div className="bg-[#E6E6DD] px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-20 flex min-w-[100vw] flex-col">
-      <header className="flex flex-col items-center text-2xl sm:text-3xl lg:text-4xl font-bold">
-        <h1 className="text-center">FESTIVE BONANZA</h1>
-      </header>
+    <div className="flex flex-col bg-[#E6E6DD]">
+      <Navbar />
 
-      {/* intro text */}
-      <div className="flex md:flex-row items-center md:items-start gap-10 flex-col justify-between xl:justify-normal">
-        
-        {/* this div will have an img */}
-        <div className="flex-1 flex-shrink-0 h-full">
-          <Image src="/intro-football.png" className="w-auto md:w-full max-h-[200px] md:max-h-[300px] h-auto xl:h-full xl:w-auto" alt="intro football" width={946} height={654} />
-        </div>
+      <div className="bg-[#E6E6DD] px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-20 flex min-w-[100vw] flex-col">
 
-        {/* intro text + buttons */}
-        <div className="flex-1 flex flex-col items-center md:items-start gap-20">
-          <div className="font-normal text-center md:text-left text-base lg:text-lg text-[#45474A]">
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.  “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra."
+        <header className="flex flex-col items-center text-2xl sm:text-3xl lg:text-4xl font-bold">
+          <h1 className="text-center">FESTIVE BONANZA</h1>
+        </header>
+
+        {/* intro text */}
+        <div className="flex md:flex-row items-center md:items-start gap-10 flex-col justify-between xl:justify-normal">
+
+          {/* this div will have an img */}
+          <div className="flex-1 flex-shrink-0 h-full">
+            <Image src="/intro-football.png" className="w-auto md:w-full max-h-[200px] md:max-h-[300px] h-auto xl:h-full xl:w-auto" alt="intro football" width={946} height={654} />
           </div>
-          <div className="flex gap-20">
-            <Button variant={"secondary"} className="italic hidden md:block">Click here to know more</Button>
-            <Button className="italic">Click here to know more</Button>
+
+          {/* intro text + buttons */}
+          <div className="flex-1 flex flex-col items-center md:items-start gap-20">
+            <div className="font-normal text-center md:text-left text-base lg:text-lg text-[#45474A]">
+              “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.  “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra."
+            </div>
+            <div className="flex gap-20">
+              <Button variant={"secondary"} className="italic hidden md:block">Click here to know more</Button>
+              <Button className="italic">Click here to know more</Button>
+            </div>
           </div>
         </div>
-      </div>
 
         {/* how to participate */}
         <div className="flex flex-col gap-10 text-center md:text-left">
           <h3 className="text-2xl font-bold">How to participate?</h3>
 
           <div className="font-normal text-base lg:text-lg text-[#45474A] text-center md:text-left">
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.  “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.  
+            “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.  “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
           </div>
         </div>
 
@@ -85,6 +90,7 @@ export default function Bonanza() {
         </div>
 
 
-    </div>
+      </div>
+    </div>    
   );
 }
