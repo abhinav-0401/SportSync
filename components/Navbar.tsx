@@ -10,7 +10,7 @@ export default function Navbar() {
         <div className="hidden md:flex gap-4">
           <li><Link href="/cricket">Cricket</Link></li>
           <li>Football</li>
-          <li>Casino</li>
+          <li><Link href="/casino">Casino</Link></li>
           <li>Favourites</li>
           <li>Sign up</li>
         </div>
@@ -25,7 +25,7 @@ export default function Navbar() {
             <ul className="pt-6 flex flex-col gap-4 text-l">
               <li className="hover:text-black/40"><Link href="/cricket">Cricket</Link></li>
               <li className="hover:text-black/40">Football</li>
-              <li className="hover:text-black/40">Casino</li>
+              <li className="hover:text-black/40"><Link href="/casino">Casino</Link></li>
               <li className="hover:text-black/40">Favourites</li>
               <li className="hover:text-black/40">Sign up</li>
             </ul>
