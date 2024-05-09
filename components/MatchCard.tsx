@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 export default function MatchCard() {
+  const router= useRouter()
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       
@@ -36,7 +38,7 @@ export default function MatchCard() {
 
       <div className="flex gap-12 py-4 justify-between">
         <Button className="flex-1">Analytics</Button>
-        <Button className="flex-1">Article</Button>
+        <Button className="flex-1" onClick={()=>router.push("/cricket-article")}>Article</Button>
       </div>
 
     </div>

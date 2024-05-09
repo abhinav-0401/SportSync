@@ -16,7 +16,7 @@ export default function HotTopics() {
   ];
 
   return (
-    <div className="flex flex-col gap-12 items-center rounded-xl max-w-screen mb-8 lg:bg-white/60 py-12 px-8">
+    <div className="flex flex-col gap-12 items-center rounded-xl max-w-screen mb-8 lg:bg-white/40 py-12 px-8">
       
       <h2 className="font-bold text-lg sm:text-xl lg:text-2xl text-center">Hot Topics</h2>
 
