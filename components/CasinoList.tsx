@@ -53,9 +53,9 @@ export default function CasinoList({ type }: Props) {
 
   return (
     <div className="flex md:flex-row flex-col flex-wrap justify-between md:justify-normal gap-10">
-      {casinos.map(casino => {
+      {casinos.map((casino, index) => {
         if (casino.type == type || type == "all") {
-          return <CasinoCard title={casino.title} description={casino.description} imageUrl={casino.imageUrl} />;
+          return <CasinoCard title={casino.title} key={index} description={casino.description} imageUrl={casino.imageUrl} />;
         }
       })}
     </div>

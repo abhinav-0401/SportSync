@@ -51,8 +51,8 @@ export default function Artcile() {
               <Button className="rounded-full">Search</Button>
             </div>
             <div className="flex flex-col gap-8">
-              {articles.map(article => {
-                return <ArticleCard title={article.title} description={article.description} imageUrl={article.imageUrl} date={article.date} />
+              {articles.map((article, index) => {
+                return <ArticleCard title={article.title} key={index} description={article.description} imageUrl={article.imageUrl} date={article.date} />
               })}
             </div>
             <div className="flex w-full justify-center">

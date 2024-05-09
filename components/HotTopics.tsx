@@ -22,9 +22,9 @@ export default function HotTopics() {
 
       <div className="flex lg:flex-col flex-row md:items-center overflow-x-scroll max-w-80 md:max-w-[420px] md:overflow-x-auto justify-between gap-4">
 
-        {topics.map(topic => {
+        {topics.map((topic, index) => {
           return (
-            <div className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4 justify-between">
+            <div key={index} className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4 justify-between">
               <Image src="/ad.png" alt="advertisement" className="min-w-[161px]" height={126} width={213} />
               <div className="flex flex-col gap-2 items-center">
                 <h4 className="font-semibold text-base sm:text-lg lg:text-xl">{topic.title}</h4>
