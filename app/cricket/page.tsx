@@ -8,6 +8,7 @@ import Tag from "@/components/tag";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Cricket() {
@@ -37,7 +38,12 @@ export default function Cricket() {
 
           {/* search + links */}
           <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full md:max-w-[300px] md:min-w-[200px]">
-            <Input type="search" className="w-2/3 md:w-full" />
+            {/* <Input type="search" className="w-2/3 md:w-full" /> */}
+            <div className="flex w-2/3 md:w-full bg-white/40 px-1 py-1 rounded-full">
+              <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
+              <Input type="search" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
+              <Button className="rounded-full">Search</Button>
+            </div>
             <div className="lg:flex flex-col hidden gap-10 bg-white/60 min-h-full py-4 px-8 rounded-2xl">
               {/* tags */}
               <div className="flex flex-wrap w-full gap-4">
