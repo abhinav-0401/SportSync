@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
     <div className="bg-[#E6E6DD]">
       <div className="px-8 md:px-16">
         <SectionOne isSmallScreen={isSmallScreen} />
-        <SectionTwo isSmallScreen={isSmallScreen} />
+        <SectionTwo />
         <TopPicks />
         <ExcitingOffers />
       </div>
@@ -29,18 +30,31 @@ export default function Home() {
 }
 
 function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
+  const router = useRouter();
+
   return (
-    <div className="pt-24">
+    <div className="pt-8 md:pt-16 lg:pt-24">
       <div className="flex lg:flex-row flex-col lg:justify-center items-center">
         <div className="flex flex-col items-center">
-          <Image src="/logo-2.png" alt="Logo" width={400} height={50} className="max-w-[122px] md:max-w-[158px]" />
+          <Image src="/logo-2.png" alt="Logo" width={400} height={50} className="max-w-[122px] md:max-w-[244px]" />
           <h3 className="text-black font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl ">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
-          <div className="my-4 sm:mx-16 md:mx-20 lg:mx-24 xl:mx-28">
-            <span className="mx-3 sm:mx-4 md:mx-10">Cricket</span>
-            <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
-            <span className="mx-3 sm:mx-4 md:mx-10">Casino</span>
+          <div className="flex my-4 sm:mx-16 md:mx-20 lg:mx-24 xl:mx-28">
+            <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
+              <span>Cricket</span>
+            </span>
+            <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
+              <span>Football</span>
+            </span>
+            <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
+              <span>Casinos</span>
+            </span>
+            {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
+            <span className="mx-3 sm:mx-4 md:mx-10">Casino</span> */}
           </div>
           <div className="flex justify-center">
             <button
@@ -52,7 +66,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
         </div>
         <LogoImages />
       </div>
-      <div className="my-40 w-full flex items-center">
+      <div className="my-12 sm:my-20 md:my-32 lg:my-40 w-full flex items-center hover:cursor-pointer" onClick={() => router.push("/bonanza")}>
         <Image src="/bonanza-banner.png" alt="Logo" className="w-full h-auto hidden sm:block" width={1800} height={50} />
         <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block sm:hidden" width={1800} height={50} />
       </div>
@@ -72,9 +86,9 @@ function LogoImages() {
   );
 }
 
-function SectionTwo({  isSmallScreen }: { isSmallScreen: boolean }) {
+function SectionTwo() {
   return (
-    <div className="pt-24 flex flex-col gap-12">
+    <div className="pt-4 sm:pt-8 md:pt-16 lg:pt-24 flex flex-col gap-12">
       
       <div className="flex flex-col items-start gap-8">
 
@@ -126,10 +140,6 @@ function SectionTwo({  isSmallScreen }: { isSmallScreen: boolean }) {
             <span>MS DHONI</span>
           </div>
         </div>
-      </div>
-
-      <div className="flex w-full justify-center">
-        <Button className="italic">Click here to get details</Button>
       </div>
     </div>
   );
@@ -183,8 +193,8 @@ function ExcitingOffers() {
           <p className="p-4 w-80 text-[#45474A] font-medium text-center">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
           </p>
-          <button className="mx-20 my-8 border-2 p-4 bg-black text-white border-black rounded-xl w-72">
-            Click here to know more
+          <button className="mx-20 my-8 border-2 p-4 bg-black text-white italic border-black rounded-xl w-72">
+            Click here <span className="hidden md:inline">to know more</span>
           </button>
         </div>
       </div>

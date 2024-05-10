@@ -22,8 +22,8 @@ interface Props {
 export default function CasinoCard({ title, description, imageUrl }: Props) {
   return (
     <div className="flex max-h-[450px] flex-col max-w-[300px] items-center gap-5 p-5 bg-white/66 rounded-xl border border-solid border-gray-300/66 shadow-lg">
-      <div className="min-w-full md:min-w-48 md:min-h-32">
-        <Image src={imageUrl} className='md:min-h-full md:w-auto' alt={title} width={300} height={200} />
+      <div className="min-w-full"> 
+        <Image src={imageUrl} className='' alt={title} width={300} height={200} />
       </div>
       <div className="flex flex-col gap-2">
         <div className="text-xl md:text-2xl font-semibold text-black">{title}</div>
@@ -61,3 +61,5 @@ export default function CasinoCard({ title, description, imageUrl }: Props) {
     </div>
   );
 }
+
+// md:min-w-48 md:min-h-32

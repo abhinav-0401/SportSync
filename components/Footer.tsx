@@ -29,7 +29,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-5">
-          <h3 className="font-bold text-xl">QUICK LINKS</h3>
+          <h3 className="font-bold text-xl text-nowrap">QUICK LINKS</h3>
           <ul className="flex flex-col gap-4">
             <li><Link href={"/"}>Home</Link></li>
             <li><Link href="/cricket">Cricket</Link></li>
@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-5">
-          <h3 className="font-bold text-xl">SOCIAL MEDIA</h3>
+          <h3 className="font-bold text-xl text-nowrap">SOCIAL MEDIA</h3>
           <ul className="flex flex-col gap-4">
             <li>Instagram</li>
             <li>Facebook</li>
