@@ -52,7 +52,7 @@ export default function CasinoList({ type }: Props) {
   ];
 
   return (
-    <div className="flex md:flex-row flex-col items-center md:items-start flex-wrap justify-between md:justify-normal gap-10">
+    <div className="flex md:flex-row flex-col items-center md:items-start flex-wrap justify-between md:justify-normal gap-20">
       {casinos.map((casino, index) => {
         if (casino.type == type || type == "all") {
           return <CasinoCard title={casino.title} key={index} description={casino.description} imageUrl={casino.imageUrl} />;

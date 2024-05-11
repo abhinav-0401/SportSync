@@ -11,7 +11,7 @@ export default function AdCard() {
           <div className="text-wrap dark:text-[#E6E6DDCC]">
             “Lorem ipsum dolor sit amet,<br></br> consectetur adipiscing elit. Turpis donec amet proin 
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   );
