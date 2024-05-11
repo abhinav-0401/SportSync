@@ -8,7 +8,7 @@ import CasinoList from "@/components/CasinoList";
 
 export default function Casino() {
   return (
-    <div className="bg-[#E6E6DD] min-h-screen">
+    <div className="bg-[#E6E6DD] dark:bg-black min-h-screen">
       <div className="flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16">
         
         <div className="px-8 sm:px-16 md:px-24 lg:px-32 flex flex-col gap-20">
@@ -18,8 +18,8 @@ export default function Casino() {
 
             <div className="flex bg-white/40 px-1 py-1 rounded-full">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
-            <Input type="search" placeholder="Indian Premier League" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
-              <Button className="rounded-full">Search</Button>
+            <Input type="search" placeholder="Best Casino Bars" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
+              <Button className="px-10 rounded-full">Search</Button>
             </div>
         </div>
 

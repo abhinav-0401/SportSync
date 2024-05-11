@@ -3,18 +3,18 @@ import { Button } from "./ui/button";
 
 export default function FeaturedCard() {
   return (
-    <div className="flex flex-col gap-8 rounded-xl bg-white/60 py-4 md:py-7 px-4 md:px-8">
+    <div className="flex flex-col gap-8 rounded-xl dark:bg-[#45474a80] bg-white/60 py-4 md:py-7 px-4 md:px-8">
       <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">Featured Match</h2>
 
       <div className="flex flex-col gap-6">
-        <h3 className="text-center font-bold text-base sm:text-lg lg:text-xl">Indian Premier League</h3>
+        <h3 className="text-center font-bold text-base sm:text-lg lg:text-xl dark:text-[#E6E6DD]">Indian Premier League</h3>
 
         <div className="flex justify-evenly items-center">
 
           <div className="flex flex-col items-center gap-2">
             <Image src="/india.png" height={20} width={30} alt="india" />
-            <div className="font-semibold text-sm md:text-base">IND</div>
-            <div className="text-sm md:text-base font-semibold">190/8</div>
+            <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">IND</div>
+            <div className="text-sm md:text-base font-semibold dark:text-[#E6E6DD]">190/8</div>
           </div>
 
           <div className="font-bold">Vs</div>
@@ -27,7 +27,7 @@ export default function FeaturedCard() {
 
         </div>
 
-        <Button>Click here to know more</Button>
+        <Button className="dark:bg-[#E6E6DD]">Click here to know more</Button>
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ export default function Navbar() {
           <li><Link href="/cricket" className="text-black dark:text-[#E6E6DD] hover:text-gray-700">Cricket</Link></li>
           <li><Link href="/football" className="text-black dark:text-[#E6E6DD] hover:text-gray-700">Football</Link></li>
           <li><Link href="/casino" className="text-black dark:text-[#E6E6DD] hover:text-gray-700">Casino</Link></li>
-          <li><Link href="/favourites" className="text-black dark:text-[#E6E6DD] hover:text-gray-700">Favourites</Link></li>
+          {/* <li><Link href="/favourites" className="text-black dark:text-[#E6E6DD] hover:text-gray-700">Favourites</Link></li> */}
           <li>
             <button className="text-black dark:text-[#E6E6DD] font-semibold" onClick={themeChange}>{theme === 'light' ? "Dark" : "Light"} Mode</button>
           </li>
@@ -46,7 +46,7 @@ export default function Navbar() {
             <li><Link href="/cricket" className="hover:text-black/40">Cricket</Link></li>
             <li><Link href="/football" className="hover:text-black/40">Football</Link></li>
             <li><Link href="/casino" className="hover:text-black/40">Casino</Link></li>
-            <li><Link href="/favourites" className="hover:text-black/40">Favourites</Link></li>
+            {/* <li><Link href="/favourites" className="hover:text-black/40">Favourites</Link></li> */}
             <li><button className="text-black dark:text-[#E6E6DD] font-bold text-2xl" onClick={themeChange}>{theme==='light' ? "Dark": "Light" }</button></li>
           </ul>
         </SheetContent>

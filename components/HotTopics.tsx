@@ -16,19 +16,18 @@ export default function HotTopics() {
   ];
 
   return (
-    <div className="flex flex-col gap-12 items-center rounded-xl max-w-screen mb-8 lg:bg-white/40 py-12 px-8">
-      
-      <h2 className="font-bold text-lg sm:text-xl lg:text-2xl text-center">Hot Topics</h2>
+    <div className="flex flex-col gap-6 items-center rounded-xl max-w-screen mb-8 lg:bg-white/40 dark:bg-[#45474a80] py-6 px-8">
 
-      <div className="flex lg:flex-col flex-row md:items-center overflow-x-scroll max-w-80 md:max-w-[420px] md:overflow-x-auto justify-between gap-4">
+      <h2 className="font-bold text-lg sm:text-xl lg:text-2xl text-center dark:text-[#E6E6DD]">Hot Topics</h2>
 
+      <div className="flex lg:flex-col flex-row items-center overflow-x-scroll max-w-80 md:max-w-[420px] md:overflow-x-auto justify-between gap-4">
         {topics.map((topic, index) => {
           return (
-            <div key={index} className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4 justify-between">
+            <div key={index} className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4">
               <Image src="/ad.png" alt="advertisement" className="min-w-[161px]" height={126} width={213} />
               <div className="flex flex-col gap-2 items-center">
-                <h4 className="font-semibold text-base sm:text-lg lg:text-xl">{topic.title}</h4>
-                <div className="text-wrap font-normal text-sm text-[#45474A]">
+                <h4 className="font-semibold text-base sm:text-lg lg:text-xl dark:text-[#E6E6DD]">{topic.title}</h4>
+                <div className="text-wrap font-normal text-sm text-[#45474A] dark:text-[#E6E6DD]">
                   {topic.description}
                 </div>
               </div>
@@ -38,5 +37,6 @@ export default function HotTopics() {
       </div>
 
     </div>
+
   );
 }

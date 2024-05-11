@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="bg-[url('/footer-bg.png')] bg-cover flex flex-col md:flex-row justify-evenly px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-8 md:gap-0">
+    <div className="bg-[url('/footer-bg.png')] dark:bg-black dark:text-[#E6E6DD] bg-cover flex flex-col md:flex-row justify-evenly px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-8 md:gap-0">
       <div className="flex flex-1 flex-col justify-between gap-4">
         <h3 className="font-semibold text-xl">ABOUT US</h3>
         <div>
