@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-[#E6E6DD]">
+    <div className="dark:bg-black bg-[#E6E6DD]">
       <div className="px-8 md:px-16">
         <SectionOne isSmallScreen={isSmallScreen} />
         <SectionTwo />
@@ -37,28 +37,28 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
       <div className="flex lg:flex-row flex-col lg:justify-center items-center">
         <div className="flex flex-col items-center">
           <Image src="/logo-2.png" alt="Logo" width={400} height={50} className="max-w-[122px] md:max-w-[244px]" />
-          <h3 className="text-black font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl ">
+          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl ">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
           <div className="flex my-4 sm:mx-16 md:mx-20 lg:mx-24 xl:mx-28">
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
-              <span>Cricket</span>
+              <span className="dark:text-[#E6E6DD]">Cricket</span>
             </span>
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
-              <span>Football</span>
+              <span className="dark:text-[#E6E6DD]">Football</span>
             </span>
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
-              <span>Casinos</span>
+              <span className="dark:text-[#E6E6DD]">Casinos</span>
             </span>
             {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
             <span className="mx-3 sm:mx-4 md:mx-10">Casino</span> */}
           </div>
           <div className="flex justify-center">
             <button
-              className={`mt-4 p-4 border-2 border-black bg-black text-white rounded-xl italic w-full sm:w-60 md:w-80 lg:w-96 xl:w-112 ${isSmallScreen && "sm-button-style"}`}
+              className={`mt-4 p-4 border-2 border-black dark:bg-[#45474A] bg-black text-white dark:text-[#E6E6DD] rounded-xl italic w-full sm:w-60 md:w-80 lg:w-96 xl:w-112 ${isSmallScreen && "sm-button-style"}`}
             >
               {isSmallScreen ? "Click here" : "Click here to know more"}
             </button>
@@ -79,8 +79,8 @@ function LogoImages() {
     <div className="flex flex-grow lg:items-center flex-shrink-0">
       <Image src="/Group 15.png" alt="Logo" width={250} height={190} className="min-w-[320px] sm:min-w-[400px] xl:min-w-[400px] my-2" />
       <div>
-        <Image src="/Rectangle 118.png" alt="Logo" width={97} height={91} className="min-h-24 min-w-24 lg:min-w-32 hidden xl:block my-2 mt-6" />
-        <Image src="/Rectangle 119.png" alt="Logo" width={97} height={91} className="min-h-24 min-w-24 lg:min-w-32 mt-6 hidden xl:block" />
+        <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 hidden xl:block my-2 mt-6" />
+        <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 mt-6 hidden xl:block" />
       </div>
     </div>
   );
@@ -88,7 +88,7 @@ function LogoImages() {
 
 function SectionTwo() {
   return (
-    <div className="pt-4 sm:pt-8 md:pt-16 lg:pt-24 flex flex-col gap-12">
+    <div className="pt-4 sm:pt-8 md:pt-16 lg:pt-24 flex flex-col gap-12 dark:text-[#E6E6DD]">
       
       <div className="flex flex-col items-start gap-8">
 
@@ -147,7 +147,7 @@ function SectionTwo() {
 
 function TopPicks() {
   return (
-    <div className="my-10">
+    <div className="my-10 dark:text-[#E6E6DD]">
       <h2 className="my-10 font-bold text-3xl">Top Picks</h2>
       <div className="flex flex-col items-center md:items-start md:flex-row justify-center lg:justify-normal flex-wrap gap-10">
         {Array.from({ length: 6 }).map((_, index) => (
@@ -183,17 +183,17 @@ function PickCard() {
 
 function ExcitingOffers() {
   return (
-    <div className="py-10">
+    <div className="py-10 dark:text-[#E6E6DD]">
       <h2 className="my-20 font-bold text-3xl">Exciting Offers</h2>
       <div className="flex flex-col lg:flex-row lg:justify-between max-w-[100vw]">
         {Array.from({ length: 2 }).map((_, index) => (
           <OfferCard key={index} />
         ))}
         <div className="flex flex-col justify-center items-center md:flex-grow-1">
-          <p className="p-4 w-80 text-[#45474A] font-medium text-center">
+          <p className="p-4 w-80 text-[#45474A] dark:text-[#E6E6DD] font-medium text-center">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
           </p>
-          <button className="mx-20 my-8 border-2 p-4 bg-black text-white italic border-black rounded-xl w-72">
+          <button className="mx-20 my-8 border-2 p-4 bg-black dark:bg-[#45474A] dark:text-[#E6E6DD] text-white italic border-black rounded-xl w-72">
             Click here <span className="hidden md:inline">to know more</span>
           </button>
         </div>
