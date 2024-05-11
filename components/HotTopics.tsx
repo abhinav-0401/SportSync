@@ -16,7 +16,7 @@ export default function HotTopics() {
   ];
 
   return (
-    <div className="flex flex-col gap-12 items-center rounded-xl max-w-screen mb-8 lg:bg-white/40 py-12 px-8">
+    <div className="flex flex-col gap-12 items-center rounded-xl max-w-screen mb-8 lg:bg-white/40 dark:bg-[#45474A80] py-12 px-8">
       
       <h2 className="font-bold text-lg sm:text-xl lg:text-2xl text-center">Hot Topics</h2>
 
@@ -28,7 +28,7 @@ export default function HotTopics() {
               <Image src="/ad.png" alt="advertisement" className="min-w-[161px]" height={126} width={213} />
               <div className="flex flex-col gap-2 items-center">
                 <h4 className="font-semibold text-base sm:text-lg lg:text-xl">{topic.title}</h4>
-                <div className="text-wrap font-normal text-sm text-[#45474A]">
+                <div className="text-wrap font-normal text-sm text-[#45474A] dark:text-[#E6E6DDCC]">
                   {topic.description}
                 </div>
               </div>
