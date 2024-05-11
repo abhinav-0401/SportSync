@@ -36,21 +36,21 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
     <div className="pt-8 md:pt-16 lg:pt-24">
       <div className="flex lg:flex-row flex-col lg:justify-center items-center">
         <div className="flex flex-col items-center">
-          <Image src="/logo-2.png" alt="Logo" width={400} height={50} className="max-w-[122px] md:max-w-[244px]" />
-          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl ">
+          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[122px] md:max-w-[244px]" />
+          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
           <div className="flex my-4 sm:mx-16 md:mx-20 lg:mx-24 xl:mx-28">
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full" unoptimized />
               <span className="dark:text-[#E6E6DD]">Cricket</span>
             </span>
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className=""/>
               <span className="dark:text-[#E6E6DD]">Football</span>
             </span>
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} />
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized />
               <span className="dark:text-[#E6E6DD]">Casinos</span>
             </span>
             {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
@@ -60,15 +60,26 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
             <button
               className={`mt-4 p-4 border-2 border-black dark:bg-[#45474A] bg-black text-white dark:text-[#E6E6DD] rounded-xl italic w-full sm:w-60 md:w-80 lg:w-96 xl:w-112 ${isSmallScreen && "sm-button-style"}`}
             >
-              {isSmallScreen ? "Click here" : "Click here to know more"}
+              {isSmallScreen ? "Click here" : (<div className="flex items-center justify-center space-x-2">
+                <span>Click here to know more</span>
+                <Image src={"/arrow.png"} alt="arrow" width={20} height={20} />
+              </div>)}
             </button>
           </div>
         </div>
         <LogoImages />
       </div>
-      <div className="my-12 sm:my-20 md:my-32 lg:my-40 w-full flex items-center hover:cursor-pointer" onClick={() => router.push("/bonanza")}>
-        <Image src="/bonanza-banner.png" alt="Logo" className="w-full h-auto hidden sm:block" width={1800} height={50} />
-        <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block sm:hidden" width={1800} height={50} />
+      <div className="my-12 sm:my-20 md:my-32 w-full flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
+        <div className="flex flex-col items-center justify-center w-full -space-y-40">
+          <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 hidden sm:block" width={1800} height={50} unoptimized />
+          <div className="flex flex-col items-center justify-center space-y-5">
+            <span className="text-2xl tracking-wider font-semibold">FESTIVE BONANZA</span>
+            <span className="text-center max-w-3xl">
+            “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
+            </span>
+          </div>
+        </div>
+        <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block sm:hidden" width={1800} height={50} unoptimized />
       </div>
     </div>
   );
@@ -77,10 +88,10 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 function LogoImages() {
   return (
     <div className="flex flex-grow lg:items-center flex-shrink-0">
-      <Image src="/Group 15.png" alt="Logo" width={250} height={190} className="min-w-[320px] sm:min-w-[400px] xl:min-w-[400px] my-2" />
-      <div>
-        <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 hidden xl:block my-2 mt-6" />
-        <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 mt-6 hidden xl:block" />
+      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="min-w-[320px] sm:min-w-[400px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg mt-3" unoptimized />
+      <div className="pl-3">
+        <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 hidden xl:block my-2 mt-6" unoptimized />
+        <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 mt-6 hidden xl:block" unoptimized />
       </div>
     </div>
   );
@@ -93,7 +104,7 @@ function SectionTwo() {
       <div className="flex flex-col items-start gap-8">
 
         <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
-        <div className="bg-black text-white rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
+        <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
 
       </div>
 
@@ -141,6 +152,9 @@ function SectionTwo() {
           </div>
         </div>
       </div>
+      <div className="w-full flex items-center justify-center">
+        <button className="bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit">Click here to get details</button>
+      </div>
     </div>
   );
 }
@@ -149,7 +163,7 @@ function TopPicks() {
   return (
     <div className="my-10 dark:text-[#E6E6DD]">
       <h2 className="my-10 font-bold text-3xl">Top Picks</h2>
-      <div className="flex flex-col items-center md:items-start md:flex-row justify-center lg:justify-normal flex-wrap gap-10">
+      <div className="flex flex-col items-center w-full md:flex-row justify-center flex-wrap gap-10">
         {Array.from({ length: 6 }).map((_, index) => (
           <PickCard key={index} />
         ))}
