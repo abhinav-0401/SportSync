@@ -70,16 +70,16 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
         <LogoImages />
       </div>
       <div className="my-12 sm:my-20 md:my-32 w-full flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
-        <div className="flex flex-col items-center justify-center w-full -space-y-40">
-          <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 hidden sm:block" width={1800} height={50} unoptimized />
+        <div className="flex flex-col items-center justify-center w-full md:-space-y-40">
+          <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 hidden md:block" width={1800} height={50} unoptimized />
+          <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block md:hidden" width={1800} height={50} unoptimized />
           <div className="flex flex-col items-center justify-center space-y-5">
-            <span className="text-2xl tracking-wider font-semibold">FESTIVE BONANZA</span>
-            <span className="text-center max-w-3xl">
+            <span className="text-2xl tracking-wider md:block hidden font-semibold">FESTIVE BONANZA</span>
+            <span className="text-center hidden md:block max-w-3xl">
             “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
             </span>
           </div>
         </div>
-        <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block sm:hidden" width={1800} height={50} unoptimized />
       </div>
     </div>
   );
