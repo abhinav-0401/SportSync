@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 export default function FeaturedCard() {
   return (
-    <div className="flex flex-col gap-8 rounded-xl dark:bg-[#45474a80] bg-white/60 py-4 md:py-7 px-4 md:px-8">
+    <div className="flex flex-col gap-8 rounded-xl bg-white/60 dark:bg-[#45474A80] py-4 md:py-7 px-4 md:px-10">
       <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">Featured Match</h2>
 
       <div className="flex flex-col gap-6">

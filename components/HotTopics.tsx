@@ -26,8 +26,8 @@ export default function HotTopics() {
             <div key={index} className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4">
               <Image src="/ad.png" alt="advertisement" className="min-w-[161px]" height={126} width={213} />
               <div className="flex flex-col gap-2 items-center">
-                <h4 className="font-semibold text-base sm:text-lg lg:text-xl dark:text-[#E6E6DD]">{topic.title}</h4>
-                <div className="text-wrap font-normal text-sm text-[#45474A] dark:text-[#E6E6DD]">
+                <h4 className="font-semibold text-base sm:text-lg lg:text-xl">{topic.title}</h4>
+                <div className="text-wrap font-normal text-sm text-[#45474A] dark:text-[#E6E6DDCC]">
                   {topic.description}
                 </div>
               </div>
