@@ -48,7 +48,7 @@ export default function Artcile() {
               <Input type="search" className=" mx-4 border-0 focus-visible:ring-0 bg-transparent" />
               <Button className="rounded-full px-10">Search</Button>
             </div>
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col items-center gap-8">
               {articles.map((article, index) => {
                 return <ArticleCard title={article.title} key={index} description={article.description} imageUrl={article.imageUrl} date={article.date} />
               })}

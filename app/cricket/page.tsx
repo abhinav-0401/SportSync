@@ -37,7 +37,7 @@ export default function Cricket() {
           {/* search + links */}
           <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
             {/* <Input type="search" className="w-2/3 md:w-full" /> */}
-            <div className="flex w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
+            <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
               <Input type="search" placeholder="Indian Premier League" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
             </div>

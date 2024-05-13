@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 export default function MatchCard() {
-  const router= useRouter()
+  const router= useRouter();
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 dark:bg-[#45474a66] py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       
@@ -37,8 +37,8 @@ export default function MatchCard() {
       </div>
 
       <div className="flex gap-12 py-4 justify-between ">
-        <Button className="flex-1 dark:bg-[#E6E6DD]">Analytics</Button>
-        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={()=>router.push("/cricket-article")}>Article</Button>
+        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push("/analytics")}>Analytics</Button>
+        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={()=> router.push("/cricket-article")}>Article</Button>
       </div>
 
     </div>
