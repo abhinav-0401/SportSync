@@ -36,21 +36,25 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
     <div className="pt-8 md:pt-16 lg:pt-24">
       <div className="flex lg:flex-row flex-col lg:justify-center items-center">
         <div className="flex flex-col items-center">
-          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[122px] md:max-w-[244px]" />
+          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[122px] hidden dark:block md:max-w-[244px]" />
+          <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[122px] dark:hidden md:max-w-[244px]" />
           <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
           <div className="flex my-4 sm:mx-16 md:mx-20 lg:mx-24 xl:mx-28">
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full" unoptimized />
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full dark:hidden" unoptimized />
+              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
               <span className="dark:text-[#E6E6DD]">Cricket</span>
             </span>
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className=""/>
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden"/>
+              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
               <span className="dark:text-[#E6E6DD]">Football</span>
             </span>
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized />
+              <Image src="/casino-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden" />
+              <Image src="/bulletDarkCasino.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
               <span className="dark:text-[#E6E6DD]">Casinos</span>
             </span>
             {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
@@ -98,6 +102,8 @@ function LogoImages() {
 }
 
 function SectionTwo() {
+  const router = useRouter();
+
   return (
     <div className="pt-4 sm:pt-8 md:pt-16 lg:pt-24 flex flex-col gap-12 dark:text-[#E6E6DD]">
       
@@ -153,7 +159,7 @@ function SectionTwo() {
         </div>
       </div>
       <div className="w-full flex items-center justify-center">
-        <button className="bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit">Click here to get details</button>
+        <button className="bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
       </div>
     </div>
   );
@@ -189,7 +195,7 @@ function PickCard() {
       </div>
       <div className="flex flex-col items-center md:items-start">
         <h2 className="font-bold">Indian Premier League</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin</p>
+        <p className="text-sm italic text-center md:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin</p>
       </div>
     </div>
   );
