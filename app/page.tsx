@@ -211,7 +211,7 @@ function ExcitingOffers() {
             <OfferCard key={index} />
           ))} */}
           <span className="lg:block hidden"><OfferCard /></span>
-          <span className="lg:block hidden"><OfferCard /></span>
+          <span className="xl:block hidden"><OfferCard /></span>
           <span className=""><OfferCard /></span>
         <div className="flex flex-col justify-center items-center md:flex-grow-1">
           <p className="p-4 w-72 text-[#45474A] dark:text-[#E6E6DD] font-medium text-center">
