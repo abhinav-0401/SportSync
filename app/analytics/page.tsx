@@ -21,7 +21,7 @@ export default function Analytics() {
         <div className="flex flex-col gap-10 flex-grow">
           <div className="">
             <Tabs defaultValue="live" className="w-full">
-              <TabsList className="flex w-full justify-between bg-transparent">
+              <TabsList className="flex w-full justify-between bg-transparent overflow-x-scroll">
                 <TabsTrigger className="flex-grow" variant={"outline"} value="live">Live</TabsTrigger>
                 <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Summary</TabsTrigger>
                 <TabsTrigger className="flex-grow" variant={"outline"} value="score">Score Card</TabsTrigger>
@@ -42,16 +42,16 @@ export default function Analytics() {
                   </div>
                 </div>
               </TabsContent>
-              <TabsContent value="summary" className="flex w-full flex-col px-12 gap-10">
+              <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
                 <MatchSummary />
               </TabsContent>
-              <TabsContent value="score" className="flex w-full flex-col px-12 gap-10">
+              <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
                 <ScoreCard />
               </TabsContent>
-              <TabsContent value="stats" className="flex w-full flex-col px-12 gap-10">
+              <TabsContent value="stats" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
                 <TeamStats />
               </TabsContent>
-              <TabsContent value="table" className="flex w-full flex-col px-12 gap-10">
+              <TabsContent value="table" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
                 <TableSection />
               </TabsContent>
             </Tabs>

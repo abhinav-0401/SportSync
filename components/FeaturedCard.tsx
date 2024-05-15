@@ -1,7 +1,12 @@
+"use client"
+
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 export default function FeaturedCard() {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col gap-8 rounded-xl bg-white/60 dark:bg-[#45474A80] py-4 md:py-7 px-4 md:px-10">
       <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">Featured Match</h2>
@@ -27,7 +32,7 @@ export default function FeaturedCard() {
 
         </div>
 
-        <Button className="dark:bg-[#E6E6DD]">Click here to know more</Button>
+        <Button className="dark:bg-[#E6E6DD]" onClick={() => router.push("/cricket-article")}>Click here to know more</Button>
       </div>
     </div>
   );

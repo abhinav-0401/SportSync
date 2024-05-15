@@ -1,72 +1,117 @@
-import React from 'react'
+import * as React from "react"
 
-type Props = {}
+import { cn } from "@/lib/utils"
 
-function CustomTable({}: Props) {
-  return (
-    <table className='flex flex-col items-center justify-center w-full rounded-md bg-[#45474A80] p-5 space-y-2'>
-            <tr className='flex items-center justify-between w-full border-b border-[#E6E6DD66] pb-2'>
-              <th className='font-normal'>Batsman</th>
-              <div className='flex items-center justify-center space-x-7'>
-                <th className='font-normal'>R</th>
-                <th className='font-normal'>B</th>
-                <th className='font-normal'>4s</th>
-                <th className='font-normal'>6s</th>
-                <th className='font-normal'>S/R</th>
-              </div>
-            </tr>
-            <tr className='flex items-center justify-between w-full border-b border-[#E6E6DD66] pb-2'>
-              <th className='font-normal'>Batsman</th>
-              <div className='flex items-center justify-center space-x-7'>
-                <th className='font-normal'>R</th>
-                <th className='font-normal'>B</th>
-                <th className='font-normal'>4s</th>
-                <th className='font-normal'>6s</th>
-                <th className='font-normal'>S/R</th>
-              </div>
-            </tr>
-            <tr className='flex items-center justify-between w-full border-b border-[#E6E6DD66] pb-2'>
-              <th className='font-normal'>Batsman</th>
-              <div className='flex items-center justify-center space-x-7'>
-                <th className='font-normal'>R</th>
-                <th className='font-normal'>B</th>
-                <th className='font-normal'>4s</th>
-                <th className='font-normal'>6s</th>
-                <th className='font-normal'>S/R</th>
-              </div>
-            </tr>
-            <tr className='flex items-center justify-between w-full border-b border-[#E6E6DD66] pb-2'>
-              <th className='font-normal'>Batsman</th>
-              <div className='flex items-center justify-center space-x-7'>
-                <th className='font-normal'>R</th>
-                <th className='font-normal'>B</th>
-                <th className='font-normal'>4s</th>
-                <th className='font-normal'>6s</th>
-                <th className='font-normal'>S/R</th>
-              </div>
-            </tr>
-            <tr className='flex items-center justify-between w-full border-b border-[#E6E6DD66] pb-2'>
-              <th className='font-normal'>Batsman</th>
-              <div className='flex items-center justify-center space-x-7'>
-                <th className='font-normal'>R</th>
-                <th className='font-normal'>B</th>
-                <th className='font-normal'>4s</th>
-                <th className='font-normal'>6s</th>
-                <th className='font-normal'>S/R</th>
-              </div>
-            </tr>
-            <tr className='flex items-center justify-between w-full'>
-              <th className='font-normal'>Batsman</th>
-              <div className='flex items-center justify-center space-x-7'>
-                <th className='font-normal'>R</th>
-                <th className='font-normal'>B</th>
-                <th className='font-normal'>4s</th>
-                <th className='font-normal'>6s</th>
-                <th className='font-normal'>S/R</th>
-              </div>
-            </tr>
-          </table>
-  )
+const Table = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  <div className="relative w-full overflow-auto">
+    <table
+      ref={ref}
+      className={cn("w-full dark:bg-zinc-900 bg-white/50 rounded-md caption-bottom text-sm", className)}
+      {...props}
+    />
+  </div>
+))
+Table.displayName = "Table"
+
+const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+))
+TableHeader.displayName = "TableHeader"
+
+const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tbody
+    ref={ref}
+    className={cn("[&_tr:last-child]:border-0", className)}
+    {...props}
+  />
+))
+TableBody.displayName = "TableBody"
+
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableFooter.displayName = "TableFooter"
+
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(
+      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      className
+    )}
+    {...props}
+  />
+))
+TableRow.displayName = "TableRow"
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(
+      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableHead.displayName = "TableHead"
+
+const TableCell = React.forwardRef<
+  HTMLTableCellElement,
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <td
+    ref={ref}
+    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    {...props}
+  />
+))
+TableCell.displayName = "TableCell"
+
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
+>(({ className, ...props }, ref) => (
+  <caption
+    ref={ref}
+    className={cn("mt-4 text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+TableCaption.displayName = "TableCaption"
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
 }
-
-export default CustomTable

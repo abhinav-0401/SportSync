@@ -1,7 +1,8 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from 'next/image';
-import CustomTable from './ui/table';
+import CustomTable from './ui/old-table';
+import CustomResponsiveTable from './CustomResponsiveTable';
 
 type Props = {}
 
@@ -23,7 +24,8 @@ function TeamStats({}: Props) {
             <span>Batting</span>
             <span>96-1 (10.1ov)</span>
           </div>
-          <CustomTable />
+          {/* <CustomTable /> */}
+          <CustomResponsiveTable />
         </TabsContent>
         <TabsContent value='ENG'>
 
