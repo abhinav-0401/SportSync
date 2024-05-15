@@ -11,20 +11,20 @@ export default function MatchStats() {
       </div>
 
       <div className="flex justify-between px-4 sm:px-8 md:px-16">
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           {/* img + country name */}
           <div className="flex flex-col gap-2 md:gap-4">
             <Image src="/india.png" alt='india' width={36} height={24} />
-            <div className="font-semibold text-base md:text-lg">IND</div>
+            <div className="font-semibold text-sm sm:text-base md:text-lg">IND</div>
           </div>
-          <div className="font-medium text-base md:text-lg">198/3</div>
+          <div className="font-medium text-sm sm:text-base md:text-lg">198/3</div>
         </div>
-        <div className="flex sm:gap-2">
+        <div className="flex gap-4">
           {/* img + country name */}
-          <div className="font-medium text-sm min-[370px]:text-base md:text-lg">YET TO BAT</div>
+          <div className="font-medium text-sm min-[370px]:text-base md:text-lg">Yet to Bat</div>
           <div className="flex flex-col gap-2 md:gap-4">
             <Image src="/england.png" alt='india' width={36} height={24} />
-            <div className="font-semibold text-base md:text-lg">ENG</div>
+            <div className="font-semibold text-sm sm:text-base md:text-lg">ENG</div>
           </div>
         </div>
       </div>

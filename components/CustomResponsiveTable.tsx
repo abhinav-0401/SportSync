@@ -15,9 +15,9 @@ export default function CustomResponsiveTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Array.from({ length: 4 }).map(() => {
+        {Array.from({ length: 4 }).map((_: any, idx: number) => {
           return (
-            <TableRow>
+            <TableRow key={idx}>
               <TableCell className="font-medium">KL Rahul</TableCell>
               <TableCell>67</TableCell>
               <TableCell>40</TableCell>
