@@ -214,7 +214,7 @@ function ExcitingOffers() {
           <span className="xl:block hidden"><OfferCard /></span>
           <span className=""><OfferCard /></span>
         <div className="flex flex-col justify-center items-center md:flex-grow-1">
-          <p className="p-4 w-72 text-[#45474A] dark:text-[#E6E6DD] font-medium text-center">
+          <p className="p-4 w-72 text-[#45474A] dark:text-[#E6E6DD] font-medium text-left">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
           </p>
           <button className="mx-20 my-8 border-2 p-4 bg-black dark:bg-[#45474A] dark:text-[#E6E6DD] text-white italic border-black rounded-xl w-72 flex items-center justify-center space-x-2">
