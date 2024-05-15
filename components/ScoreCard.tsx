@@ -1,7 +1,8 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from 'next/image';
-import CustomTable from './ui/table';
+import CustomTable from './ui/old-table';
+import CustomResponsiveTable from './CustomResponsiveTable';
 
 type Props = {}
 
@@ -23,7 +24,8 @@ function ScoreCard({}: Props) {
             <span>Batting</span>
             <span>96-1 (10.1ov)</span>
           </div>
-          <CustomTable />
+          {/* <CustomTable /> */}
+          <CustomResponsiveTable />
           <div className='flex items-center justify-between w-full'>
             <div className="flex gap-2 md:gap-4">
               <Image src="/india.png" alt='india' width={36} height={24} className='rounded-lg' />
@@ -32,7 +34,8 @@ function ScoreCard({}: Props) {
             <span>Bowling</span>
             <span>96-1 (10.1ov)</span>
           </div>
-          <CustomTable />
+          {/* <CustomTable /> */}
+          <CustomResponsiveTable />
         </TabsContent>
         <TabsContent value='ENG'>
 
