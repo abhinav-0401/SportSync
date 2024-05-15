@@ -124,9 +124,9 @@ function SectionTwo() {
           </div>
           <div className="font-medium text-base md:text-lg">198/3</div>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           {/* img + country name */}
-          <div className="font-medium text-base md:text-lg">YET TO BAT</div>
+          <div className="font-medium text-sm min-[370px]:text-base md:text-lg">YET TO BAT</div>
           <div className="flex flex-col gap-2 md:gap-4">
             <Image src="/england.png" alt='india' width={36} height={24} />
             <div className="font-semibold text-base md:text-lg">ENG</div>
