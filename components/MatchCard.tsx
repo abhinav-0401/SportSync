@@ -1,15 +1,26 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function MatchCard() {
+  
   const router= useRouter();
+
+  const [liked, setLiked] = useState(false);
+
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 dark:bg-[#45474a66] py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       
       <div className="flex justify-between">
         <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">Indian Premier League</h3>
-        <Image src="/heart.png" alt="like" className="h-fit w-fit" height={18} width={30} />
+        <span className="flex items-center" onClick={() => setLiked(!liked)}>
+          {
+            liked
+              ? <Image src="/heart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
+              : <Image src="/unlikedHeart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
+          }
+        </span>
       </div>
 
       <div className="flex justify-between dark:text-[#E6E6DD]">
