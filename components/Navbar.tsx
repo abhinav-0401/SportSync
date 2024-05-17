@@ -38,7 +38,7 @@ export default function Navbar() {
       <Sheet>
         <SheetTrigger>
           <Image src="/hamburger.png" alt="menu button" width={30} height={20} className="dark:hidden md:hidden" />
-          <Image src="/hamburger-new.png" alt="menu button" width={30} height={20} className="hidden dark:block md:hidden" />
+          <Image src="/hamburger-new.png" alt="menu button" width={30} height={20} className="hidden dark:block dark:md:hidden" />
         </SheetTrigger>
         <SheetContent className="bg-[#D9D9D9] dark:bg-black dark:text-[#E6E6DD]">
           <SheetHeader>
