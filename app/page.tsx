@@ -35,25 +35,25 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 
   return (
     <div className="pt-8 md:pt-16 lg:pt-24">
-      <div className="flex lg:flex-row flex-col lg:justify-center items-center">
-        <div className="flex flex-col items-center">
-          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[122px] hidden dark:block md:max-w-[244px]" />
-          <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[122px] dark:hidden md:max-w-[244px]" />
-          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl">
+      <div className="flex md:flex-row flex-col md:justify-start lg:justify-between items-center">
+        <div className="flex flex-col items-center lg:ml-12 md:min-w-[350px]">
+          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[122px] hidden dark:block md:max-w-[150px] lg:max-w-[244px]" />
+          <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[122px] dark:hidden md:max-w-[150px] lg:max-w-[244px]" />
+          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-center text-lg sm:text-base md:text-lg lg:text-xl xl:text-2xl">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
-          <div className="flex my-4 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-[12px] lg:mx-24 xl:mx-28">
-            <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
+          <div className="flex gap-4 md:gap-10 lg:gap-16 my-4 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-[12px] lg:mx-24 xl:mx-28">
+            <span className="flex gap-2">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full dark:hidden" unoptimized />
               <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
               <span className="dark:text-[#E6E6DD]">Cricket</span>
             </span>
-            <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
+            <span className="flex gap-2">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden"/>
               <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
               <span className="dark:text-[#E6E6DD]">Football</span>
             </span>
-            <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
+            <span className="flex gap-2">
               <Image src="/casino-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden" />
               <Image src="/bulletDarkCasino.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
               <span className="dark:text-[#E6E6DD]">Casinos</span>
@@ -92,11 +92,12 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 
 function LogoImages() {
   return (
-    <div className="flex flex-grow lg:items-center flex-shrink-0">
-      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="min-w-[300px] sm:min-w-[400px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg mt-3" unoptimized />
-      <div className="xl:pl-3">
-        <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 hidden xl:block my-2 mt-6" unoptimized />
-        <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 mt-6 hidden xl:block" unoptimized />
+    <div className="flex gap-4 lg:items-center flex-shrink-0">
+      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] min-w-[300px] md:min-w-[220px] 
+      min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg mt-3" unoptimized />
+      <div className="">
+        <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] hidden md:block my-2 mt-6" unoptimized />
+        <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] mt-6 hidden md:block" unoptimized />
       </div>
     </div>
   );
