@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="dark:bg-black bg-[#E6E6DD]">
-      <div className="px-8 md:px-16">
+      <div className="px-4 md:px-8 lg:px-16">
         <SectionOne isSmallScreen={isSmallScreen} />
         <SectionTwo />
         <TopPicks />
@@ -42,7 +42,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
           <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-left text-lg sm:text-xl lg:text-2xl">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
-          <div className="flex my-4 sm:mx-16 md:mx-20 lg:mx-24 xl:mx-28">
+          <div className="flex my-4 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-[12px] lg:mx-24 xl:mx-28">
             <span className="flex gap-2 mx-3 sm:mx-4 md:mx-10">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full dark:hidden" unoptimized />
               <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
@@ -93,8 +93,8 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 function LogoImages() {
   return (
     <div className="flex flex-grow lg:items-center flex-shrink-0">
-      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="min-w-[320px] sm:min-w-[400px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg mt-3" unoptimized />
-      <div className="pl-3">
+      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="min-w-[300px] sm:min-w-[400px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg mt-3" unoptimized />
+      <div className="xl:pl-3">
         <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 hidden xl:block my-2 mt-6" unoptimized />
         <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 lg:min-w-32 mt-6 hidden xl:block" unoptimized />
       </div>
@@ -137,25 +137,25 @@ function SectionTwo() {
       <div className="text-center font-medium text-lg">IND chose to bat</div>
 
       {/* scores */}
-      <div className="flex md:flex-row flex-col gap-8 md:gap-0 justify-between px-4 sm:px-8 md:px-16">
+      <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
         <div className="flex flex-col gap-2">
-          <div className="flex gap-2 font-semibold text-sm md:text-base">
+          <div className="flex gap-3 sm:gap-4 font-semibold text-[12px] sm:text-sm md:text-base">
             <span>KL Rahul</span>
             <span>20* (19)</span>
           </div>
-          <div className="flex gap-2 font-normal text-sm md:text-base">
-            <span>MS DHONI</span>
+          <div className="flex gap-3 sm:gap-4 font-normal text-[12px] sm:text-sm md:text-base">
+            <span>MS Dhoni</span>
             <span>56* (50)</span>
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex gap-2 md:text-base text-sm">
+          <div className="flex gap-3 sm:gap-4 md:text-base sm:text-sm text-[12px]">
             <span>20* (19)</span>
             <span>KL Rahul</span>
           </div>
-          <div className="flex gap-2 text-sm md:text-base">
+          <div className="flex gap-3 sm:gap-4 text-[12px] sm:text-sm md:text-base">
             <span>56* (50)</span>
-            <span>MS DHONI</span>
+            <span>MS Dhoni</span>
           </div>
         </div>
       </div>
