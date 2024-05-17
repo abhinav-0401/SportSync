@@ -39,7 +39,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
         <div className="flex flex-col items-center lg:ml-12 md:min-w-[350px]">
           <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[122px] hidden dark:block md:max-w-[150px] lg:max-w-[244px]" />
           <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[122px] dark:hidden md:max-w-[150px] lg:max-w-[244px]" />
-          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-center text-lg sm:text-base md:text-lg lg:text-xl xl:text-2xl">
+          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-center text-xl sm:text-2xl md:text-lg lg:text-xl xl:text-2xl">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
           <div className="flex gap-4 md:gap-10 lg:gap-16 my-4 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-[12px] lg:mx-24 xl:mx-28">
@@ -75,12 +75,12 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
         <LogoImages />
       </div>
       <div className="my-12 sm:my-20 md:my-32 w-full flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
-        <div className="flex flex-col items-center justify-center w-full md:-space-y-40">
-          <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 hidden md:block" width={1800} height={50} unoptimized />
-          <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block md:hidden" width={1800} height={50} unoptimized />
+        <div className="flex flex-col items-center justify-center w-full sm:-space-y-40">
+          <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 rounded-xl hidden sm:block" width={1800} height={50} unoptimized />
+          <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block sm:hidden" width={1800} height={50} unoptimized />
           <div className="flex flex-col items-center justify-center space-y-5">
-            <span className="text-2xl tracking-wider md:block hidden font-semibold">FESTIVE BONANZA</span>
-            <span className="text-center hidden md:block max-w-3xl">
+            <span className="text-2xl tracking-wider sm:block hidden font-semibold">FESTIVE BONANZA</span>
+            <span className="text-center hidden sm:block text-sm md:text-base max-w-3xl">
             “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
             </span>
           </div>
@@ -92,7 +92,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 
 function LogoImages() {
   return (
-    <div className="flex gap-4 lg:items-center flex-shrink-0">
+    <div className="flex md:gap-4 lg:items-center flex-shrink-0">
       <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] min-w-[300px] md:min-w-[220px] 
       min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg mt-3" unoptimized />
       <div className="">
