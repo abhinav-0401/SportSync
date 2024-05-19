@@ -15,7 +15,7 @@ export default function Cricket() {
   const router = useRouter();
 
   const handleTabChange = (tab: any) => {
-    console.log(tab);
+   
     router.push(`/${tab}`);
   };
   return (
