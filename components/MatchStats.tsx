@@ -32,25 +32,27 @@ export default function MatchStats() {
       <div className="text-center font-medium text-lg">IND chose to bat</div>
 
       {/* scores */}
-      <div className="flex md:flex-row flex-col gap-8 md:gap-0 justify-between px-4 sm:px-8 md:px-16">
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-2 font-semibold text-sm md:text-base">
-            <span>KL Rahul</span>
-            <span>20* (19)</span>
-          </div>
-          <div className="flex gap-2 font-normal text-sm md:text-base">
-            <span>MS DHONI</span>
-            <span>56* (50)</span>
+      <div className="flex md:flex-row flex-col font-semibold gap-8 md:gap-0 justify-between px-4 sm:px-8 md:px-16">
+        <div className="flex gap-2 items-start">
+          <Image src="/cricket-bat-2.png" className="object-none" alt='india' width={20} height={20} />
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2 font-semibold text-sm md:text-base">
+              <span>KL Rahul</span>
+              <span>20* (19)</span>
+            </div>
+            <div className="flex gap-2 font-normal text-sm md:text-base">
+              <span>MS DHONI</span>
+              <span>56* (50)</span>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-2 md:text-base text-sm">
-            <span>20* (19)</span>
-            <span>KL Rahul</span>
-          </div>
-          <div className="flex gap-2 text-sm md:text-base">
-            <span>56* (50)</span>
-            <span>MS DHONI</span>
+        <div className="flex gap-2 items-start">
+          <Image src="/cricket_ball.png" className="object-none" alt='india' width={16} height={16} />
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2 md:text-base text-sm">
+              <span>KL Rahul</span>
+              <span>1/27 (4.0)</span>
+            </div>
           </div>
         </div>
       </div>

@@ -35,7 +35,7 @@ export default function MobileFooter() {
 
       <div className="flex justify-between sm:px-4 py-8 text-sm sm:text-base dark:text-[#e6e6dd] w-full max-w-md">
 
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col gap-2 items-center">
           <h3 className="font-bold">QUICK LINKS</h3>
           <div className="flex gap-4">
             <span>Home</span>
@@ -47,7 +47,7 @@ export default function MobileFooter() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col gap-2 items-center">
           <h3 className="font-bold">CONTACT US</h3>
           <div className="flex gap-4">
             <span>+(91)592844566</span>
