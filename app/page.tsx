@@ -1,4 +1,5 @@
 "use client"
+import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -20,7 +21,7 @@ export default function Home() {
 
   return (
     <div className="dark:bg-black bg-[#E6E6DD]">
-      <div className="px-4 md:px-8 lg:px-16">
+      <div className="md:px-8 lg:px-16">
         <SectionOne isSmallScreen={isSmallScreen} />
         <SectionTwo />
         <TopPicks />
@@ -34,36 +35,36 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
   const router = useRouter();
 
   return (
-    <div className="pt-8 md:pt-16 lg:pt-24">
-      <div className="flex md:flex-row flex-col md:justify-start lg:justify-between items-center">
+    <div className="-mt-6 md:pt-16 lg:pt-24 bg-[url('/mobile-bg.png')] bg-cover md:bg-none">
+      <div className="flex md:flex-row flex-col bg-gradient-to-b from-white/0 from-60% dark:to-black to-[#e6e6dd] md:bg-none px-4 py-12 md:px-0 md:justify-start lg:justify-between items-center">
         <div className="flex flex-col items-center lg:ml-12 md:min-w-[350px]">
-          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[122px] hidden dark:block md:max-w-[150px] lg:max-w-[244px]" />
-          <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[122px] dark:hidden md:max-w-[150px] lg:max-w-[244px]" />
-          <h3 className="text-black dark:text-[#E6E6DD] font-semibold text-center md:text-center text-xl sm:text-2xl md:text-lg lg:text-xl xl:text-2xl">
+          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] block md:max-w-[150px] lg:max-w-[244px]" />
+          {/* <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] dark:block md:max-w-[150px] lg:max-w-[244px]" /> */}
+          <h3 className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd] font-semibold text-center md:text-center text-xl min-[400px]:text-2xl md:text-lg lg:text-xl xl:text-2xl">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
-          <div className="flex gap-4 md:gap-10 lg:gap-16 my-4 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-[12px] lg:mx-24 xl:mx-28">
+          <div className="flex justify-between min-[425px]:gap-12 min-[425px]:justify-center w-full md:gap-10 lg:gap-16 my-12 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-sm min-[425px]:text-base lg:mx-24 xl:mx-28">
             <span className="flex gap-2">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full dark:hidden" unoptimized />
               <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
-              <span className="dark:text-[#E6E6DD]">Cricket</span>
+              <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Cricket</span>
             </span>
             <span className="flex gap-2">
               <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden"/>
               <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
-              <span className="dark:text-[#E6E6DD]">Football</span>
+              <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Football</span>
             </span>
             <span className="flex gap-2">
               <Image src="/casino-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden" />
               <Image src="/bulletDarkCasino.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
-              <span className="dark:text-[#E6E6DD]">Casinos</span>
+              <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Casinos</span>
             </span>
             {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
             <span className="mx-3 sm:mx-4 md:mx-10">Casino</span> */}
           </div>
           <div className="flex justify-center">
             <button
-              className={`mt-4 p-4 border-2 border-black dark:bg-[#45474A] bg-black text-white dark:text-[#E6E6DD] rounded-xl italic w-full sm:w-60 md:w-80 lg:w-96 xl:w-112 ${isSmallScreen && "sm-button-style"}`}
+              className={`mt-4 p-4 hidden md:block border-2 border-black dark:bg-[#45474A] bg-black text-white dark:text-[#E6E6DD] rounded-xl italic w-full sm:w-60 md:w-80 lg:w-96 xl:w-112 ${isSmallScreen && "sm-button-style"}`}
             >
               {isSmallScreen ? "Click here" : (<div className="flex items-center justify-center space-x-2">
                 <span>Click here to know more</span>
@@ -74,7 +75,8 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
         </div>
         <LogoImages />
       </div>
-      <div className="my-12 sm:my-20 md:my-32 w-full flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
+
+      <div className="mb-12 md:my-32 w-full px-4 bg-[#e6e6dd] dark:bg-black flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
         <div className="flex flex-col items-center justify-center w-full sm:-space-y-40">
           <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 rounded-xl hidden sm:block" width={1800} height={50} unoptimized />
           <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block sm:hidden" width={1800} height={50} unoptimized />
@@ -86,6 +88,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
@@ -93,9 +96,8 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 function LogoImages() {
   return (
     <div className="flex md:gap-4 lg:items-center flex-shrink-0">
-      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] min-w-[300px] md:min-w-[220px] 
-      min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg mt-3" unoptimized />
-      <div className="">
+      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] mt-28 mb-20 min-[425px]:min-w-[400px] md:min-w-[220px] min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg" unoptimized />
+      <div className="flex flex-col justify-center">
         <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] hidden md:block my-2 mt-6" unoptimized />
         <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] mt-6 hidden md:block" unoptimized />
       </div>
@@ -107,70 +109,72 @@ function SectionTwo() {
   const router = useRouter();
 
   return (
-    <div className="pt-4 sm:pt-8 md:pt-16 lg:pt-24 flex flex-col gap-12 dark:text-[#E6E6DD]">
-      
-      <div className="flex flex-col items-start gap-8">
+    <>
+      <span className="md:hidden"><FeaturedCard /></span>
+      <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
+        <div className="flex flex-col items-start gap-8">
 
-        <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
-        <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
+          <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
+          <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
 
-      </div>
-
-      <div className="flex justify-between px-4 sm:px-8 md:px-16">
-        <div className="flex gap-4">
-          {/* img + country name */}
-          <div className="flex flex-col gap-2 md:gap-4">
-            <Image src="/india.png" alt='india' width={36} height={24} />
-            <div className="font-semibold text-base md:text-lg">IND</div>
-          </div>
-          <div className="font-medium text-base md:text-lg">198/3</div>
         </div>
-        <div className="flex gap-2">
-          {/* img + country name */}
-          <div className="font-medium text-sm min-[370px]:text-base md:text-lg">YET TO BAT</div>
-          <div className="flex flex-col gap-2 md:gap-4">
-            <Image src="/england.png" alt='india' width={36} height={24} />
-            <div className="font-semibold text-base md:text-lg">ENG</div>
-          </div>
-        </div>
-      </div>
 
-      <div className="text-center font-medium text-lg">IND chose to bat</div>
-
-      {/* scores */}
-      <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-3 sm:gap-4 font-semibold text-[12px] sm:text-sm md:text-base">
-            <span>KL Rahul</span>
-            <span>20* (19)</span>
+        <div className="flex justify-between px-4 sm:px-8 md:px-16">
+          <div className="flex gap-4">
+            {/* img + country name */}
+            <div className="flex flex-col gap-2 md:gap-4">
+              <Image src="/india.png" alt='india' width={36} height={24} />
+              <div className="font-semibold text-base md:text-lg">IND</div>
+            </div>
+            <div className="font-medium text-base md:text-lg">198/3</div>
           </div>
-          <div className="flex gap-3 sm:gap-4 font-normal text-[12px] sm:text-sm md:text-base">
-            <span>MS Dhoni</span>
-            <span>56* (50)</span>
+          <div className="flex gap-2">
+            {/* img + country name */}
+            <div className="font-medium text-sm min-[370px]:text-base md:text-lg">YET TO BAT</div>
+            <div className="flex flex-col gap-2 md:gap-4">
+              <Image src="/england.png" alt='india' width={36} height={24} />
+              <div className="font-semibold text-base md:text-lg">ENG</div>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-3 sm:gap-4 md:text-base sm:text-sm text-[12px]">
-            <span>20* (19)</span>
-            <span>KL Rahul</span>
+
+        <div className="text-center font-medium text-lg">IND chose to bat</div>
+
+        {/* scores */}
+        <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-3 sm:gap-4 font-semibold text-[12px] sm:text-sm md:text-base">
+              <span>KL Rahul</span>
+              <span>20* (19)</span>
+            </div>
+            <div className="flex gap-3 sm:gap-4 font-normal text-[12px] sm:text-sm md:text-base">
+              <span>MS Dhoni</span>
+              <span>56* (50)</span>
+            </div>
           </div>
-          <div className="flex gap-3 sm:gap-4 text-[12px] sm:text-sm md:text-base">
-            <span>56* (50)</span>
-            <span>MS Dhoni</span>
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-3 sm:gap-4 md:text-base sm:text-sm text-[12px]">
+              <span>20* (19)</span>
+              <span>KL Rahul</span>
+            </div>
+            <div className="flex gap-3 sm:gap-4 text-[12px] sm:text-sm md:text-base">
+              <span>56* (50)</span>
+              <span>MS Dhoni</span>
+            </div>
           </div>
         </div>
+        <div className="w-full flex items-center justify-center">
+          <button className="bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
+        </div>
       </div>
-      <div className="w-full flex items-center justify-center">
-        <button className="bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
-      </div>
-    </div>
+    </>
   );
 }
 
 function TopPicks() {
   return (
-    <div className="my-10 dark:text-[#E6E6DD]">
-      <h2 className="my-10 font-bold text-3xl">Top Picks</h2>
+    <div className="px-4 my-10 dark:text-[#E6E6DD]">
+      <h2 className="my-10 font-bold text-3xl text-center md:text-left">Top Picks</h2>
       <div className="flex flex-col items-center w-full md:flex-row justify-center flex-wrap gap-10">
         {Array.from({ length: 6 }).map((_, index) => (
           <PickCard key={index} />
@@ -205,8 +209,8 @@ function PickCard() {
 
 function ExcitingOffers() {
   return (
-    <div className="py-10 dark:text-[#E6E6DD]">
-      <h2 className="my-20 font-bold text-3xl">Exciting Offers</h2>
+    <div className="px-4 py-10 dark:text-[#E6E6DD]">
+      <h2 className="my-20 font-bold text-3xl text-center md:text-left">Exciting Offers</h2>
       <div className="flex flex-col lg:flex-row lg:justify-between">
           {/* {Array.from({ length: 3 }).map((_, index) => (
             <OfferCard key={index} />
