@@ -38,8 +38,8 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
     <div className="-mt-6 md:pt-16 lg:pt-24 bg-[url('/mobile-bg.png')] bg-cover md:bg-none">
       <div className="flex md:flex-row flex-col bg-gradient-to-b from-white/0 from-60% dark:to-black to-[#e6e6dd] md:bg-none px-4 py-12 md:px-0 md:justify-start lg:justify-between items-center">
         <div className="flex flex-col items-center lg:ml-12 md:min-w-[350px]">
-          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] block md:max-w-[150px] lg:max-w-[244px]" />
-          {/* <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] dark:block md:max-w-[150px] lg:max-w-[244px]" /> */}
+          <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[180px] sm:max-w-[180px] dark:block md:hidden md:max-w-[150px] lg:max-w-[244px]" />
+          <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] hidden md:block dark:hidden md:max-w-[150px] lg:max-w-[244px]" />
           <h3 className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd] font-semibold text-center md:text-center text-xl min-[400px]:text-2xl md:text-lg lg:text-xl xl:text-2xl">
             Lorem ipsum dolor sit amet, consectetur
           </h3>
@@ -77,12 +77,12 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
       </div>
 
       <div className="mb-12 md:my-32 w-full px-4 bg-[#e6e6dd] dark:bg-black flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
-        <div className="flex flex-col items-center justify-center w-full sm:-space-y-40">
-          <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 rounded-xl hidden sm:block" width={1800} height={50} unoptimized />
-          <Image src="/bonanza-banner-sm.png" alt="Logo" className="w-full h-auto block sm:hidden" width={1800} height={50} unoptimized />
+        <div className="flex flex-col items-center justify-center w-full md:-space-y-40">
+          <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 rounded-xl hidden md:block" width={1800} height={50} unoptimized />
+          <Image src="/bonanza_mobile_3.jpeg" alt="Logo" className="w-full h-auto rounded-xl block md:hidden" width={1800} height={50} unoptimized />
           <div className="flex flex-col items-center justify-center space-y-5">
-            <span className="text-2xl tracking-wider sm:block hidden font-semibold">FESTIVE BONANZA</span>
-            <span className="text-center hidden sm:block text-sm md:text-base max-w-3xl">
+            <span className="text-2xl tracking-wider md:block hidden font-semibold">FESTIVE BONANZA</span>
+            <span className="text-center hidden md:block text-sm md:text-base max-w-3xl">
             “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
             </span>
           </div>
@@ -96,7 +96,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 function LogoImages() {
   return (
     <div className="flex md:gap-4 lg:items-center flex-shrink-0">
-      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] mt-28 mb-20 min-[425px]:min-w-[400px] md:min-w-[220px] min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg" unoptimized />
+      <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] mt-28 mb-20 min-[425px]:min-w-[400px] md:min-w-[220px] min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg hover:" unoptimized />
       <div className="flex flex-col justify-center">
         <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] hidden md:block my-2 mt-6" unoptimized />
         <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] mt-6 hidden md:block" unoptimized />
