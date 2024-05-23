@@ -17,14 +17,14 @@ interface MatchCardProps {
   match: any;
 }
 
-export default function Cricket() {
+export default function Football() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async (type?: string) => {
     try {
-      const response = await axios.get(`/api/series${type ? `?type=${type}` : ''}`);
+      const response = await axios.get(`/api/series/football`);
       setData(response.data);
       setError(null);
     } catch (error) {
