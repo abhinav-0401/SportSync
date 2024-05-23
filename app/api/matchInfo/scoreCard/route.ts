@@ -3,12 +3,13 @@ import axios from "axios";
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const matchId = searchParams.get("matchId");
+  console.log("matchId: ", matchId);
 
   const options = {
     method: 'GET',
     url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/scard`,
     headers: {
-      'X-RapidAPI-Key': '02fbfcbb53mshe164c7d46e999d6p142177jsn4ed1f614fe73',
+      'X-RapidAPI-Key': '1de355f466msh1bfa3dfa1c06b74p1ced11jsn982e34977c06',
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
     }
   };

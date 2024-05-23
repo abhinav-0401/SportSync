@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     method: "GET",
     url: `https://cricbuzz-cricket.p.rapidapi.com/matches/v1/${listType}`,
     headers: {
-      "X-RapidAPI-Key": "02fbfcbb53mshe164c7d46e999d6p142177jsn4ed1f614fe73",
+      "X-RapidAPI-Key": "1de355f466msh1bfa3dfa1c06b74p1ced11jsn982e34977c06",
       "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
     },
   };
