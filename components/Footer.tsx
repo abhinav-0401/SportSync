@@ -7,7 +7,7 @@ export default function Footer() {
     //   <div className="w-full flex items-center justify-center">
     //     <Image src={"/footerbgblack.png"} alt="footerBg" width={500} height={500} unoptimized className="opacity-40 w-[90vw] h-[700px]" />
     //   </div>
-    <div className="bg-black flex flex-col md:flex-row justify-evenly px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-8 md:gap-0 w-full dark:bg-[url('../public/bg-dark-footer-40.png')] md:bg-no-repeat bg-center md:bg-cover bg-contain bg-repeat-y bg-[url('../public/footer-bg.png')]">
+    <div className="bg-black hidden md:flex flex-col md:flex-row justify-evenly px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-8 md:gap-0 w-full dark:bg-[url('../public/bg-dark-footer-40.png')] md:bg-no-repeat bg-center md:bg-cover bg-contain bg-repeat-y bg-[url('../public/footer-bg.png')]">
       <div className="flex flex-1 flex-col justify-between gap-4">
         <h3 className="font-semibold text-xl">ABOUT US</h3>
         <div>
