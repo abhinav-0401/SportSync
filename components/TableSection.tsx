@@ -13,13 +13,16 @@ import {
 } from "@/components/ui/table"
 
 
-type Props = {}
+type Props = {
+  seriesName?: string;
+  pointsTable: any;
+}
 
-function TableSection({}: Props) {
+function TableSection({ seriesName, pointsTable }: Props) {
   return (
     <div className='flex flex-col items-start justify-center space-y-7'>
-      <span className='font-medium text-lg'>Table</span>
-      <Tabs defaultValue='IND' className='w-full'>
+      <span className='font-medium text-lg'>{seriesName}</span>
+      {/* <Tabs defaultValue='IND' className='w-full'>
         <TabsList className='bg-transparent w-full'>
           <TabsTrigger className="flex-grow" variant={"outline"} value="IND">IND</TabsTrigger>
           <TabsTrigger className="flex-grow" variant={"outline"} value="ENG">ENG</TabsTrigger>
@@ -33,36 +36,43 @@ function TableSection({}: Props) {
             <span className='font-semibold text-sm sm:text-base md:text-lg'>Bowling</span>
             <span className='font-semibold text-sm sm:text-base md:text-lg'>96-1 (10.1ov)</span>
           </div>
-          {/* <CustomTable /> */}
-          <Table className='mb-12'>
-            {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-            <TableHeader>
-              <TableRow>
-                <TableHead className="">Batsman</TableHead>
-                <TableHead>R</TableHead>
-                <TableHead>B</TableHead>
-                <TableHead>4s</TableHead>
-                <TableHead>6s</TableHead>
-                <TableHead className="text-right">S/R</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">KL Rahul</TableCell>
-                <TableCell>67</TableCell>
-                <TableCell>40</TableCell>
-                <TableCell className="">7</TableCell>
-                <TableCell className="">2</TableCell>
-                <TableCell className="text-right">167.50</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <CustomTable />
+          
 
         </TabsContent>
         <TabsContent value='ENG'>
 
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
+      <Table className='mb-12'>
+        {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
+        <TableHeader>
+          <TableRow>
+            <TableHead className="">Team</TableHead>
+            <TableHead>M</TableHead>
+            <TableHead>W</TableHead>
+            <TableHead>L</TableHead>
+            <TableHead>NRR</TableHead>
+            <TableHead className="text-right">Pts</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {
+            pointsTable?.pointsTable &&  pointsTable?.pointsTable[0]?.pointsTableInfo?.map((row: any) => {
+              return (
+                <TableRow>
+                  <TableCell className="font-medium">{row?.teamFullName}</TableCell>
+                  <TableCell>{row?.matchesPlayed}</TableCell>
+                  <TableCell>{row?.matchesWon}</TableCell>
+                  <TableCell className="">{row?.matchesLost}</TableCell>
+                  <TableCell className="">{row?.nrr}</TableCell>
+                  <TableCell className="text-right">{row?.points}</TableCell>
+                </TableRow>
+              );
+            })
+          }
+        </TableBody>
+      </Table>
     </div>
   )
 }
