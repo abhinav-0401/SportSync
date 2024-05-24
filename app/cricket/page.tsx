@@ -230,13 +230,13 @@ function MatchCard({ match }: MatchCardProps) {
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 dark:bg-[#45474a66] py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       <div className="flex justify-between">
         <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">{match?.matchInfo.seriesName}</h3>
-        <span className="flex items-center" onClick={() => setLiked(!liked)}>
+        {/* <span className="flex items-center" onClick={() => setLiked(!liked)}>
           {liked ? (
             <Image src="/heart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
           ) : (
             <Image src="/unlikedHeart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
           )}
-        </span>
+        </span> */}
       </div>
 
       <div className="flex justify-between dark:text-[#E6E6DD]">
@@ -258,11 +258,14 @@ function MatchCard({ match }: MatchCardProps) {
           </div>
         </div>
         <div className="flex flex-col gap-4 text-sm md:text-base font-semibold">
-          <div>{match?.matchScore?.team1Score?.inngs1?.runs} / {match?.matchScore?.team1Score?.inngs1?.wickets} ({match?.matchScore?.team1Score?.inngs1?.overs})</div>
+          { match?.matchScore?.team1Score?.inngs1?.runs
+            ? <div>{match?.matchScore?.team1Score?.inngs1?.runs} / {match?.matchScore?.team1Score?.inngs1?.wickets} ({match?.matchScore?.team1Score?.inngs1?.overs})</div>
+            : <div>Yet to Bat</div>
+          }
           <div className="text-[#828486]">
-            {match?.matchScore?.team2Score 
+            {match?.matchScore?.team2Score?.inngs1?.runs 
               ? <span>{match?.matchScore?.team2Score?.inngs1?.runs} / {match?.matchScore?.team2Score?.inngs1?.wickets} ({match?.matchScore?.team2Score?.inngs1?.overs})</span>
-              : null}
+              : <div>Yet to Bat</div>}
           </div>
         </div>
       </div>

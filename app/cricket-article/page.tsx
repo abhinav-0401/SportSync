@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface ArticleData {
   title: string;
@@ -26,6 +27,8 @@ const imgUrls: string[] = [
 export default function Artcile() {
 
   const [articlesData, setArticlesData] = useState<any>(null);
+
+  const router = useRouter();
 
   async function getArticles() {
     const response = await axios.get("/api/articles");
@@ -67,7 +70,16 @@ export default function Artcile() {
             </div>
             <div className="flex flex-col items-center gap-8">
               {articlesData?.list?.map((article: any, index: number) => {
-                return <ArticleCard title={article?.story?.context} key={index} description={article?.story?.intro} imageUrl={"/article-3.png"} date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()} />
+                return (
+                  <span className="w-full flex flex-col items-center" key={index} onClick={() => router.push(`/cricket-article/${article?.story?.id ?? 0}`)}>
+                    <ArticleCard 
+                      title={article?.story?.hline}
+                      description={article?.story?.intro}
+                      imageUrl={"/article-3.png"}
+                      date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
+                    />
+                  </span>
+                );
               })}
             </div>
             <div className="flex w-full justify-center">
