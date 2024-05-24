@@ -18,14 +18,22 @@ interface MatchCardProps {
 }
 
 export default function Cricket() {
+
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [currentType, setCurrentType] = useState<string | undefined>();
+  const [currentListType, setCurrentListType] = useState<"live" | "upcoming" | "recent">("live");
+
+  // const [upcomingData, setUpcomingData] = useState<any>(null);
+  // const [completedData, setCompletedData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async (type?: string) => {
+  const fetchData = async (listType: "live" | "upcoming" | "recent", type?: string) => {
     try {
-      const response = await axios.get(`/api/series${type ? `?type=${type}` : ''}`);
+      const response = await axios.get(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
+      console.log(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
       setData(response.data);
+      console.log(response.data);
       setError(null);
     } catch (error) {
       setError('Failed to fetch data');
@@ -34,7 +42,7 @@ export default function Cricket() {
   };
 
   const handleTagClick = (type: string) => {
-    fetchData(type);
+    fetchData(currentListType, type);
   };
 
   const handleTabChange = (tab: any) => {
@@ -42,8 +50,13 @@ export default function Cricket() {
     router.push(`/${tab}`);
   };
 
+  function handleInnerTabChange(tabValue: "live" | "upcoming" | "recent") {
+    setCurrentListType(tabValue);
+    fetchData(tabValue);
+  }
+
   useEffect(() => {
-    fetchData(); // Fetch initial data on mount
+    fetchData(currentListType); // Fetch initial data on mount
   }, []);
 
   return (
@@ -66,10 +79,11 @@ export default function Cricket() {
             </div>
             <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
               <div className="flex flex-wrap w-full gap-3">
-                <Tag name="All" onClick={() => fetchData()} />
+                <Tag name="All" onClick={() => fetchData(currentListType)} />
                 <Tag name="International" onClick={() => handleTagClick('International')} />
                 <Tag name="League" onClick={() => handleTagClick('League')} />
                 <Tag name="Domestic" onClick={() => handleTagClick('Domestic')} />
+                <Tag name="Women" onClick={() => handleTagClick('Women')} />
               </div>
 
               <div className="flex flex-col gap-6">
@@ -100,20 +114,33 @@ export default function Cricket() {
           <div className="flex-grow">
             <Tabs defaultValue="live" className="w-full">
               <TabsList className="flex w-full justify-between bg-transparent">
-                <TabsTrigger className="flex-grow" variant={"outline"} value="live">Live</TabsTrigger>
-                <TabsTrigger className="flex-grow" variant={"outline"} value="upcoming">Upcoming</TabsTrigger>
-                <TabsTrigger className="flex-grow" variant={"outline"} value="completed">Completed</TabsTrigger>
+                <TabsTrigger className="flex-grow" variant={"outline"} value="live" onClick={() => handleInnerTabChange("live")}>Live</TabsTrigger>
+                <TabsTrigger className="flex-grow" variant={"outline"} value="upcoming" onClick={() => handleInnerTabChange("upcoming")}>Upcoming</TabsTrigger>
+                <TabsTrigger className="flex-grow" variant={"outline"} value="completed" onClick={() => handleInnerTabChange("recent")}>Completed</TabsTrigger>
               </TabsList>
               <TabsContent value="live" className="flex w-full flex-col gap-10">
-                {data?.matchScheduleMap?.map((schedule: any, index: number) => (
-                  <DayMatchList key={index} schedule={schedule} />
-                ))}
+                {/* {data?.map((match: any, index: number) => (
+                  <DayMatchList key={index} schedule={match} />
+                ))} */}
+                <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
                   <Button className="w-fit">See more</Button>
                 </div>
               </TabsContent>
-              <TabsContent value="upcoming">Upcoming matches</TabsContent>
-              <TabsContent value="completed">Completed matches</TabsContent>
+
+              <TabsContent value="upcoming" className="flex w-full flex-col gap-10">
+                <DayMatchList schedule={data} />
+                <div className="flex w-full justify-center">
+                  <Button className="w-fit">See more</Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="completed" className="flex w-full flex-col gap-10">
+                <DayMatchList schedule={data} />
+                <div className="flex w-full justify-center">
+                  <Button className="w-fit">See more</Button>
+                </div>                
+              </TabsContent>
             </Tabs>
           </div>
 
@@ -133,15 +160,15 @@ function DayMatchList({ schedule }: any) {
     <div className="flex flex-col gap-10">
       <div className="flex items-center gap-4 py-4 border-b-2 border-black/40 dark:border-[#E6E6DD80]">
         <div className="text-3xl xl:text-5xl font-bold">
-          {new Date(parseInt(schedule?.scheduleAdWrapper?.longDate)).getDate()}
+          {new Date().getDate()}
         </div>
         <div className="flex font-medium dark:text-[#E6E6DD] text-sm md:text-base lg:text-lg xl:text-xl flex-col">
-          <h3>{new Date(parseInt(schedule?.scheduleAdWrapper?.longDate)).toLocaleString('default', { month: 'long' })}</h3>
-          <h3>{new Date(parseInt(schedule?.scheduleAdWrapper?.longDate)).toLocaleDateString('default', { weekday: 'long' })}</h3>
+          <h3>{new Date().toLocaleString('default', { month: 'long' })}</h3>
+          <h3>{new Date().toLocaleDateString('default', { weekday: 'long' })}</h3>
         </div>
       </div>
 
-      {schedule?.scheduleAdWrapper?.matchScheduleList.map((match: any, index: number) => (
+      {schedule?.map((match: any, index: number) => (
         <MatchCard key={index} match={match} />
       ))}
     </div>
@@ -154,27 +181,39 @@ function MatchCard({ match }: MatchCardProps) {
   const [imageUrl1, setImageUrl1] = useState<string | null>(null);
   const [imageUrl2, setImageUrl2] = useState<string | null>(null);
 
-  const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void) => {
-    try {
-      const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
-      setImageUrl(response.data.url);
-    } catch (error) {
-      console.error('Failed to fetch image URL', error);
-    }
-  };
+  // console.log(match);
 
-  useEffect(() => {
-    const imageId1 = match?.matchInfo[0]?.team1?.imageId;
-    const imageId2 = match?.matchInfo[0]?.team2?.imageId;
+  // const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void) => {
+  //   try {
+  //     const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
+  //     console.log(response.data);
+  //     setImageUrl(response.data.url);
+  //   } catch (error) {
+  //     console.error('Failed to fetch image URL', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const imageId1 = match?.matchInfo[0]?.team1?.imageId;
+  //   const imageId2 = match?.matchInfo[0]?.team2?.imageId;
     
-    if (imageId1) fetchImageUrl(imageId1, setImageUrl1);
-    if (imageId2) fetchImageUrl(imageId2, setImageUrl2);
-  }, [match]);
+  //   if (imageId1) fetchImageUrl(imageId1, setImageUrl1);
+  //   if (imageId2) fetchImageUrl(imageId2, setImageUrl2);
+  // }, [match]);
+
+  // async function getMatchDetails(matchId: number) {
+  //   const res = await axios.get(`/api/matchInfo?matchId=${matchId}`);
+  //   console.log(res.data);
+  // }
+
+  // useEffect(() => {
+  //   // getMatchDetails(match?.matchInfo.matchId);
+  // }, [match]);
 
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 dark:bg-[#45474a66] py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       <div className="flex justify-between">
-        <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">{match?.seriesName}</h3>
+        <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">{match?.matchInfo.seriesName}</h3>
         <span className="flex items-center" onClick={() => setLiked(!liked)}>
           {liked ? (
             <Image src="/heart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
@@ -186,34 +225,38 @@ function MatchCard({ match }: MatchCardProps) {
 
       <div className="flex justify-between dark:text-[#E6E6DD]">
         <div className="flex items-center gap-8">
-          <div>{new Date(parseInt(match?.matchInfo[0]?.startDate)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
+          <div>{new Date(parseInt(match?.matchInfo?.startDate)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
           <div className="flex flex-col gap-4 justify-between">
             <div className="flex gap-4 justify-between">
               {imageUrl1 && (
-                <Image src={imageUrl1} height={20} width={30} alt={match?.matchInfo[0]?.team1?.teamName} />
+                <Image src={imageUrl1} height={20} width={30} alt={match?.matchInfo?.team1?.teamName} />
               )}
-              <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">{match?.matchInfo[0]?.team1?.teamSName}</div>
+              <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">{match?.matchInfo?.team1?.teamSName}</div>
             </div>
             <div className="flex gap-4 justify-between">
               {imageUrl2 && (
-                <Image src={imageUrl2} height={20} width={30} alt={match?.matchInfo[0]?.team2?.teamName} />
+                <Image src={imageUrl2} height={20} width={30} alt={match?.matchInfo?.team2?.teamName} />
               )}
-              <div className="font-semibold text-sm md:text-base text-[#828486]">{match?.matchInfo[0]?.team2?.teamSName}</div>
+              <div className="font-semibold text-sm md:text-base text-[#828486]">{match?.matchInfo?.team2?.teamSName}</div>
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 text-sm md:text-base font-semibold">
-          <div>{match?.matchInfo[0]?.team1Score}</div>
-          <div className="text-[#828486]">{match?.matchInfo[0]?.team2Score}</div>
+          <div>{match?.matchScore?.team1Score?.inngs1?.runs} / {match?.matchScore?.team1Score?.inngs1?.wickets} ({match?.matchScore?.team1Score?.inngs1?.overs})</div>
+          <div className="text-[#828486]">
+            {match?.matchScore?.team2Score 
+              ? <span>{match?.matchScore?.team2Score?.inngs1?.runs} / {match?.matchScore?.team2Score?.inngs1?.wickets} ({match?.matchScore?.team2Score?.inngs1?.overs})</span>
+              : null}
+          </div>
         </div>
       </div>
 
       <div className="flex justify-center font-semibold text-sm md:text-base">
-        {match?.matchInfo[0]?.matchResult}
+        {match?.matchInfo?.status}
       </div>
 
       <div className="flex gap-12 py-4 justify-between">
-        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push("/analytics")}>Analytics</Button>
+        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push(`/analytics?matchId=${match?.matchInfo?.matchId}&seriesId=${match?.matchInfo?.seriesId}`)}>Analytics</Button>
         <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push("/cricket-article")}>Article</Button>
       </div>
     </div>
