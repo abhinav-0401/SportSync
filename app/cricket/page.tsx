@@ -9,9 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import axios from "axios";
+import { Base64 } from "js-base64";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface MatchCardProps {
   match: any;
@@ -180,26 +181,35 @@ function MatchCard({ match }: MatchCardProps) {
   const [liked, setLiked] = useState(false);
   const [imageUrl1, setImageUrl1] = useState<string | null>(null);
   const [imageUrl2, setImageUrl2] = useState<string | null>(null);
+  const [imageData1, setImageData1] = useState<any | null>(null);
+  const [imageData2, setImageData2] = useState<any | null>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   // console.log(match);
 
-  // const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void) => {
-  //   try {
-  //     const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
-  //     console.log(response.data);
-  //     setImageUrl(response.data.url);
-  //   } catch (error) {
-  //     console.error('Failed to fetch image URL', error);
-  //   }
-  // };
+  const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void, setImageData: (data: any) => void) => {
+    try {
+      const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
+      // const res = await fetch(`/api/getImageUrl?imageId=${imageId}`);
+      // const response = await res.json();
+      // const blob = await res.blob();
+      // const b = await blob.arrayBuffer();
 
-  // useEffect(() => {
-  //   const imageId1 = match?.matchInfo[0]?.team1?.imageId;
-  //   const imageId2 = match?.matchInfo[0]?.team2?.imageId;
+      console.log(response.data);
+      setImageUrl(response.data.url);
+      setImageData(response.data.data);
+    } catch (error) {
+      console.error('Failed to fetch image URL', error);
+    }
+  };
+
+  useEffect(() => {
+    const imageId1 = match?.matchInfo?.team1?.imageId;
+    const imageId2 = match?.matchInfo?.team2?.imageId;
     
-  //   if (imageId1) fetchImageUrl(imageId1, setImageUrl1);
-  //   if (imageId2) fetchImageUrl(imageId2, setImageUrl2);
-  // }, [match]);
+    if (imageId1) fetchImageUrl(imageId1, setImageUrl1, setImageData1);
+    if (imageId2) fetchImageUrl(imageId2, setImageUrl2, setImageData2);
+  }, [match]);
 
   // async function getMatchDetails(matchId: number) {
   //   const res = await axios.get(`/api/matchInfo?matchId=${matchId}`);
@@ -210,17 +220,23 @@ function MatchCard({ match }: MatchCardProps) {
   //   // getMatchDetails(match?.matchInfo.matchId);
   // }, [match]);
 
+  // useEffect(() => {
+  //   if (imageData1) {
+  //     imgRef.current?.src = imageData1.
+  //   }
+  // }, []);
+
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 dark:bg-[#45474a66] py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       <div className="flex justify-between">
         <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">{match?.matchInfo.seriesName}</h3>
-        <span className="flex items-center" onClick={() => setLiked(!liked)}>
+        {/* <span className="flex items-center" onClick={() => setLiked(!liked)}>
           {liked ? (
             <Image src="/heart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
           ) : (
             <Image src="/unlikedHeart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
           )}
-        </span>
+        </span> */}
       </div>
 
       <div className="flex justify-between dark:text-[#E6E6DD]">
@@ -228,25 +244,28 @@ function MatchCard({ match }: MatchCardProps) {
           <div>{new Date(parseInt(match?.matchInfo?.startDate)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
           <div className="flex flex-col gap-4 justify-between">
             <div className="flex gap-4 justify-between">
-              {imageUrl1 && (
-                <Image src={imageUrl1} height={20} width={30} alt={match?.matchInfo?.team1?.teamName} />
+              {imageData1 && (
+                <Image ref={imgRef} src={`data:image/jpeg;base64,${Base64.encodeURI(imageData1)}`} height={20} width={30} alt={match?.matchInfo?.team1?.teamName} />
               )}
               <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">{match?.matchInfo?.team1?.teamSName}</div>
             </div>
             <div className="flex gap-4 justify-between">
-              {imageUrl2 && (
-                <Image src={imageUrl2} height={20} width={30} alt={match?.matchInfo?.team2?.teamName} />
+              {imageData2 && (
+                <Image ref={imgRef} src={`data:image/jpeg;base64,${Base64.encodeURI(imageData2)}`} height={20} width={30} alt={match?.matchInfo?.team1?.teamName} />
               )}
               <div className="font-semibold text-sm md:text-base text-[#828486]">{match?.matchInfo?.team2?.teamSName}</div>
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 text-sm md:text-base font-semibold">
-          <div>{match?.matchScore?.team1Score?.inngs1?.runs} / {match?.matchScore?.team1Score?.inngs1?.wickets} ({match?.matchScore?.team1Score?.inngs1?.overs})</div>
+          { match?.matchScore?.team1Score?.inngs1?.runs
+            ? <div>{match?.matchScore?.team1Score?.inngs1?.runs} / {match?.matchScore?.team1Score?.inngs1?.wickets} ({match?.matchScore?.team1Score?.inngs1?.overs})</div>
+            : <div>Yet to Bat</div>
+          }
           <div className="text-[#828486]">
-            {match?.matchScore?.team2Score 
+            {match?.matchScore?.team2Score?.inngs1?.runs 
               ? <span>{match?.matchScore?.team2Score?.inngs1?.runs} / {match?.matchScore?.team2Score?.inngs1?.wickets} ({match?.matchScore?.team2Score?.inngs1?.overs})</span>
-              : null}
+              : <div>Yet to Bat</div>}
           </div>
         </div>
       </div>

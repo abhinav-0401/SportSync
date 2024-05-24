@@ -1,3 +1,5 @@
+"use client"
+
 // components/ArticleCard.tsx
 import Image from 'next/image';
 import React from 'react';
@@ -11,7 +13,7 @@ interface ArticleCardProps {
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ title, description, date, imageUrl }) => {
     return (
-        <div className="flex md:flex-row max-w-[320px] md:max-w-fit flex-col gap-5 p-5 hover:bg-[#45474a80] cursor-pointer bg-white/66 rounded-xl border border-solid border-gray-300/66 shadow-lg">
+        <div className="flex md:flex-row max-w-[320px] md:max-w-fit lg:min-w-full flex-col gap-5 p-5 hover:bg-[#45474a80] cursor-pointer bg-white/66 rounded-xl border border-solid border-gray-300/66 shadow-lg">
             <div className="flex md:min-w-fit">
                 <Image src={imageUrl} className='md:min-h-full md:max-w-full' alt={title} width={300} height={200} />
             </div>

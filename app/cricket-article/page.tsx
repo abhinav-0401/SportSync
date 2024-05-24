@@ -1,9 +1,14 @@
+"use client"
+
 import Image from "next/image";
 import HotTopics from "@/components/HotTopics";
 import Navbar from "@/components/Navbar";
 import ArticleCard from "@/components/ui/articleCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface ArticleData {
   title: string;
@@ -20,6 +25,21 @@ const imgUrls: string[] = [
 ];
 
 export default function Artcile() {
+
+  const [articlesData, setArticlesData] = useState<any>(null);
+
+  const router = useRouter();
+
+  async function getArticles() {
+    const response = await axios.get("/api/articles");
+    setArticlesData(response.data);
+    console.log(response.data);
+  }
+
+  useEffect(() => {
+    getArticles();
+  }, []);
+
   const currentDate = new Date().toLocaleString();
 
   const articles: ArticleData[] = imgUrls.map(url => {
@@ -33,7 +53,7 @@ export default function Artcile() {
 
   return (
     <div className="bg-[#E6E6DD] dark:bg-black">
-      <div className="flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16">
+      <div className="flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-12 xl:px-20 lg:py-16">
 
         <div className="flex justify-center dark:text-[#E6E6DD] mt-4 font-bold text-4xl">
           <h1>ARTICLES</h1>
@@ -49,8 +69,17 @@ export default function Artcile() {
               <Button className="rounded-full px-10">Search</Button>
             </div>
             <div className="flex flex-col items-center gap-8">
-              {articles.map((article, index) => {
-                return <ArticleCard title={article.title} key={index} description={article.description} imageUrl={article.imageUrl} date={article.date} />
+              {articlesData?.list?.map((article: any, index: number) => {
+                return (
+                  <span className="w-full flex flex-col items-center" key={index} onClick={() => router.push(`/cricket-article/${article?.story?.id ?? 0}`)}>
+                    <ArticleCard 
+                      title={article?.story?.hline}
+                      description={article?.story?.intro}
+                      imageUrl={"/article-3.png"}
+                      date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
+                    />
+                  </span>
+                );
               })}
             </div>
             <div className="flex w-full justify-center">

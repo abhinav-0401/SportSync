@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     method: "GET",
     url: `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`,
     headers: {
-      "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
+      "X-RapidAPI-Key": process.env.RAPIDAPI_KEY as string,
       "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
     },
   };
@@ -26,7 +26,8 @@ export async function GET(req: NextRequest) {
   try {
     const response = await axios.request(options);
     console.log("Response received:", response.config.url);
-    return NextResponse.json({ url: response.config.url });
+    console.log(response.data);
+    return NextResponse.json({ url: response.config.url, data: response.data });
   } catch (error) {
     console.error("Error fetching image URL:", error);
     return NextResponse.json(
