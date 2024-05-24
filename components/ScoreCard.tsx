@@ -36,7 +36,7 @@ function ScoreCard({ scoreCard }: Props) {
           <div className='flex items-center justify-between w-full'>
             <div className="flex gap-2 md:gap-4">
               <Image src="/india.png" alt='india' width={36} height={24} className='rounded-lg' />
-              <div className="font-semibold text-base md:text-lg">IND</div>
+              <div className="font-semibold text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[0]?.bowlTeamDetails?.bowlTeamName}</div>
             </div>
             <span>Bowlers</span>
             <span>{scoreCard && scoreCard?.scoreCard[0].scoreDetails?.runs} - {scoreCard && scoreCard?.scoreCard[0].scoreDetails?.wickets} ({scoreCard && scoreCard?.scoreCard[0].scoreDetails?.overs})</span>
@@ -58,7 +58,7 @@ function ScoreCard({ scoreCard }: Props) {
           <div className='flex items-center justify-between w-full'>
             <div className="flex gap-2 md:gap-4">
               <Image src="/india.png" alt='india' width={36} height={24} className='rounded-lg' />
-              <div className="font-semibold text-base md:text-lg">IND</div>
+              <div className="font-semibold text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[1]?.bowlTeamDetails?.bowlTeamName}</div>
             </div>
             <span>Bowlers</span>
             <span>{scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.runs} - {scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.wickets} ({scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.overs})</span>
