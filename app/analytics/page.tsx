@@ -44,8 +44,8 @@ function TabData() {
 
   useEffect(() => {
     getScoreCard();
-    getLeanBack();
     getPointsTable();
+    getLeanBack();
   }, []);
 
   return (
@@ -81,44 +81,13 @@ function TabData() {
                 <TeamStats />
               </TabsContent> */}
       <TabsContent value="table" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-        <TableSection />
+        <TableSection seriesName={scoreCard?.matchHeader?.seriesName} pointsTable={pointsTable} />
       </TabsContent>
     </Tabs>
   );
 }
 
 export default function Analytics() {
-  // const searchParams = useSearchParams();
-  // const matchId = searchParams.get("matchId");
-  // const seriesId = searchParams.get("seriesId");
-
-  // const [scoreCard, setScoreCard] = useState<any>(null);
-  // const [leanBack, setLeanBack] = useState<any>(null);
-  // const [pointsTable, setPointsTable] = useState<any>(null);
-
-  // async function getScoreCard() {
-  //   const res = await axios.get(`/api/matchInfo/scoreCard?matchId=${matchId}`);
-  //   console.log(res.data);
-  //   setScoreCard(res.data);
-  // }
-
-  // async function getLeanBack() {
-  //   const res = await axios.get(`/api/matchInfo/leanBack?matchId=${matchId}`);
-  //   console.log(res.data);
-  //   setLeanBack(res.data);
-  // }
-
-  // async function getPointsTable() {
-  //   const res = await axios.get(`/api/matchInfo/pointsTable?seriesId=${seriesId}`);
-  //   console.log(res.data);
-  //   setPointsTable(res.data);
-  // }
-
-  // useEffect(() => {
-  //   getScoreCard();
-  //   getLeanBack();
-  //   getPointsTable();
-  // }, []);
 
   return (
     <div className="bg-[#E6E6DD] dark:bg-black min-h-screen flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-12 lg:py-16 dark:text-[#E6E6DD]">

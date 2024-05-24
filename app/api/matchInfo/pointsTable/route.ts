@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     method: 'GET',
     url: `https://cricbuzz-cricket.p.rapidapi.com/stats/v1/series/${seriesId}/points-table`,
     headers: {
-      'X-RapidAPI-Key': '1de355f466msh1bfa3dfa1c06b74p1ced11jsn982e34977c06',
+      'X-RapidAPI-Key': process.env.RAPIDAPI_KEY as string,
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
     }
   };
