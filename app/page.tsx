@@ -1,6 +1,8 @@
 "use client"
+
 import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -108,10 +110,27 @@ function LogoImages() {
 function SectionTwo() {
   const router = useRouter();
 
+  const [featuredMatch, setFeaturedMatch] = useState<any>(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("/api/matches?listType=live");
+      setFeaturedMatch(response.data[0]);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <span className="md:hidden"><FeaturedCard /></span>
       <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
+        {/* <FeaturedCard /> */}
         <div className="flex flex-col items-start gap-8">
 
           <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
@@ -121,26 +140,36 @@ function SectionTwo() {
 
         <div className="flex justify-between px-4 sm:px-8 md:px-16">
           <div className="flex gap-4">
-            {/* img + country name */}
-            <div className="flex flex-col gap-2 md:gap-4">
+            <div className="flex flex-col items-center gap-2 md:gap-4">
               <Image src="/india.png" alt='india' width={36} height={24} />
-              <div className="font-semibold text-base md:text-lg">IND</div>
+              <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team1?.teamName}</div>
             </div>
-            <div className="font-medium text-base md:text-lg">198/3</div>
+            <div className="font-medium text-base md:text-lg">
+              {
+                featuredMatch?.matchScore?.team1Score?.inngs1?.runs
+                  ? <span>{featuredMatch?.matchScore?.team1Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team1Score?.inngs1?.wickets}</span>
+                  : <span>Yet to Bat</span>
+              }
+            </div>
           </div>
           <div className="flex gap-2">
-            {/* img + country name */}
-            <div className="font-medium text-sm min-[370px]:text-base md:text-lg">YET TO BAT</div>
-            <div className="flex flex-col gap-2 md:gap-4">
+            <div className="font-medium text-sm min-[370px]:text-base md:text-lg">
+              {
+                featuredMatch?.matchScore?.team2Score?.inngs1?.runs
+                  ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span>
+                  : <span>Yet to Bat</span>
+              }
+            </div>
+            <div className="flex flex-col items-center gap-2 md:gap-4">
               <Image src="/england.png" alt='india' width={36} height={24} />
-              <div className="font-semibold text-base md:text-lg">ENG</div>
+              <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team2?.teamName}</div>
             </div>
           </div>
         </div>
 
-        <div className="text-center font-medium text-lg">IND chose to bat</div>
+        <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>
 
-        {/* scores */}
+        
         <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
           <div className="flex flex-col gap-2">
             <div className="flex gap-3 sm:gap-4 font-semibold text-[12px] sm:text-sm md:text-base">
