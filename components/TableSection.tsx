@@ -58,9 +58,9 @@ function TableSection({ seriesName, pointsTable }: Props) {
         </TableHeader>
         <TableBody>
           {
-            pointsTable?.pointsTable &&  pointsTable?.pointsTable[0]?.pointsTableInfo?.map((row: any) => {
+            pointsTable?.pointsTable &&  pointsTable?.pointsTable[0]?.pointsTableInfo?.map((row: any, index: any) => {
               return (
-                <TableRow>
+                <TableRow key={index}>
                   <TableCell className="font-medium">{row?.teamFullName}</TableCell>
                   <TableCell>{row?.matchesPlayed}</TableCell>
                   <TableCell>{row?.matchesWon}</TableCell>
