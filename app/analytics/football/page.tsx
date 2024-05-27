@@ -100,7 +100,7 @@ function TabData() {
         {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchSummary /> : null}
       </TabsContent>
       <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-        <FootballScoreCard scoreCard={scoreCard} />
+        <FootballScoreCard fixtureData={fixtureData} scoreCard={fixtureData?.events} homeId={fixtureData?.teams?.home?.id} awayId={fixtureData?.teams?.away?.id} />
       </TabsContent>
       {/* <TabsContent value="stats" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
                 <TeamStats />
@@ -241,11 +241,29 @@ function TableSection({ pointsTable }: TableSectionProps) {
 }
 
 type FootballProps = {
+  fixtureData: any;
   scoreCard: any;
+  homeId?: number;
+  awayId?: number;
 }
 
-function FootballScoreCard({ scoreCard }: FootballProps) {
+function FootballScoreCard({ fixtureData, scoreCard, homeId, awayId }: FootballProps) {
   // console.log("hehe", scoreCard?.scoreCard[0].batTeamDetails?.batsmenData)
+
+  const [homeEvents, setHomeEvents] = useState<any[]>([]);
+  const [awayEvents, setAwayEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    let home = scoreCard?.filter((event: any, idx: number) => {
+      return event?.team?.id === homeId;
+    });
+    let away = scoreCard?.filter((event: any, idx: number) => {
+      return event?.team?.id === awayId;
+    });
+    setHomeEvents(home);
+    setAwayEvents(away);
+    console.log("events", home, away);
+  }, []);
 
   return (
     <div className='flex flex-col items-start justify-center space-y-7'>
@@ -253,85 +271,82 @@ function FootballScoreCard({ scoreCard }: FootballProps) {
       <Tabs defaultValue='IND' className='w-full'>
 
         <TabsList className='bg-transparent w-full'>
-          <TabsTrigger className="flex-grow" variant={"outline"} value="IND">{scoreCard && scoreCard?.scoreCard[0]?.batTeamDetails?.batTeamName}</TabsTrigger>
-          <TabsTrigger className="flex-grow" variant={"outline"} disabled={!(scoreCard && scoreCard?.scoreCard[1])} value="ENG">{scoreCard && scoreCard?.scoreCard[1]?.batTeamDetails?.batTeamName}</TabsTrigger>
+          <TabsTrigger className="flex-grow" variant={"outline"} value="IND">{fixtureData?.teams?.home?.name}</TabsTrigger>
+          <TabsTrigger className="flex-grow" variant={"outline"} value="ENG">{fixtureData?.teams?.away?.name}</TabsTrigger>
         </TabsList>
 
         <TabsContent value='IND' className='flex flex-col items-center justify-center w-full space-y-7'>
-          <div className='flex items-center justify-between w-full'>
-            <div className="flex gap-2 md:gap-4">
-              <Image src="/india.png" alt='india' width={36} height={24} className='rounded-lg' />
-              <div className="font-semibold text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[0].batTeamDetails?.batTeamName}</div>
-            </div>
-            <span>Batters</span>
-            <span>{scoreCard && scoreCard?.scoreCard[0].scoreDetails?.runs} - {scoreCard && scoreCard?.scoreCard[0].scoreDetails?.wickets} ({scoreCard && scoreCard?.scoreCard[0].scoreDetails?.overs})</span>
-          </div>
-          <FootballResponsiveTable batsmenData={scoreCard?.scoreCard[0]?.batTeamDetails?.batsmenData} />
-          <div className='flex items-center justify-between w-full'>
-            <div className="flex gap-2 md:gap-4">
-              <Image src="/india.png" alt='india' width={36} height={24} className='rounded-lg' />
-              <div className="font-semibold text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[0]?.bowlTeamDetails?.bowlTeamName}</div>
-            </div>
-            <span>Bowlers</span>
-            <span>{scoreCard && scoreCard?.scoreCard[0].scoreDetails?.runs} - {scoreCard && scoreCard?.scoreCard[0].scoreDetails?.wickets} ({scoreCard && scoreCard?.scoreCard[0].scoreDetails?.overs})</span>
-          </div>
-          {/* <CustomTable /> */}
-          {/* <BowlerResponsiveTable bowlersData={scoreCard?.scoreCard[0]?.bowlTeamDetails?.bowlersData} /> */}
+          <FootballResponsiveTable eventsData={homeEvents} score={fixtureData?.score} />
         </TabsContent>
 
         <TabsContent value='ENG' className='flex flex-col items-center justify-center w-full space-y-7'>
-          <div className='flex items-center justify-between w-full'>
-            <div className="flex gap-2 md:gap-4">
-              <Image src="/india.png" alt='india' width={36} height={24} className='rounded-lg' />
-              <div className="font-semibold text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[1]?.batTeamDetails?.batTeamName}</div>
-            </div>
-            <span>Batters</span>
-            <span>{scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.runs} - {scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.wickets} ({scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.overs})</span>
-          </div>
-          <FootballResponsiveTable batsmenData={scoreCard?.scoreCard[1]?.batTeamDetails?.batsmenData} />
-          <div className='flex items-center justify-between w-full'>
-            <div className="flex gap-2 md:gap-4">
-              <Image src="/india.png" alt='india' width={36} height={24} className='rounded-lg' />
-              <div className="font-semibold text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[1]?.bowlTeamDetails?.bowlTeamName}</div>
-            </div>
-            <span>Bowlers</span>
-            <span>{scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.runs} - {scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.wickets} ({scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.overs})</span>
-          </div>
-          {/* <CustomTable /> */}
-          {/* <BowlerResponsiveTable bowlersData={scoreCard?.scoreCard[1]?.bowlTeamDetails?.bowlersData} /> */}
+          <FootballResponsiveTable eventsData={awayEvents} score={fixtureData?.score} />
         </TabsContent>
       </Tabs>
     </div>
   )
 }
 
-function FootballResponsiveTable({ batsmenData }: { batsmenData: any[] }) {
+function FootballResponsiveTable({ eventsData, score }: { eventsData: any[], score: any }) {
+  // const [isHalfTime, setIsHalfTime] = useState(false);
+  let isHalfTime: boolean = false;
+  let reversedEvents = eventsData?.toReversed();
+  let greaterThanHalfEvents = reversedEvents?.filter((event: any, idx: number) => {
+    return event?.time?.elapsed >= 45;
+  });
+  let lessThanHalfEvents = reversedEvents?.filter((event: any, idx: number) => {
+    return event?.time?.elapsed < 45;
+  });
+  console.log("event arr", greaterThanHalfEvents, lessThanHalfEvents);
+
   return (
     <Table className='mb-12'>
       {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-      <TableHeader>
-        <TableRow>
-          <TableHead className="">Batsman</TableHead>
-          <TableHead>R</TableHead>
-          <TableHead>B</TableHead>
-          <TableHead>4s</TableHead>
-          <TableHead>6s</TableHead>
-          <TableHead className="text-right">S/R</TableHead>
-        </TableRow>
-      </TableHeader>
       <TableBody>
+        <TableRow>
+          <TableHead className="font-bold">FT {score?.fulltime?.home}-{score?.fulltime?.away}</TableHead>
+        </TableRow>
         {
-          Object.entries(batsmenData).map((batter, idx) => {
+          greaterThanHalfEvents?.map((event: any, idx: number) => {
             return (
               <TableRow key={idx}>
-                <TableCell className="font-medium">{batter[1].batName}</TableCell>
-                <TableCell>{batter[1].runs}</TableCell>
-                <TableCell>{batter[1].fours}</TableCell>
-                <TableCell className="">{batter[1].fours}</TableCell>
-                <TableCell className="">{batter[1].sixes}</TableCell>
-                <TableCell className="text-right">{batter[1].strikeRate}</TableCell>
+                <TableHead>{event?.time?.elapsed}'</TableHead>
+                <TableHead>{event?.detail}</TableHead>
+                <TableHead>{event?.player?.name}</TableHead>
+                <TableHead>
+                  {
+                    event?.detail === "Normal Goal"
+                      ? event?.assist?.name ? "Assist: " : null
+                    : event?.detail.slice(0, 12) === "Substitution"
+                      ? "In: " : null
+                  }
+                  {event?.assist?.name}
+                </TableHead>
               </TableRow>
-            )
+            );
+          })
+        }
+        <TableRow>
+          <TableHead className="font-bold">HT {score?.halftime?.home}-{score?.halftime?.away}</TableHead>
+        </TableRow>
+        {
+          lessThanHalfEvents?.map((event: any, idx: number) => {
+            return (
+              <TableRow key={idx}>
+                <TableHead>{event?.time?.elapsed}'</TableHead>
+                <TableHead>{event?.detail}</TableHead>
+                <TableHead>{event?.player?.name}</TableHead>
+                <TableHead>
+                  {
+                    event?.detail === "Normal Goal"
+                      ? event?.assist?.name ? "Assist: " : null
+                      : event?.detail.slice(0, 12) === "Substitution"
+                        ? "In: " : null
+                  }
+                  {event?.assist?.name}
+                </TableHead>
+              </TableRow>
+            );
           })
         }
       </TableBody>
