@@ -221,7 +221,7 @@ function TableSection({ pointsTable }: TableSectionProps) {
               {
                 group?.map((team: any, index: number) => {
                   return (
-                    <TableRow>
+                    <TableRow key={index}>
                       <TableHead className="">{team?.team?.name}</TableHead>
                       <TableHead>{team?.all?.played}</TableHead>
                       <TableHead>{team?.all?.win}</TableHead>
@@ -310,7 +310,7 @@ function FootballResponsiveTable({ eventsData, score }: { eventsData: any[], sco
           greaterThanHalfEvents?.map((event: any, idx: number) => {
             return (
               <TableRow key={idx}>
-                <TableHead>{event?.time?.elapsed}'</TableHead>
+                <TableHead>{event?.time?.elapsed}&apos;</TableHead>
                 <TableHead>{event?.detail}</TableHead>
                 <TableHead>{event?.player?.name}</TableHead>
                 <TableHead>
@@ -333,7 +333,7 @@ function FootballResponsiveTable({ eventsData, score }: { eventsData: any[], sco
           lessThanHalfEvents?.map((event: any, idx: number) => {
             return (
               <TableRow key={idx}>
-                <TableHead>{event?.time?.elapsed}'</TableHead>
+                <TableHead>{event?.time?.elapsed}&apos;</TableHead>
                 <TableHead>{event?.detail}</TableHead>
                 <TableHead>{event?.player?.name}</TableHead>
                 <TableHead>
