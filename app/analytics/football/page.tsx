@@ -5,7 +5,6 @@ import FeaturedCard from "@/components/FeaturedCard";
 import HotTopics from "@/components/HotTopics";
 // import MatchStats from "@/components/MatchStats";
 import MatchSummary from "@/components/MatchSummary";
-import TeamStats from "@/components/TeamStats";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -28,27 +27,21 @@ function TabData() {
   const leagueId = searchParams.get("leagueId");
 
   const [scoreCard, setScoreCard] = useState<any>(null);
-  const [leanBack, setLeanBack] = useState<any>(null);
   const [pointsTable, setPointsTable] = useState<any>(null);
   const [fixtureData, setFixtureData] = useState<any>(null);
   const [goalsData, setGoalsData] = useState<any>(null);
-
-  async function getScoreCard() {
-    const res = await axios.get(`/api/matchInfo/scoreCard?matchId=${matchId}`);
-    console.log(res.data);
-    setScoreCard(res.data);
-  }
-
-  async function getLeanBack() {
-    const res = await axios.get(`/api/matchInfo/leanBack?matchId=${matchId}`);
-    console.log(res.data);
-    setLeanBack(res.data);
-  }
+  const [statsData, setStatsData] = useState<any>(null);
 
   async function getPointsTable() {
     const res = await axios.get(`/api/football/standings?leagueId=${leagueId}&season=${fixtureData?.league?.season}`);
     console.log(res.data);
     setPointsTable(res.data);
+  }
+
+  async function getStats() {
+    const res = await axios.get(`/api/football/stats?matchId=${matchId}`);
+    console.log("stats: ", res.data);
+    setStatsData(res.data.data);
   }
 
   async function getFixtureData() {
@@ -71,6 +64,7 @@ function TabData() {
 
   useEffect(() => {
     getPointsTable();
+    getStats();
   }, [fixtureData])
 
   return (
@@ -79,7 +73,7 @@ function TabData() {
         <TabsTrigger className="flex-grow" variant={"outline"} value="live">Live</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Summary</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="score">Score Card</TabsTrigger>
-        {/* <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger> */}
+        <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="table">Table</TabsTrigger>
       </TabsList>
       <TabsContent value="live" className="flex w-full flex-col px-4 gap-12 md:gap-16 lg:gap-20">
@@ -102,9 +96,9 @@ function TabData() {
       <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <FootballScoreCard fixtureData={fixtureData} scoreCard={fixtureData?.events} homeId={fixtureData?.teams?.home?.id} awayId={fixtureData?.teams?.away?.id} />
       </TabsContent>
-      {/* <TabsContent value="stats" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-                <TeamStats />
-              </TabsContent> */}
+      <TabsContent value="stats" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
+        <FootballTeamStats statsData={statsData} />
+      </TabsContent>
       <TabsContent value="table" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <TableSection pointsTable={pointsTable} />
       </TabsContent>
@@ -352,4 +346,34 @@ function FootballResponsiveTable({ eventsData, score }: { eventsData: any[], sco
       </TableBody>
     </Table>
   );
+}
+
+type StatsProps = {
+  statsData: any[];
+}
+
+function FootballTeamStats({ statsData }: StatsProps) {
+  return (
+    // <div className='flex flex-col items-start justify-center space-y-7'>
+      <Table>
+        <TableRow>
+          <TableHead>{statsData && statsData[0] ? statsData[0]?.team?.name : ""}</TableHead>
+          <TableHead className="text-center">TEAM STATS</TableHead>
+          <TableHead className="text-right">{statsData && statsData[1] ? statsData[1]?.team?.name : ""}</TableHead>
+        </TableRow>
+        {
+          statsData && statsData[0] && 
+            statsData[0]?.statistics?.map((stat: any, idx: number) => {
+              return (
+                <TableRow>
+                  <TableCell>{stat?.value}</TableCell>
+                  <TableCell className="text-center">{stat?.type}</TableCell>
+                  <TableCell className="text-right">{statsData && statsData[1] ? statsData[1]?.statistics[idx]?.value : ""}</TableCell>
+                </TableRow>
+              );
+            })
+        }
+      </Table>
+    // </div>
+  )
 }
