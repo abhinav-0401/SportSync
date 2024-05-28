@@ -80,10 +80,12 @@ export default function Football() {
             <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
               <div className="flex flex-wrap w-full gap-3">
                 <Tag name="All" onClick={() => fetchData(currentListType)} />
-                <Tag name="International" onClick={() => handleTagClick('International')} />
-                <Tag name="League" onClick={() => handleTagClick('League')} />
-                <Tag name="Domestic" onClick={() => handleTagClick('Domestic')} />
-                <Tag name="Women" onClick={() => handleTagClick('Women')} />
+                <Tag name="Asia" onClick={() => handleTagClick('Asia')} />
+                <Tag name="Africa" onClick={() => handleTagClick('Africa')} />
+                <Tag name="Australia" onClick={() => handleTagClick('Australia')} />
+                <Tag name="Europe" onClick={() => handleTagClick('Europe')} />
+                <Tag name="North America" onClick={() => handleTagClick('North America')} />
+                <Tag name="South America" onClick={() => handleTagClick('South America')} />
               </div>
 
               <div className="flex flex-col gap-6">
@@ -168,7 +170,7 @@ function DayMatchList({ schedule }: any) {
         </div>
       </div>
 
-      {schedule?.response?.map((match: any, index: number) => (
+      {schedule?.map((match: any, index: number) => (
         <MatchCard key={index} match={match} />
       ))}
     </div>
@@ -250,7 +252,7 @@ function MatchCard({ match }: MatchCardProps) {
       </div>
 
       <div className="flex justify-center font-semibold text-sm md:text-base">
-        {match?.fixture?.status?.long} {match?.fixture?.status?.elapsed}
+        {match?.fixture?.status?.long} {match?.fixture?.status?.elapsed}&apos;
       </div>
 
       <div className="flex gap-12 py-4 justify-between">
