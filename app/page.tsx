@@ -38,7 +38,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
 
   return (
     <div className="-mt-6 md:pt-16 lg:pt-24 bg-[url('/mobile-bg.png')] bg-cover md:bg-none">
-      <div className="flex md:flex-row flex-col bg-gradient-to-b from-white/0 from-60% dark:to-black to-[#e6e6dd] md:bg-none px-4 py-12 md:px-0 md:justify-start lg:justify-between items-center">
+      <div className="flex md:flex-row flex-col bg-gradient-to-b from-white/0 from-60% dark:to-black to-[#e6e6dd] md:bg-none px-4 pt-12 md:pt-0 pb-12 md:px-0 md:justify-start lg:justify-between items-center">
         <div className="flex flex-col items-center lg:ml-12 md:min-w-[350px]">
           <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[180px] sm:max-w-[180px] dark:block md:hidden md:max-w-[150px] lg:max-w-[244px]" />
           <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] hidden md:block dark:hidden md:max-w-[150px] lg:max-w-[244px]" />
