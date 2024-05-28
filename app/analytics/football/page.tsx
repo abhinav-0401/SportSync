@@ -365,7 +365,7 @@ function FootballTeamStats({ statsData }: StatsProps) {
           statsData && statsData[0] && 
             statsData[0]?.statistics?.map((stat: any, idx: number) => {
               return (
-                <TableRow>
+                <TableRow key={idx}>
                   <TableCell>{stat?.value}</TableCell>
                   <TableCell className="text-center">{stat?.type}</TableCell>
                   <TableCell className="text-right">{statsData && statsData[1] ? statsData[1]?.statistics[idx]?.value : ""}</TableCell>
