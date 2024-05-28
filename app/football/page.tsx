@@ -30,8 +30,8 @@ export default function Football() {
 
   const fetchData = async (listType: "live" | "upcoming" | "recent", type?: string) => {
     try {
-      const response = await axios.get(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
-      console.log(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
+      const response = await axios.get(`/api/football/fixtures?listType=${listType}${type ? `&type=${type}` : ''}`);
+      console.log(`/api/football/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
       setData(response.data);
       console.log(response.data);
       setError(null);
@@ -168,7 +168,7 @@ function DayMatchList({ schedule }: any) {
         </div>
       </div>
 
-      {schedule?.map((match: any, index: number) => (
+      {schedule?.response?.map((match: any, index: number) => (
         <MatchCard key={index} match={match} />
       ))}
     </div>
@@ -213,50 +213,48 @@ function MatchCard({ match }: MatchCardProps) {
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 dark:bg-[#45474a66] py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       <div className="flex justify-between">
-        <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">{match?.matchInfo.seriesName}</h3>
-        <span className="flex items-center" onClick={() => setLiked(!liked)}>
+        <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">{match?.league?.name}</h3>
+        {/* <span className="flex items-center" onClick={() => setLiked(!liked)}>
           {liked ? (
             <Image src="/heart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
           ) : (
             <Image src="/unlikedHeart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
           )}
-        </span>
+        </span> */}
       </div>
 
       <div className="flex justify-between dark:text-[#E6E6DD]">
         <div className="flex items-center gap-8">
-          <div>{new Date(parseInt(match?.matchInfo?.startDate)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
+          <div>{new Date(parseInt(match?.fixture?.date)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
           <div className="flex flex-col gap-4 justify-between">
             <div className="flex gap-4 justify-between">
               {imageUrl1 && (
-                <Image src={imageUrl1} height={20} width={30} alt={match?.matchInfo?.team1?.teamName} />
+                <Image src={imageUrl1} height={20} width={30} alt={match?.teams?.home?.name} />
               )}
-              <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">{match?.matchInfo?.team1?.teamSName}</div>
+              <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">{match?.teams?.home?.name}</div>
             </div>
             <div className="flex gap-4 justify-between">
               {imageUrl2 && (
                 <Image src={imageUrl2} height={20} width={30} alt={match?.matchInfo?.team2?.teamName} />
               )}
-              <div className="font-semibold text-sm md:text-base text-[#828486]">{match?.matchInfo?.team2?.teamSName}</div>
+              <div className="font-semibold text-sm md:text-base text-[#828486]">{match?.teams?.away?.name}</div>
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 text-sm md:text-base font-semibold">
-          <div>{match?.matchScore?.team1Score?.inngs1?.runs} / {match?.matchScore?.team1Score?.inngs1?.wickets} ({match?.matchScore?.team1Score?.inngs1?.overs})</div>
+          <div>{match?.goals?.home ?? "Yet to Play"}</div>
           <div className="text-[#828486]">
-            {match?.matchScore?.team2Score
-              ? <span>{match?.matchScore?.team2Score?.inngs1?.runs} / {match?.matchScore?.team2Score?.inngs1?.wickets} ({match?.matchScore?.team2Score?.inngs1?.overs})</span>
-              : null}
+            {match?.goals?.away ?? "Yet to Play"}
           </div>
         </div>
       </div>
 
       <div className="flex justify-center font-semibold text-sm md:text-base">
-        {match?.matchInfo?.status}
+        {match?.fixture?.status?.long} {match?.fixture?.status?.elapsed}
       </div>
 
       <div className="flex gap-12 py-4 justify-between">
-        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push(`/analytics?matchId=${match?.matchInfo?.matchId}&seriesId=${match?.matchInfo?.seriesId}`)}>Analytics</Button>
+        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push(`/analytics/football?matchId=${match?.fixture?.id}&leagueId=${match?.league?.id}`)}>Analytics</Button>
         <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push("/cricket-article")}>Article</Button>
       </div>
     </div>
