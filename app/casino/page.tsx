@@ -1,9 +1,7 @@
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DayMatchList from "@/components/DayMatchList";
 import CasinoList from "@/components/CasinoList";
 
 export default function Casino() {

@@ -126,21 +126,21 @@ export default function Football() {
                 ))} */}
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="upcoming" className="flex w-full flex-col gap-10">
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="completed" className="flex w-full flex-col gap-10">
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
             </Tabs>

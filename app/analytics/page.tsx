@@ -4,7 +4,7 @@ import AdCard from "@/components/AdCard";
 import FeaturedCard from "@/components/FeaturedCard";
 import HotTopics from "@/components/HotTopics";
 // import MatchStats from "@/components/MatchStats";
-import MatchSummary from "@/components/MatchSummary";
+// import MatchSummary from "@/components/MatchSummary";
 import ScoreCard from "@/components/ScoreCard";
 import TableSection from "@/components/TableSection";
 import TeamStats from "@/components/TeamStats";
@@ -13,6 +13,8 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
+import { db } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 
 function TabData() {
@@ -23,6 +25,7 @@ function TabData() {
   const [scoreCard, setScoreCard] = useState<any>(null);
   const [leanBack, setLeanBack] = useState<any>(null);
   const [pointsTable, setPointsTable] = useState<any>(null);
+  const [summaryData, setSummaryData] = useState<any>(null);
 
   async function getScoreCard() {
     const res = await axios.get(`/api/matchInfo/scoreCard?matchId=${matchId}`);
@@ -42,10 +45,20 @@ function TabData() {
     setPointsTable(res.data);
   }
 
+  async function getSummary() {
+    if (matchId) {
+      const docRef = doc(db, "summary", `${matchId}`);
+      const docSnap = await getDoc(docRef);
+      console.log("summary data: ", docSnap.data());
+      setSummaryData(docSnap.data());
+    }
+  }
+
   useEffect(() => {
     getScoreCard();
     getPointsTable();
     getLeanBack();
+    getSummary();
   }, []);
 
   return (
@@ -72,10 +85,12 @@ function TabData() {
         </div>
       </TabsContent>
       <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-        {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchSummary /> : null}
+        <MatchSummary summaryData={summaryData} />
       </TabsContent>
       <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-        <ScoreCard scoreCard={scoreCard} />
+        <Suspense fallback={<div>Loading...</div>}>
+          {scoreCard?.scoreCard && scoreCard?.scoreCard[0] && <ScoreCard scoreCard={scoreCard} />}
+        </Suspense>
       </TabsContent>
       {/* <TabsContent value="stats" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
                 <TeamStats />
@@ -179,6 +194,38 @@ function MatchStats({ scoreCard, leanBack }: { scoreCard: any; leanBack: any; })
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function MatchSummary({ summaryData } : { summaryData: any;}) {
+
+  console.log("summaryData from MatchSummary: ", summaryData);
+
+  return (
+    <div className="flex flex-col gap-8">
+
+      <div className="flex flex-col items-start gap-8">
+
+        <h3 className="font-bold text-xl text-center w-full md:text-left">Summary</h3>
+
+      </div>
+
+      <div className="flex items-center gap-4 md:gap-8">
+        <Image src="/analytics-summary.png" alt="summary" className="max-w-[150px]" height={177} width={182} unoptimized />
+
+        <div className="flex flex-col gap-2 sm:gap-4 md:gap-8">
+          <h3 className="font-semibold text-lg md:text-xl lg:text-2xl">{summaryData?.title}</h3>
+          <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+            {summaryData?.keyPoints}
+          </div>
+        </div>
+      </div>
+
+      <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+        {summaryData?.content}
+      </div>
+
     </div>
   );
 }

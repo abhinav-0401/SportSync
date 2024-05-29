@@ -25,8 +25,6 @@ export default function Cricket() {
   const [currentType, setCurrentType] = useState<string | undefined>();
   const [currentListType, setCurrentListType] = useState<"live" | "upcoming" | "recent">("live");
 
-  // const [upcomingData, setUpcomingData] = useState<any>(null);
-  // const [completedData, setCompletedData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async (listType: "live" | "upcoming" | "recent", type?: string) => {
@@ -125,21 +123,21 @@ export default function Cricket() {
                 ))} */}
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="upcoming" className="flex w-full flex-col gap-10">
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="completed" className="flex w-full flex-col gap-10">
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>                
               </TabsContent>
             </Tabs>
