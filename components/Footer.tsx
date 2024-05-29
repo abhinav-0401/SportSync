@@ -21,10 +21,10 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row flex-1 justify-between gap-4">
+      <div className="flex flex-col md:flex-row justify-end flex-1 gap-16">
 
         <div className="flex flex-col gap-5">
-          <h3 className="font-bold text-xl">HELP</h3>
+          <h3 className="font-bold text-xl">CONTACT US</h3>
           <ul className="flex flex-col gap-4">
             <li>Contact Us</li>
             <li>FAQs</li>
@@ -42,7 +42,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-5">
+        {/* <div className="flex flex-col gap-5">
           <h3 className="font-bold text-xl text-nowrap">SOCIAL MEDIA</h3>
           <ul className="flex flex-col gap-4">
             <li>Instagram</li>
@@ -50,7 +50,7 @@ export default function Footer() {
             <li>Twitter</li>
             <li>LinkedIn</li>
           </ul>
-        </div>
+        </div> */}
 
       </div>
     </div>
