@@ -185,29 +185,29 @@ function MatchCard({ match }: MatchCardProps) {
 
   // console.log(match);
 
-  const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void, setImageData: (data: any) => void) => {
-    try {
-      const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
-      // const res = await fetch(`/api/getImageUrl?imageId=${imageId}`);
-      // const response = await res.json();
-      // const blob = await res.blob();
-      // const b = await blob.arrayBuffer();
+  // const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void, setImageData: (data: any) => void) => {
+  //   try {
+  //     const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
+  //     // const res = await fetch(`/api/getImageUrl?imageId=${imageId}`);
+  //     // const response = await res.json();
+  //     // const blob = await res.blob();
+  //     // const b = await blob.arrayBuffer();
 
-      console.log(response.data);
-      setImageUrl(response.data.url);
-      setImageData(response.data.data);
-    } catch (error) {
-      console.error('Failed to fetch image URL', error);
-    }
-  };
+  //     console.log(response.data);
+  //     setImageUrl(response.data.url);
+  //     setImageData(response.data.data);
+  //   } catch (error) {
+  //     console.error('Failed to fetch image URL', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    const imageId1 = match?.matchInfo?.team1?.imageId;
-    const imageId2 = match?.matchInfo?.team2?.imageId;
+  // useEffect(() => {
+  //   const imageId1 = match?.matchInfo?.team1?.imageId;
+  //   const imageId2 = match?.matchInfo?.team2?.imageId;
     
-    if (imageId1) fetchImageUrl(imageId1, setImageUrl1, setImageData1);
-    if (imageId2) fetchImageUrl(imageId2, setImageUrl2, setImageData2);
-  }, [match]);
+  //   if (imageId1) fetchImageUrl(imageId1, setImageUrl1, setImageData1);
+  //   if (imageId2) fetchImageUrl(imageId2, setImageUrl2, setImageData2);
+  // }, [match]);
 
   // async function getMatchDetails(matchId: number) {
   //   const res = await axios.get(`/api/matchInfo?matchId=${matchId}`);

@@ -4,7 +4,7 @@ import AdCard from "@/components/AdCard";
 import FeaturedCard from "@/components/FeaturedCard";
 import HotTopics from "@/components/HotTopics";
 // import MatchStats from "@/components/MatchStats";
-import MatchSummary from "@/components/MatchSummary";
+// import MatchSummary from "@/components/MatchSummary";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -19,6 +19,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
 
 function TabData() {
@@ -31,6 +33,7 @@ function TabData() {
   const [fixtureData, setFixtureData] = useState<any>(null);
   const [goalsData, setGoalsData] = useState<any>(null);
   const [statsData, setStatsData] = useState<any>(null);
+  const [summaryData, setSummaryData] = useState<any>(null);
 
   async function getPointsTable() {
     const res = await axios.get(`/api/football/standings?leagueId=${leagueId}&season=${fixtureData?.league?.season}`);
@@ -55,17 +58,24 @@ function TabData() {
     setGoalsData(goalEvents);
   }
 
+  async function getSummary() {
+    if (matchId) {
+      const docRef = doc(db, "footballSummary", `${matchId}`);
+      const docSnap = await getDoc(docRef);
+      console.log("summary data: ", docSnap.data());
+      setSummaryData(docSnap.data());
+    }
+  }
+
   useEffect(() => {
     getFixtureData();
-    // getScoreCard();
-    // getPointsTable();
-    // getLeanBack();
   }, []);
 
   useEffect(() => {
     getPointsTable();
     getStats();
-  }, [fixtureData])
+    getSummary();
+  }, [fixtureData]);
 
   return (
     <Tabs defaultValue="live" className="w-full">
@@ -91,7 +101,7 @@ function TabData() {
         </div>
       </TabsContent>
       <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-        {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchSummary /> : null}
+        <MatchSummary summaryData={summaryData} />
       </TabsContent>
       <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <FootballScoreCard fixtureData={fixtureData} scoreCard={fixtureData?.events} homeId={fixtureData?.teams?.home?.id} awayId={fixtureData?.teams?.away?.id} />
@@ -152,7 +162,7 @@ function MatchStats({ fixtureData, goalsData }: { fixtureData: any; goalsData: a
         <div className="flex gap-4">
           {/* img + country name */}
           <div className="flex flex-col items-center gap-2 md:gap-4">
-            <Image src="/india.png" alt='india' width={36} height={24} />
+            <Image src={fixtureData?.teams?.home?.logo} alt='india' width={36} height={24} />
             <div className="font-semibold text-sm sm:text-base md:text-lg">{fixtureData?.teams?.home?.name}</div>
           </div>
           <div className="font-medium text-sm sm:text-base md:text-lg">
@@ -165,7 +175,7 @@ function MatchStats({ fixtureData, goalsData }: { fixtureData: any; goalsData: a
             {fixtureData?.goals?.away}
           </div>
           <div className="flex flex-col items-center gap-2 md:gap-4">
-            <Image src="/england.png" alt='india' width={36} height={24} />
+            <Image src={fixtureData?.teams?.away?.logo} alt='india' width={36} height={24} />
             <div className="font-semibold text-sm sm:text-base md:text-lg">{fixtureData?.teams?.away?.name}</div>
           </div>
         </div>
@@ -376,4 +386,36 @@ function FootballTeamStats({ statsData }: StatsProps) {
       </Table>
     // </div>
   )
+}
+
+function MatchSummary({ summaryData }: { summaryData: any; }) {
+
+  console.log("summaryData from MatchSummary: ", summaryData);
+
+  return (
+    <div className="flex flex-col gap-8">
+
+      <div className="flex flex-col items-start gap-8">
+
+        <h3 className="font-bold text-xl text-center w-full md:text-left">Summary</h3>
+
+      </div>
+
+      <div className="flex items-center gap-4 md:gap-8">
+        <Image src="/analytics-summary.png" alt="summary" className="max-w-[150px]" height={177} width={182} unoptimized />
+
+        <div className="flex flex-col gap-2 sm:gap-4 md:gap-8">
+          <h3 className="font-semibold text-lg md:text-xl lg:text-2xl">{summaryData?.title}</h3>
+          <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+            {summaryData?.keyPoints}
+          </div>
+        </div>
+      </div>
+
+      <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+        {summaryData?.content}
+      </div>
+
+    </div>
+  );
 }
