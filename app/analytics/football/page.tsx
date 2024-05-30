@@ -402,7 +402,7 @@ function MatchSummary({ summaryData }: { summaryData: any; }) {
       </div>
 
       <div className="flex items-center gap-4 md:gap-8">
-        <Image src="/analytics-summary.png" alt="summary" className="max-w-[150px]" height={177} width={182} unoptimized />
+        <Image src={summaryData?.imageUrl ?? "/analytics-summary.png"} alt="summary" className="min-w-[150px] min-h-[150px] rounded-md" height={177} width={182} unoptimized />
 
         <div className="flex flex-col gap-2 sm:gap-4 md:gap-8">
           <h3 className="font-semibold text-lg md:text-xl lg:text-2xl">{summaryData?.title}</h3>
