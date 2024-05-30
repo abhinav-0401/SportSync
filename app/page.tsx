@@ -83,7 +83,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
           <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 rounded-xl hidden md:block" width={1800} height={50} unoptimized />
           <Image src="/bonanza_mobile_3.jpeg" alt="Logo" className="w-full h-auto rounded-xl block md:hidden" width={1800} height={50} unoptimized />
           <div className="flex flex-col items-center justify-center space-y-5">
-            <span className="text-2xl tracking-wider md:block hidden font-semibold">FESTIVE BONANZA</span>
+            <span className="text-3xl tracking-wider md:block hidden font-semibold">FESTIVE BONANZA</span>
             <span className="text-center hidden md:block text-sm md:text-base max-w-3xl">
             “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
             </span>
@@ -193,7 +193,7 @@ function SectionTwo() {
           </div>
         </div>
         <div className="w-full flex items-center justify-center">
-          <button className="bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
+          <button className="bg-black text-white dark:bg-white italic dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
         </div>
       </div>
     </>

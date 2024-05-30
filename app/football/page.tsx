@@ -126,21 +126,21 @@ export default function Football() {
                 ))} */}
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="upcoming" className="flex w-full flex-col gap-10">
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="completed" className="flex w-full flex-col gap-10">
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
-                  <Button className="w-fit">See more</Button>
+                  {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
             </Tabs>
@@ -180,8 +180,8 @@ function DayMatchList({ schedule }: any) {
 function MatchCard({ match }: MatchCardProps) {
   const router = useRouter();
   const [liked, setLiked] = useState(false);
-  const [imageUrl1, setImageUrl1] = useState<string | null>(null);
-  const [imageUrl2, setImageUrl2] = useState<string | null>(null);
+  // const [imageUrl1, setImageUrl1] = useState<string | null>(null);
+  // const [imageUrl2, setImageUrl2] = useState<string | null>(null);
 
   // console.log(match);
 
@@ -230,15 +230,11 @@ function MatchCard({ match }: MatchCardProps) {
           <div>{new Date(parseInt(match?.fixture?.date)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
           <div className="flex flex-col gap-4 justify-between">
             <div className="flex gap-4 justify-between">
-              {imageUrl1 && (
-                <Image src={imageUrl1} height={20} width={30} alt={match?.teams?.home?.name} />
-              )}
+              <Image src={match?.teams?.home?.logo} height={20} width={20} alt={match?.teams?.home?.name} />
               <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">{match?.teams?.home?.name}</div>
             </div>
             <div className="flex gap-4 justify-between">
-              {imageUrl2 && (
-                <Image src={imageUrl2} height={20} width={30} alt={match?.matchInfo?.team2?.teamName} />
-              )}
+              <Image src={match?.teams?.away?.logo} height={20} width={20} alt={match?.matchInfo?.team2?.teamName} />
               <div className="font-semibold text-sm md:text-base text-[#828486]">{match?.teams?.away?.name}</div>
             </div>
           </div>

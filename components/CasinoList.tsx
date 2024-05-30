@@ -1,4 +1,9 @@
+"use client"
+
+import { useEffect, useState } from "react";
 import CasinoCard from "./CasinoCard";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/firebase";
 
 interface CasinoCardData {
   title: string;
@@ -12,6 +17,22 @@ interface Props {
 }
 
 export default function CasinoList({ type }: Props) {
+  const [casinoData, setCasinoData] = useState<any>(null);
+
+  async function getCasinoData() {
+    const docs = await getDocs(collection(db, "casino"));
+    let casinoArr: any = [];
+    docs.forEach(doc => {
+      casinoArr.push({ id: doc.id, data: doc.data() });
+    });
+    setCasinoData(casinoArr);
+    console.log("casinoData: ", casinoArr);
+  }
+
+  useEffect(() => {
+    getCasinoData();
+  }, []);
+
   const casinos: CasinoCardData[] = [
     {
       title: "Indian Premier League",
@@ -53,9 +74,9 @@ export default function CasinoList({ type }: Props) {
 
   return (
     <div className="flex md:flex-row flex-col items-center md:items-start flex-wrap justify-between md:justify-normal gap-20">
-      {casinos.map((casino, index) => {
-        if (casino.type == type || type == "all") {
-          return <CasinoCard title={casino.title} key={index} description={casino.description} imageUrl={casino.imageUrl} />;
+      {casinoData?.map((casino: any, index: number) => {
+        if (casino?.data?.type == type || type == "all") {
+          return <CasinoCard title={casino?.data?.title} key={index} description={casino?.data?.content} imageUrl={casino?.data?.imageUrl ?? "/article-1.png"} />;
         }
       })}
     </div>
