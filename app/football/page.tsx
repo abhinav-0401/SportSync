@@ -73,10 +73,10 @@ export default function Football() {
 
         <div className="flex flex-col lg:flex-row flex-grow h-full gap-4 md:gap-10 justify-between">
           <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
-            <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
+            {/* <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
               <Input type="search" placeholder="Indian Premier League" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
-            </div>
+            </div> */}
             <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
               <div className="flex flex-wrap w-full gap-3">
                 <Tag name="All" onClick={() => fetchData(currentListType)} />
