@@ -17,7 +17,7 @@ export default function Navbar() {
     else setTheme('light')
   }
   return (
-    <nav className="sticky top-0 h-14 md:h-20 flex justify-center z-50 items-center border-b dark:border-[#F5F5F580] border-black dark:bg-black bg-[#E6E6DD] px-6 py-4 sm:px-10 sm:py-8 lg:px-20">
+    <nav className="sticky top-0 h-14 md:h-20 flex justify-center z-50 items-center border-b dark:border-[#F5F5F580] border-black dark:bg-black bg-[#E6E6DD] px-6 py-4 sm:px-10 rounded-2xl sm:py-8 lg:px-20">
       <div className="flex justify-between w-full">
         <div className="flex items-center">
           <Image src="/logoBlack.png" alt="navbar logo" width={94} height={44} className="dark:hidden cursor-pointer" onClick={clickHandler} />
