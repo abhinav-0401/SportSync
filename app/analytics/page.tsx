@@ -65,8 +65,8 @@ function TabData() {
     <Tabs defaultValue="live" className="w-full">
       <TabsList className="flex w-full justify-between bg-transparent overflow-x-scroll md:overflow-x-hidden overflow-y-hidden">
         <TabsTrigger className="flex-grow" variant={"outline"} value="live">Live</TabsTrigger>
-        <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Summary</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="score">Score Card</TabsTrigger>
+        <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Summary</TabsTrigger>
         {/* <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger> */}
         <TabsTrigger className="flex-grow" variant={"outline"} value="table">Table</TabsTrigger>
       </TabsList>
