@@ -7,7 +7,7 @@ export default function Footer() {
     //   <div className="w-full flex items-center justify-center">
     //     <Image src={"/footerbgblack.png"} alt="footerBg" width={500} height={500} unoptimized className="opacity-40 w-[90vw] h-[700px]" />
     //   </div>
-    <div className="bg-black hidden md:flex flex-col md:flex-row justify-evenly px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-8 md:gap-0 w-full dark:bg-[url('../public/bg-dark-footer-40.png')] md:bg-no-repeat bg-center md:bg-cover bg-contain bg-repeat-y bg-[url('../public/footer-bg.png')]">
+    <div className="bg-black hidden md:flex flex-col md:flex-row justify-evenly px-6 py-4 sm:px-10 sm:py-12 lg:px-20 lg:py-24 gap-8 md:gap-0 w-full dark:bg-[url('../public/bg-dark-footer-40.png')]  md:bg-no-repeat bg-center md:bg-cover bg-contain bg-repeat-y bg-[url('../public/footer-bg.png')]">
       <div className="flex flex-1 flex-col justify-between gap-4">
         <h3 className="font-semibold text-xl">ABOUT US</h3>
         <div>
@@ -26,9 +26,9 @@ export default function Footer() {
         <div className="flex flex-col gap-5">
           <h3 className="font-bold text-xl">CONTACT US</h3>
           <ul className="flex flex-col gap-4">
-            <li>Contact Us</li>
-            <li>FAQs</li>
-            <li>Accessibility</li>
+            <li>(+91)592844566</li>
+            <li>score71@gmail.com</li>
+            {/* <li>Accessibility</li> */}
           </ul>
         </div>
 
@@ -37,8 +37,8 @@ export default function Footer() {
           <ul className="flex flex-col gap-4">
             <li><Link href={"/"}>Home</Link></li>
             <li><Link href="/cricket">Cricket</Link></li>
-            <li>Football</li>
-            <li>Casino</li>
+            <li><Link href="/football">Football</Link></li>
+            <li><Link href="/casino">Casino</Link></li>
           </ul>
         </div>
 

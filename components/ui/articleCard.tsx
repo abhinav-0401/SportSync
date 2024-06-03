@@ -19,7 +19,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ title, description, date, ima
             </div>
             <div className="flex flex-col gap-2">
                 <div className="text-xl md:text-2xl font-semibold dark:text-[#E6E6DD] text-black">{title}</div>
-                <p className="text-gray-700 h-[100px] text-ellipsis dark:text-[#E6E6DD] overflow-y-hidden">{description}</p>
+                <p className="text-gray-700 h-[100px] italic text-ellipsis dark:text-[#E6E6DD] overflow-y-hidden">{description}</p>
                 <span className='md:hidden'>...</span>
                 <div className="text-sm font-semibold dark:text-[#E6E6DD] text-gray-700">{date}</div>
             </div>

@@ -62,7 +62,7 @@ export default function FeaturedCard() {
 
         </div>
 
-        <Button className="dark:bg-[#E6E6DD]" onClick={() => router.push(`/analytics?matchId=${featuredMatch?.matchInfo?.matchId}&seriesId=${featuredMatch?.matchInfo?.seriesId}`)}>Click here to know more</Button>
+        <Button className="dark:bg-[#E6E6DD] font-semibold" onClick={() => router.push(`/analytics?matchId=${featuredMatch?.matchInfo?.matchId}&seriesId=${featuredMatch?.matchInfo?.seriesId}`)}>Click here to know more</Button>
       </div>
     </div>
   );

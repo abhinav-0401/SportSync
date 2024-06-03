@@ -88,7 +88,7 @@ export default function Cricket() {
               <div className="flex flex-col gap-6">
                 <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
                 <div className="flex flex-col w-full pl-8">
-                  <ul>
+                  <ul className="flex flex-col gap-4">
                     <li>India</li>
                     <li>Bangladesh</li>
                     <li>Nepal</li>
@@ -99,7 +99,7 @@ export default function Cricket() {
               <div className="flex flex-col gap-6">
                 <h2 className="lg:text-xl xl:text-xl font-bold">Competitions</h2>
                 <div className="flex flex-col w-full pl-8">
-                  <ul>
+                  <ul className="flex flex-col gap-4">
                     <li>India</li>
                     <li>Bangladesh</li>
                     <li>Nepal</li>

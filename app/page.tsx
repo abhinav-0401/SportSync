@@ -37,8 +37,8 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
   const router = useRouter();
 
   return (
-    <div className="-mt-6 md:pt-16 lg:pt-24 bg-[url('/mobile-bg.png')] bg-cover md:bg-none">
-      <div className="flex md:flex-row flex-col bg-gradient-to-b from-white/0 from-60% dark:to-black to-[#e6e6dd] md:bg-none px-4 pt-12 md:pt-0 pb-12 md:px-0 md:justify-start lg:justify-between items-center">
+    <div className="-mt-12 md:pt-16 lg:pt-24 bg-[url('/mobile-bg.png')] bg-cover md:bg-none">
+      <div className="flex md:flex-row flex-col bg-gradient-to-b from-white/0 from-65% to-90% dark:to-black to-[#e6e6dd] md:bg-none px-4 pt-12 md:pt-0 pb-12 md:px-0 md:justify-start lg:justify-between items-center">
         <div className="flex flex-col items-center lg:ml-12 md:min-w-[350px]">
           <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[180px] sm:max-w-[180px] dark:block md:hidden md:max-w-[150px] lg:max-w-[244px]" />
           <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] hidden md:block dark:hidden md:max-w-[150px] lg:max-w-[244px]" />
@@ -47,18 +47,18 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
           </h3>
           <div className="flex justify-between min-[425px]:gap-12 min-[425px]:justify-center w-full md:gap-10 lg:gap-16 my-12 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-sm min-[425px]:text-base lg:mx-24 xl:mx-28">
             <span className="flex gap-2">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full dark:hidden" unoptimized />
-              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full hidden md:block dark:hidden" unoptimized />
+              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full block md:hidden dark:block" unoptimized />
               <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Cricket</span>
             </span>
             <span className="flex gap-2">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden"/>
-              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
+              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full hidden md:block dark:hidden"/>
+              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block block md:hidden" unoptimized />
               <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Football</span>
             </span>
             <span className="flex gap-2">
-              <Image src="/casino-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full dark:hidden" />
-              <Image src="/bulletDarkCasino.png" alt="cricket" height={15} width={20} className="rounded-full dark:block hidden" unoptimized />
+              <Image src="/casino-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full hidden md:block dark:hidden" />
+              <Image src="/bulletDarkCasino.png" alt="cricket" height={15} width={20} className="rounded-full dark:block block md:hidden" unoptimized />
               <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Casinos</span>
             </span>
             {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
@@ -78,7 +78,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
         <LogoImages />
       </div>
 
-      <div className="mb-12 md:my-32 w-full px-4 bg-[#e6e6dd] dark:bg-black flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
+      <div className="mb-12 md:my-12 w-full px-4 bg-[#e6e6dd] dark:bg-black flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
         <div className="flex flex-col items-center justify-center w-full md:-space-y-40">
           <Image src="/footballImageCutout.png" alt="Logo" className="w-full h-44 rounded-xl hidden md:block" width={1800} height={50} unoptimized />
           <Image src="/bonanza_mobile_3.jpeg" alt="Logo" className="w-full h-auto rounded-xl block md:hidden" width={1800} height={50} unoptimized />
@@ -202,7 +202,7 @@ function SectionTwo() {
 
 function TopPicks() {
   return (
-    <div className="px-4 my-10 dark:text-[#E6E6DD]">
+    <div className="px-4 my-6 dark:text-[#E6E6DD]">
       <h2 className="my-10 font-bold text-3xl text-center md:text-left">Top Picks</h2>
       <div className="flex flex-col items-center w-full md:flex-row justify-center flex-wrap gap-10">
         {Array.from({ length: 6 }).map((_, index) => (
@@ -224,13 +224,13 @@ function PickCard() {
     //     <p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin”</p>
     //   </div>
     // </div>
-    <div className="flex flex-col items-center md:items-start max-w-[230px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]">
+    <div className="flex flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]">
       <div>
-        <Image src="/Rectangle 120.png" className="min-w-[220px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
+        <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
       </div>
       <div className="flex flex-col items-center md:items-start">
-        <h2 className="font-bold">Indian Premier League</h2>
-        <p className="text-sm italic text-center md:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin</p>
+        <h2 className="font-bold text-xs sm:text-sm md:text-base">Indian Premier League</h2>
+        <p className="text-xs sm:text-sm italic text-center md:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin</p>
       </div>
     </div>
   );
@@ -238,7 +238,7 @@ function PickCard() {
 
 function ExcitingOffers() {
   return (
-    <div className="px-4 py-10 dark:text-[#E6E6DD]">
+    <div className="px-4 py-6 dark:text-[#E6E6DD]">
       <h2 className="my-20 font-bold text-3xl text-center md:text-left">Exciting Offers</h2>
       <div className="flex flex-col lg:flex-row lg:justify-between">
           {/* {Array.from({ length: 3 }).map((_, index) => (

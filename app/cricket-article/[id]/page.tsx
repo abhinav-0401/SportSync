@@ -73,7 +73,7 @@ export default function IndividualArticle({ params }: Props) {
 function TopPicks() {
   return (
     <div className="px-4 mt-10 pb-10 dark:text-[#E6E6DD]">
-      <h2 className="my-10 font-bold text-3xl text-center md:text-left">Top Picks</h2>
+      <h2 className="my-10 font-bold text-3xl text-center md:text-left">Other Articles</h2>
       <div className="flex flex-col items-center w-full md:flex-row justify-center flex-wrap gap-10">
         {Array.from({ length: 6 }).map((_, index) => (
           <PickCard key={index} />

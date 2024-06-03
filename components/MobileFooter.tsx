@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function MobileFooter() {
   return (
@@ -38,12 +39,12 @@ export default function MobileFooter() {
         <div className="flex flex-col gap-2 items-center">
           <h3 className="font-bold">QUICK LINKS</h3>
           <div className="flex gap-4">
-            <span>Home</span>
-            <span>Football</span>
+            <span><Link href={"/"}>Home</Link></span>
+            <span><Link href={"/football"}>Football</Link></span>
           </div>
           <div className="flex gap-4">
-            <span>Cricket</span>
-            <span>Casino</span>
+            <span><Link href={"/cricket"}>Cricket</Link></span>
+            <span><Link href={"/casino"}>Casino</Link></span>
           </div>
         </div>
 
@@ -53,7 +54,7 @@ export default function MobileFooter() {
             <span>+(91)592844566</span>
           </div>
           <div className="flex gap-4">
-            <span>Cricket</span>
+            <span><Link href={"/cricket"}>Cricket</Link></span>
           </div>
         </div>
 
