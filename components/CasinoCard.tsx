@@ -11,19 +11,22 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-
+import { useRouter } from "next/navigation";
 
 interface Props {
   title: string;
   description: string;
   imageUrl: string;
+  redirectUrl: string;
 }
 
-export default function CasinoCard({ title, description, imageUrl }: Props) {
+export default function CasinoCard({ title, description, imageUrl, redirectUrl }: Props) {
+  const router = useRouter();
+
   return (
     <div className="flex max-h-[500px] min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg">
       <div className="min-w-full">
-        <Image src={imageUrl} className='rounded-lg' alt={title} width={350} height={250} />
+        <Image src={imageUrl === "" ? "/article-1.png" : imageUrl} className='rounded-lg' alt={title} width={350} height={250} />
       </div>
       <div className="flex flex-1 flex-col justify-between h-full">
         <div className="flex flex-col gap-2 px-2">
@@ -32,7 +35,8 @@ export default function CasinoCard({ title, description, imageUrl }: Props) {
           <span className='md:hidden'>...</span>
         </div>
         <div className="flex w-full justify-end">
-          <Dialog>
+          <Button className="bg-black dark:bg-[#E6E6DD] dark:text-black text-white text-lg px-12 py-2 rounded-xl"><a target="_blank" href={`http://${redirectUrl}`}>Play</a></Button>
+          {/* <Dialog>
             <DialogTrigger className="bg-black dark:bg-[#E6E6DD] dark:text-black text-white px-12 py-2 rounded-xl ">Play</DialogTrigger>
             <DialogContent className="backdrop-blur-lg bg-[#E6E6DD]/50">
               <DialogHeader className="w-full">
@@ -56,7 +60,7 @@ export default function CasinoCard({ title, description, imageUrl }: Props) {
                 </div>
               </div>
             </DialogContent>
-          </Dialog>
+          </Dialog> */}
         </div>
       </div>
     </div>
