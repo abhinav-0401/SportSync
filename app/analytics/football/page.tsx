@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/table"
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
+import { toast, Toaster } from "react-hot-toast";
 
 
 function TabData() {
@@ -39,18 +40,31 @@ function TabData() {
     const res = await axios.get(`/api/football/standings?leagueId=${leagueId}&season=${fixtureData?.league?.season}`);
     console.log(res.data);
     setPointsTable(res.data);
+
+    if (!res.data?.length) {
+      toast.error("There is no points table for this match!");
+    }
   }
 
   async function getStats() {
     const res = await axios.get(`/api/football/stats?matchId=${matchId}`);
     console.log("stats: ", res.data);
     setStatsData(res.data.data);
+
+    if (!res.data?.data) {
+      toast.error("Could not fetch stats");
+    }
   }
 
   async function getFixtureData() {
     const res = await axios.get(`/api/football/fixture/${matchId}`);
     console.log("Fixture: ", res.data.data.response[0]);
     setFixtureData(res.data.data.response[0]);
+
+    if (!res.data?.length) {
+      toast.error("Could not get fixture score!");
+    }
+
     let goalEvents = res.data?.data?.response[0]?.events?.filter((event: any) => {
       return event?.type?.toLowerCase() === "goal";
     });
@@ -64,6 +78,10 @@ function TabData() {
       const docSnap = await getDoc(docRef);
       console.log("summary data: ", docSnap.data());
       setSummaryData(docSnap.data());
+
+      if (!docSnap.data()) {
+        toast.error("Could not fetch summary!");
+      }
     }
   }
 
@@ -71,14 +89,19 @@ function TabData() {
     getFixtureData();
   }, []);
 
+  async function getFootballAnalyticsData() {
+    await getPointsTable();
+    await getStats();
+    await getSummary();
+  }
+
   useEffect(() => {
-    getPointsTable();
-    getStats();
-    getSummary();
+    getFootballAnalyticsData();
   }, [fixtureData]);
 
   return (
     <Tabs defaultValue="live" className="w-full">
+      <Toaster />
       <TabsList className="flex w-full justify-between bg-transparent overflow-x-scroll md:overflow-x-hidden overflow-y-hidden">
         <TabsTrigger className="flex-grow" variant={"outline"} value="live">Live</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="score">Score Card</TabsTrigger>

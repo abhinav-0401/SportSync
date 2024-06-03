@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { toast, Toaster } from "react-hot-toast";
 
 interface ArticleData {
   title: string;
@@ -34,6 +35,10 @@ export default function Artcile() {
     const response = await axios.get("/api/articles");
     setArticlesData(response.data);
     console.log(response.data);
+
+    if (!response.data?.list?.length) {
+      toast.error("Could not fetch articles");
+    }
   }
 
   useEffect(() => {
@@ -53,6 +58,7 @@ export default function Artcile() {
 
   return (
     <div className="bg-[#E6E6DD] dark:bg-black">
+      <Toaster />
       <div className="flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-12 xl:px-20 lg:py-16">
 
         <div className="flex justify-center dark:text-[#E6E6DD] mt-4 font-bold text-4xl">

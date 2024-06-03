@@ -1,6 +1,6 @@
 
-  "use client"
-  import Image from "next/image";
+"use client"
+import Image from "next/image";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useRouter } from "next/navigation";
@@ -30,7 +30,13 @@ export default function Navbar() {
           <li><Link href="/casino" className="text-black dark:text-black md:dark:text-[#E6E6DD] hover:text-gray-700">Casino</Link></li>
           {/* <li><Link href="/favourites" className="text-black dark:text-[#E6E6DD] hover:text-gray-700">Favourites</Link></li> */}
           <li>
-            <button className="text-black dark:text-black md:dark:text-[#E6E6DD] font-semibold" onClick={themeChange}>{theme === 'light' ? "Dark" : "Light"} Mode</button>
+            <button className="text-black flex items-center dark:text-black md:dark:text-[#E6E6DD] font-semibold" onClick={themeChange}>
+              {
+                theme === 'light'
+                ? <Image src={"/dark_mode_icon_bg.jpg"} alt="change theme to dark mode" height={20} width={20} />
+                : <Image src={"/light_mode_icon.png"} alt="change theme to ligh mode" height={20} width={20} />
+              }
+            </button>
           </li>
         </ul>
       </div>

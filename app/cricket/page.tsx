@@ -13,6 +13,7 @@ import { Base64 } from "js-base64";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 
 interface MatchCardProps {
   match: any;
@@ -33,6 +34,9 @@ export default function Cricket() {
       console.log(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
       setData(response.data);
       console.log(response.data);
+      if (!response.data?.length) {
+        toast.error(`There are currently no ${listType} matches of the selected type.`);
+      }
       setError(null);
     } catch (error) {
       setError('Failed to fetch data');
@@ -60,6 +64,7 @@ export default function Cricket() {
 
   return (
     <div className="bg-[#E6E6DD] dark:bg-black">
+      <Toaster />
       <div className="bg-[#E6E6DD] dark:bg-black px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
         <div className="flex justify-center w-full mb-4 lg:justify-start">
           <Tabs defaultValue="cricket" className="w-2/3 lg:w-fit" onValueChange={handleTabChange}>

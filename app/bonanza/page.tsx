@@ -17,7 +17,7 @@ export default function Bonanza() {
 
           {/* this div will have an img */}
           <div className="flex-1 flex-shrink-0 h-full">
-            <Image src="/intro-football.png" className="w-auto md:w-full max-h-[200px] md:max-h-[300px] h-auto xl:h-full xl:w-auto" alt="intro football" width={946} height={654} />
+            <Image src="/intro_football_new.png" className="w-auto md:w-full max-h-[200px] md:max-h-[300px] h-auto xl:h-full xl:w-auto" alt="intro football" width={946} height={654} />
           </div>
 
           {/* intro text + buttons */}

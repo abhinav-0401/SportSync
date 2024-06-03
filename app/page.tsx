@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
@@ -117,6 +118,10 @@ function SectionTwo() {
       const response = await axios.get("/api/matches?listType=live");
       setFeaturedMatch(response.data[0]);
       console.log(response.data);
+
+      if (!response.data?.length) {
+        toast.error("Could not fetch Featured Match!");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -129,6 +134,7 @@ function SectionTwo() {
   return (
     <>
       <span className="md:hidden"><FeaturedCard /></span>
+      <Toaster />
       <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
         {/* <FeaturedCard /> */}
         <div className="flex flex-col items-start gap-8">
