@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -70,7 +71,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
               className={`mt-4 p-4 hidden md:block border-2 border-black dark:bg-[#45474A] bg-black text-white dark:text-[#E6E6DD] rounded-xl italic w-full sm:w-60 md:w-80 lg:w-96 xl:w-112 ${isSmallScreen && "sm-button-style"}`}
             >
               {isSmallScreen ? "Click here" : (<div className="flex items-center justify-center space-x-2">
-                <span>Click here to know more</span>
+                <span><Link href={"/bonanza"}>Click here to know more</Link></span>
                 <Image src={"/arrow.png"} alt="arrow" width={20} height={20} />
               </div>)}
             </button>
@@ -176,7 +177,7 @@ function SectionTwo() {
         <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>
 
         
-        <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
+        {/* <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
           <div className="flex flex-col gap-2">
             <div className="flex gap-3 sm:gap-4 font-semibold text-[12px] sm:text-sm md:text-base">
               <span>KL Rahul</span>
@@ -197,7 +198,7 @@ function SectionTwo() {
               <span>MS Dhoni</span>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="w-full flex items-center justify-center">
           <button className="bg-black text-white dark:bg-white italic dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
         </div>
@@ -207,19 +208,59 @@ function SectionTwo() {
 }
 
 function TopPicks() {
+  const [articlesData, setArticlesData] = useState<any>(null);
+
+  useEffect(() => {
+    getArticles();
+  }, []);
+
+  async function getArticles() {
+    const response = await axios.get("/api/articles");
+    setArticlesData(response.data);
+    console.log(response.data);
+
+    if (!response.data?.list?.length) {
+      toast.error("Could not fetch articles");
+    }
+  }
+
   return (
     <div className="px-4 my-6 dark:text-[#E6E6DD]">
+      <Toaster />
       <h2 className="my-10 font-bold text-3xl text-center md:text-left">Top Picks</h2>
       <div className="flex flex-col items-center w-full md:flex-row justify-center flex-wrap gap-10">
-        {Array.from({ length: 6 }).map((_, index) => (
+        {/* {Array.from({ length: 6 }).map((_, index) => (
           <PickCard key={index} />
-        ))}
+        ))} */}
+        {
+          articlesData?.list?.map((article: any, index: number) => {
+            return (
+              <PickCard key={index}
+                title={article?.story?.hline}
+                description={article?.story?.intro}
+                imageUrl={"/article-3.png"}
+                date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
+                id={article?.story?.id ?? 0}
+              />
+            );
+          })
+        }
       </div>
     </div>
   );
 }
 
-function PickCard() {
+type PickCardProps = {
+  title: any;
+  description: any;
+  imageUrl: any;
+  date: any;
+  id: any;
+};
+
+function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
+  const router = useRouter();
+
   return (
     // <div className="flex items-center lg:flex-row flex-col w-full lg:h-[8rem] rounded-xl p-4 hover:bg-white">
     //   <div className="mr-4 -mt-2">
@@ -230,13 +271,13 @@ function PickCard() {
     //     <p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin”</p>
     //   </div>
     // </div>
-    <div className="flex flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]">
+    <div className="flex flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
         <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
       </div>
       <div className="flex flex-col items-center md:items-start">
-        <h2 className="font-bold text-xs sm:text-sm md:text-base">Indian Premier League</h2>
-        <p className="text-xs sm:text-sm italic text-center md:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin</p>
+        <h2 className="font-bold line-clamp-2 text-xs sm:text-sm md:text-base">{title}</h2>
+        <p className="text-xs sm:text-sm italic line-clamp-2 text-center md:text-left">{description}</p>
       </div>
     </div>
   );
