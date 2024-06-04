@@ -1,9 +1,45 @@
+"use client"
+
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/firebase";
 
 export default function Bonanza() {
+  const [surprises, setSurprises] = useState<any>(null);
+
+  async function getPromotions() {
+    const docs = await getDocs(collection(db, "promotions"));
+
+    let promotionsArr: any[] = [];
+    docs.forEach(doc => {
+      promotionsArr.push({ id: doc.id, data: doc.data() });
+    });
+    console.log("promotionsArr: ", promotionsArr);
+
+    let surpriseArr = [];
+    surpriseArr = promotionsArr.filter((promotion: any) => {
+      return promotion?.data?.type === "surprise";
+    });
+    console.log("surpriseArr: ", surpriseArr);
+    setSurprises(surpriseArr);
+  }
+
+  useEffect(() => {
+    getPromotions();
+  }, []);
+
   return (
     <div className="flex flex-col bg-[#E6E6DD] dark:bg-black">
       <div className="bg-[#E6E6DD] dark:bg-black px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-8 flex min-w-[100vw] flex-col">
@@ -86,7 +122,21 @@ export default function Bonanza() {
                 Want us to surprise for you? “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin
               </div>
             </div>
-            <Button className="italic w-full dark:text-[#45474A]">Click here to get a surprise</Button>
+            {/* <Button className="italic w-full dark:text-[#45474A] dark:bg-white">Click here to get a surprise</Button> */}
+            <Dialog>
+              <DialogTrigger className="w-full"><Button className="italic w-full dark:text-[#45474A] dark:bg-white">Click here to get a surprise</Button></DialogTrigger>
+              <DialogContent className="w-fit px-12 py-6 bg-transparent backdrop-blur-lg">
+                <DialogHeader>
+                  <DialogTitle className="text-center">SURPRISE!!</DialogTitle>
+                  <DialogDescription>
+                    <div className="flex flex-col items-center gap-4">
+                      <Image src="/surprise_img.png" height={130} width={160} alt="surprise" />
+                      <a><Button className="italic dark:bg-white">Redirect Link</Button></a>
+                    </div>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
