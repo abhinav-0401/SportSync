@@ -17,7 +17,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase";
 
 export default function Bonanza() {
-  const [surprises, setSurprises] = useState<any>(null);
+  const [surprise, setSurprise] = useState<any>(null);
 
   async function getPromotions() {
     const docs = await getDocs(collection(db, "promotions"));
@@ -33,7 +33,10 @@ export default function Bonanza() {
       return promotion?.data?.type === "surprise";
     });
     console.log("surpriseArr: ", surpriseArr);
-    setSurprises(surpriseArr);
+
+    if (surpriseArr.length > 0) {
+      setSurprise(surpriseArr[surpriseArr.length - 1]);
+    }
   }
 
   useEffect(() => {
@@ -131,7 +134,7 @@ export default function Bonanza() {
                   <DialogDescription>
                     <div className="flex flex-col items-center gap-4">
                       <Image src="/surprise_img.png" height={130} width={160} alt="surprise" />
-                      <a><Button className="italic dark:bg-white">Redirect Link</Button></a>
+                      <a target="_blank" href={`http://${surprise?.data?.redirectUrl}`}><Button className="italic dark:bg-white">Redirect Link</Button></a>
                     </div>
                   </DialogDescription>
                 </DialogHeader>
