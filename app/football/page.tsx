@@ -25,6 +25,10 @@ export default function Football() {
   const [currentType, setCurrentType] = useState<string | undefined>();
   const [currentListType, setCurrentListType] = useState<"live" | "upcoming" | "recent">("live");
 
+  const [currentLeague, setCurrentLeague] = useState<number>(0);
+
+  const [leagues, setLeagues] = useState<any[]>([]);
+
   // const [upcomingData, setUpcomingData] = useState<any>(null);
   // const [completedData, setCompletedData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -45,6 +49,19 @@ export default function Football() {
     }
   };
 
+  async function getLeagues() {
+    const res = await axios.get('/api/football/currentLeagues');
+    console.log("currentLeagues: ", res.data);
+
+    if (!res.data?.length) {
+      toast.error("Could not fetch leagues!");
+    } else if (res.data?.length > 50) {
+      setLeagues(res.data?.slice(0, 50));
+    } else {
+      setLeagues(res.data);
+    }
+  }
+    
   const handleTagClick = (type: string) => {
     fetchData(currentListType, type);
   };
@@ -61,6 +78,7 @@ export default function Football() {
 
   useEffect(() => {
     fetchData(currentListType); // Fetch initial data on mount
+    getLeagues();
   }, []);
 
   return (
@@ -95,17 +113,21 @@ export default function Football() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                  <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
+                  <h2 className="lg:text-xl xl:text-xl font-bold">Leagues</h2>
                   <div className="flex flex-col w-full pl-8">
                     <ul className="flex flex-col gap-4">
-                      <li>India</li>
-                      <li>Bangladesh</li>
-                      <li>Nepal</li>
-                      <li>Sri Lanka</li>
+                      <li onClick={() => setCurrentLeague(0)}>All</li>
+                      {
+                        leagues.map((league: any, index: number) => {
+                          return (
+                            <li key={index} onClick={() => setCurrentLeague(league?.league?.id)}>{league?.league?.name}</li>
+                          );
+                        })
+                      }
                     </ul>
                   </div>
                 </div>
-                <div className="flex flex-col gap-6">
+                {/* <div className="flex flex-col gap-6">
                   <h2 className="lg:text-xl xl:text-xl font-bold">Competitions</h2>
                   <div className="flex flex-col w-full pl-8">
                     <ul className="flex flex-col gap-4">
@@ -115,7 +137,7 @@ export default function Football() {
                       <li>Sri Lanka</li>
                     </ul>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -132,21 +154,21 @@ export default function Football() {
                 {/* {data?.map((match: any, index: number) => (
                   <DayMatchList key={index} schedule={match} />
                 ))} */}
-                <DayMatchList schedule={data} />
+                <DayMatchList schedule={data} currentLeague={currentLeague} />
                 <div className="flex w-full justify-center">
                   {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="upcoming" className="flex w-full flex-col gap-10">
-                <DayMatchList schedule={data} />
+                <DayMatchList schedule={data} currentLeague={currentLeague} />
                 <div className="flex w-full justify-center">
                   {/* <Button className="w-fit">See more</Button> */}
                 </div>
               </TabsContent>
 
               <TabsContent value="completed" className="flex w-full flex-col gap-10">
-                <DayMatchList schedule={data} />
+                <DayMatchList schedule={data} currentLeague={currentLeague} />
                 <div className="flex w-full justify-center">
                   {/* <Button className="w-fit">See more</Button> */}
                 </div>
@@ -165,7 +187,18 @@ export default function Football() {
   );
 }
 
-function DayMatchList({ schedule }: any) {
+function DayMatchList({ schedule, currentLeague }: any) {
+  console.log("day match list: ", schedule);
+
+  let filteredArr = schedule?.filter((match: any) => {
+    if (currentLeague === 0) { return true; }
+    else {
+      return match?.league?.id === currentLeague;
+    }
+  });
+
+  console.log("filteredArr schedule: ", filteredArr);
+
   return (
     <div className="flex flex-col gap-10">
       <div className="flex items-center gap-4 py-4 border-b-2 border-black/40 dark:border-[#E6E6DD80]">
@@ -178,7 +211,7 @@ function DayMatchList({ schedule }: any) {
         </div>
       </div>
 
-      {schedule?.map((match: any, index: number) => (
+      {filteredArr?.map((match: any, index: number) => (
         <MatchCard key={index} match={match} />
       ))}
     </div>
