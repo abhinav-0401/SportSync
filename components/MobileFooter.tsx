@@ -16,11 +16,11 @@ export default function MobileFooter() {
         </div>
         <div className="flex gap-4 items-center">
           <span>
-            <Image src="/insta-mobile-footer-light.png" className="dark:hidden" alt="instagram" width={35} height={35} />
+            <Image src="/instagram-svgrepo-com.svg" className="dark:hidden" alt="instagram" width={35} height={35} />
             <Image src="/insta-mobile-footer-dark.png" className="hidden dark:block" alt="instagram" width={35} height={35} />
           </span>
           <span>
-            <Image src="/fb-mobile-footer-light.png" className="dark:hidden" alt="instagram" width={35} height={35} />
+            <Image src="/facebook-svgrepo-com.svg" className="dark:hidden" alt="instagram" width={35} height={35} />
             <Image src="/fb-mobile-footer-dark.png" className="hidden dark:block" alt="instagram" width={35} height={35} />
           </span>
           <span>
@@ -28,8 +28,8 @@ export default function MobileFooter() {
             <Image src="/x-mobile-footer-dark.png" className="hidden dark:block" alt="instagram" width={35} height={35} />
           </span>
           <span>
-            <Image src="/in-mobile-footer-light.png" className="dark:hidden" alt="instagram" width={35} height={35} />
-            <Image src="/in-mobile-footer-dark.png" className="hidden dark:block" alt="instagram" width={35} height={35} />
+            <Image src="/linkedin-svgrepo-com.svg" className="dark:hidden" alt="instagram" width={35} height={35} />
+            <Image src="/linkedin.png" className="hidden dark:block" alt="instagram" width={35} height={35} />
           </span>
         </div>        
       </div>
