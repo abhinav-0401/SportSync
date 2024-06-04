@@ -43,9 +43,9 @@ export default function AdCard() {
       <Carousel>
         <CarouselContent className="flex items-center">
           {
-            ads?.map((ad: any) => {
+            ads?.map((ad: any, index: number) => {
               return (
-                <CarouselItem>
+                <CarouselItem key={index}>
                   <a target="_blank" href={`http://${ad?.data?.redirectUrl}`}>
                     <div className="flex flex-col items-center">
                       <Image src={ad?.data?.imageUrl ?? "ad.png"} alt="advertisement" height={126} width={213} unoptimized />
