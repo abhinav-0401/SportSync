@@ -13,6 +13,7 @@ import { Base64 } from "js-base64";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 
 interface MatchCardProps {
   match: any;
@@ -33,6 +34,9 @@ export default function Cricket() {
       console.log(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
       setData(response.data);
       console.log(response.data);
+      if (!response.data?.length) {
+        toast.error(`There are currently no ${listType} matches of the selected type.`);
+      }
       setError(null);
     } catch (error) {
       setError('Failed to fetch data');
@@ -60,6 +64,7 @@ export default function Cricket() {
 
   return (
     <div className="bg-[#E6E6DD] dark:bg-black">
+      <Toaster />
       <div className="bg-[#E6E6DD] dark:bg-black px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
         <div className="flex justify-center w-full mb-4 lg:justify-start">
           <Tabs defaultValue="cricket" className="w-2/3 lg:w-fit" onValueChange={handleTabChange}>
@@ -70,45 +75,48 @@ export default function Cricket() {
           </Tabs>
         </div>
 
-        <div className="flex flex-col lg:flex-row flex-grow h-full gap-4 md:gap-10 justify-between">
-          <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
-            {/* <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
+        <div className="flex flex-col lg:flex-row lg:items-start flex-grow h-full gap-4 md:gap-10 justify-between">
+          <div className="hidden lg:block sticky top-28">
+            <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
+              {/* <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
               <Input type="search" placeholder="Indian Premier League" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
             </div> */}
-            <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
-              <div className="flex flex-wrap w-full gap-3">
-                <Tag name="All" onClick={() => fetchData(currentListType)} />
-                <Tag name="International" onClick={() => handleTagClick('International')} />
-                <Tag name="League" onClick={() => handleTagClick('League')} />
-                <Tag name="Domestic" onClick={() => handleTagClick('Domestic')} />
-                <Tag name="Women" onClick={() => handleTagClick('Women')} />
-              </div>
-
-              <div className="flex flex-col gap-6">
-                <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
-                <div className="flex flex-col w-full pl-8">
-                  <ul className="flex flex-col gap-4">
-                    <li>India</li>
-                    <li>Bangladesh</li>
-                    <li>Nepal</li>
-                    <li>Sri Lanka</li>
-                  </ul>
+              <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
+                <div className="flex flex-wrap w-full gap-3">
+                  <Tag name="All" onClick={() => fetchData(currentListType)} />
+                  <Tag name="International" onClick={() => handleTagClick('International')} />
+                  <Tag name="League" onClick={() => handleTagClick('League')} />
+                  <Tag name="Domestic" onClick={() => handleTagClick('Domestic')} />
+                  <Tag name="Women" onClick={() => handleTagClick('Women')} />
                 </div>
-              </div>
-              <div className="flex flex-col gap-6">
-                <h2 className="lg:text-xl xl:text-xl font-bold">Competitions</h2>
-                <div className="flex flex-col w-full pl-8">
-                  <ul className="flex flex-col gap-4">
-                    <li>India</li>
-                    <li>Bangladesh</li>
-                    <li>Nepal</li>
-                    <li>Sri Lanka</li>
-                  </ul>
+
+                <div className="flex flex-col gap-6">
+                  <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
+                  <div className="flex flex-col w-full pl-8">
+                    <ul className="flex flex-col gap-4">
+                      <li>India</li>
+                      <li>Bangladesh</li>
+                      <li>Nepal</li>
+                      <li>Sri Lanka</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-6">
+                  <h2 className="lg:text-xl xl:text-xl font-bold">Competitions</h2>
+                  <div className="flex flex-col w-full pl-8">
+                    <ul className="flex flex-col gap-4">
+                      <li>India</li>
+                      <li>Bangladesh</li>
+                      <li>Nepal</li>
+                      <li>Sri Lanka</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          
 
           <div className="flex-grow">
             <Tabs defaultValue="live" className="w-full">

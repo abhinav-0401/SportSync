@@ -3,6 +3,7 @@
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 type Props = {
   params: { id: string };
@@ -17,6 +18,10 @@ export default function IndividualArticle({ params }: Props) {
     const response = await axios.get(`/api/articles/${id}`);
     console.log(response.data);
     setArticleData(response.data);
+
+    if (response.status != 200) {
+      toast.error("Could not fetch the article!");
+    }
   }
 
   function getContent(contents: any[]): any[] {
@@ -34,6 +39,7 @@ export default function IndividualArticle({ params }: Props) {
   return (
 
     <div className="bg-[#E6E6DD] dark:bg-black px-4 sm:px-10 lg:px-12 xl:px-20">
+      <Toaster />
       <div className="flex flex-col gap-12 px-4 py-4 sm:px-12 sm:py-8 lg:px-16 xl:px-24 lg:py-16">
 
         <header className="flex flex-col gap-2">

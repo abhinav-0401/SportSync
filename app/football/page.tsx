@@ -12,6 +12,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 interface MatchCardProps {
   match: any;
@@ -34,6 +35,9 @@ export default function Football() {
       console.log(`/api/football/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
       setData(response.data);
       console.log(response.data);
+      if (!response.data?.length) {
+        toast.error(`There are currently no ${listType} matches of the selected type.`);
+      }
       setError(null);
     } catch (error) {
       setError('Failed to fetch data');
@@ -61,6 +65,7 @@ export default function Football() {
 
   return (
     <div className="bg-[#E6E6DD] dark:bg-black">
+      <Toaster />
       <div className="bg-[#E6E6DD] dark:bg-black px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
         <div className="flex justify-center w-full mb-4 lg:justify-start">
           <Tabs defaultValue="football" className="w-2/3 lg:w-fit" onValueChange={handleTabChange}>
@@ -71,48 +76,51 @@ export default function Football() {
           </Tabs>
         </div>
 
-        <div className="flex flex-col lg:flex-row flex-grow h-full gap-4 md:gap-10 justify-between">
-          <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
-            {/* <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
+        <div className="flex flex-col lg:items-start lg:flex-row flex-grow h-full gap-4 md:gap-10 justify-between">
+          <div className="hidden lg:block sticky top-28">
+            <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
+              {/* <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
               <Input type="search" placeholder="Indian Premier League" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
             </div> */}
-            <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
-              <div className="flex flex-wrap w-full gap-3">
-                <Tag name="All" onClick={() => fetchData(currentListType)} />
-                <Tag name="Asia" onClick={() => handleTagClick('Asia')} />
-                <Tag name="Africa" onClick={() => handleTagClick('Africa')} />
-                <Tag name="Australia" onClick={() => handleTagClick('Australia')} />
-                <Tag name="Europe" onClick={() => handleTagClick('Europe')} />
-                <Tag name="North America" onClick={() => handleTagClick('North America')} />
-                <Tag name="South America" onClick={() => handleTagClick('South America')} />
-              </div>
-
-              <div className="flex flex-col gap-6">
-                <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
-                <div className="flex flex-col w-full pl-8">
-                  <ul>
-                    <li>India</li>
-                    <li>Bangladesh</li>
-                    <li>Nepal</li>
-                    <li>Sri Lanka</li>
-                  </ul>
+              <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
+                <div className="flex flex-wrap w-full gap-3">
+                  <Tag name="All" onClick={() => fetchData(currentListType)} />
+                  <Tag name="Asia" onClick={() => handleTagClick('Asia')} />
+                  <Tag name="Africa" onClick={() => handleTagClick('Africa')} />
+                  <Tag name="Australia" onClick={() => handleTagClick('Australia')} />
+                  <Tag name="Europe" onClick={() => handleTagClick('Europe')} />
+                  <Tag name="North America" onClick={() => handleTagClick('North America')} />
+                  <Tag name="South America" onClick={() => handleTagClick('South America')} />
                 </div>
-              </div>
-              <div className="flex flex-col gap-6">
-                <h2 className="lg:text-xl xl:text-xl font-bold">Competitions</h2>
-                <div className="flex flex-col w-full pl-8">
-                  <ul>
-                    <li>India</li>
-                    <li>Bangladesh</li>
-                    <li>Nepal</li>
-                    <li>Sri Lanka</li>
-                  </ul>
+
+                <div className="flex flex-col gap-6">
+                  <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
+                  <div className="flex flex-col w-full pl-8">
+                    <ul className="flex flex-col gap-4">
+                      <li>India</li>
+                      <li>Bangladesh</li>
+                      <li>Nepal</li>
+                      <li>Sri Lanka</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-6">
+                  <h2 className="lg:text-xl xl:text-xl font-bold">Competitions</h2>
+                  <div className="flex flex-col w-full pl-8">
+                    <ul className="flex flex-col gap-4">
+                      <li>India</li>
+                      <li>Bangladesh</li>
+                      <li>Nepal</li>
+                      <li>Sri Lanka</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
+          
           <div className="flex-grow">
             <Tabs defaultValue="live" className="w-full">
               <TabsList className="flex w-full justify-between bg-transparent">
@@ -180,60 +188,22 @@ function DayMatchList({ schedule }: any) {
 function MatchCard({ match }: MatchCardProps) {
   const router = useRouter();
   const [liked, setLiked] = useState(false);
-  // const [imageUrl1, setImageUrl1] = useState<string | null>(null);
-  // const [imageUrl2, setImageUrl2] = useState<string | null>(null);
-
-  // console.log(match);
-
-  // const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void) => {
-  //   try {
-  //     const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
-  //     console.log(response.data);
-  //     setImageUrl(response.data.url);
-  //   } catch (error) {
-  //     console.error('Failed to fetch image URL', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const imageId1 = match?.matchInfo[0]?.team1?.imageId;
-  //   const imageId2 = match?.matchInfo[0]?.team2?.imageId;
-
-  //   if (imageId1) fetchImageUrl(imageId1, setImageUrl1);
-  //   if (imageId2) fetchImageUrl(imageId2, setImageUrl2);
-  // }, [match]);
-
-  // async function getMatchDetails(matchId: number) {
-  //   const res = await axios.get(`/api/matchInfo?matchId=${matchId}`);
-  //   console.log(res.data);
-  // }
-
-  // useEffect(() => {
-  //   // getMatchDetails(match?.matchInfo.matchId);
-  // }, [match]);
 
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-white/40 dark:bg-[#45474a66] py-4 md:py-7 px-4 sm:px-8 lg:px-12">
       <div className="flex justify-between">
         <h3 className="font-bold text-base dark:text-[#E6E6DD] lg:text-lg">{match?.league?.name}</h3>
-        {/* <span className="flex items-center" onClick={() => setLiked(!liked)}>
-          {liked ? (
-            <Image src="/heart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
-          ) : (
-            <Image src="/unlikedHeart.png" alt="like" className="md:h-fit h-[16px] w-[16px] md:w-fit min-h-[16px] min-w-[16px]" height={18} width={30} />
-          )}
-        </span> */}
       </div>
 
       <div className="flex justify-between dark:text-[#E6E6DD]">
         <div className="flex items-center gap-8">
           <div>{new Date(parseInt(match?.fixture?.date)).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
           <div className="flex flex-col gap-4 justify-between">
-            <div className="flex gap-4 justify-between">
+            <div className="flex gap-4">
               <Image src={match?.teams?.home?.logo} height={20} width={20} alt={match?.teams?.home?.name} />
               <div className="font-semibold text-sm md:text-base dark:text-[#E6E6DD]">{match?.teams?.home?.name}</div>
             </div>
-            <div className="flex gap-4 justify-between">
+            <div className="flex gap-4">
               <Image src={match?.teams?.away?.logo} height={20} width={20} alt={match?.matchInfo?.team2?.teamName} />
               <div className="font-semibold text-sm md:text-base text-[#828486]">{match?.teams?.away?.name}</div>
             </div>
@@ -251,7 +221,7 @@ function MatchCard({ match }: MatchCardProps) {
         {match?.fixture?.status?.long} {match?.fixture?.status?.elapsed}&apos;
       </div>
 
-      <div className="flex gap-12 py-4 justify-between">
+      <div className="flex gap-8 xl:gap-12 py-4 justify-between">
         <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push(`/analytics/football?matchId=${match?.fixture?.id}&leagueId=${match?.league?.id}`)}>Analytics</Button>
         <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push("/cricket-article")}>Article</Button>
       </div>

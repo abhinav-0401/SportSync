@@ -15,7 +15,7 @@ import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
 import { db } from "@/firebase";
 import { doc, getDoc } from "firebase/firestore";
-
+import { toast, Toaster } from "react-hot-toast";
 
 function TabData() {
   const searchParams = useSearchParams();
@@ -31,18 +31,30 @@ function TabData() {
     const res = await axios.get(`/api/matchInfo/scoreCard?matchId=${matchId}`);
     console.log(res.data);
     setScoreCard(res.data);
+
+    if (!res.data?.scoreCard) {
+      toast.error("Could not fetch the scorecard!");
+    }
   }
 
   async function getLeanBack() {
     const res = await axios.get(`/api/matchInfo/leanBack?matchId=${matchId}`);
     console.log(res.data);
     setLeanBack(res.data);
+    if (res.status != 200) {
+      toast.error("Could not fetch striker and non striker player scores");
+    }
+
   }
 
   async function getPointsTable() {
     const res = await axios.get(`/api/matchInfo/pointsTable?seriesId=${seriesId}`);
     console.log(res.data);
     setPointsTable(res.data);
+    console.log("pointsTable length: ", res.data?.pointsTable?.length);
+    if (!res.data?.pointsTable?.length) {
+      toast.error("Could not fetch points table");
+    }
   }
 
   async function getSummary() {
@@ -51,18 +63,31 @@ function TabData() {
       const docSnap = await getDoc(docRef);
       console.log("summary data: ", docSnap.data());
       setSummaryData(docSnap.data());
+      
+      if (!docSnap.data()) {
+        toast.error("Could not fetch summary!");
+      }
     }
   }
 
+  async function getCricketAnalyticsData() {
+    await getScoreCard();
+    await getPointsTable();
+    await getLeanBack();
+    await getSummary();
+  }
+
   useEffect(() => {
-    getScoreCard();
-    getPointsTable();
-    getLeanBack();
-    getSummary();
+    // getScoreCard();
+    // getPointsTable();
+    // getLeanBack();
+    // getSummary();
+    getCricketAnalyticsData();
   }, []);
 
   return (
     <Tabs defaultValue="live" className="w-full">
+      <Toaster />
       <TabsList className="flex w-full justify-between bg-transparent overflow-x-scroll md:overflow-x-hidden overflow-y-hidden">
         <TabsTrigger className="flex-grow" variant={"outline"} value="live">Live</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="score">Score Card</TabsTrigger>

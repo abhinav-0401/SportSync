@@ -21,7 +21,11 @@ export async function GET(req: Request) {
   try {
     const response = await axios.request(options);
     console.log(response.data);
-    return Response.json({ data: response.data.response[0].league });
+    if (response.data.response?.length > 0) {
+      return Response.json({ data: response.data.response[0].league });
+    } else {
+      return Response.json({ data: response.data.response })
+    }
   } catch (error) {
     console.error(error);
     return Response.json({ message: "Failed to fetch data" },
