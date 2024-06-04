@@ -110,6 +110,12 @@ function TabData() {
         <TabsTrigger className="flex-grow" variant={"outline"} value="table">Table</TabsTrigger>
       </TabsList>
       <TabsContent value="live" className="flex w-full flex-col px-4 gap-12 md:gap-16 lg:gap-20">
+        {
+          fixtureData
+            ? <MatchStats fixtureData={fixtureData} goalsData={goalsData} />
+            : <div className="text-3xl font-bold">NOTHING TO SHOW</div>
+        }
+
         {<MatchStats fixtureData={fixtureData} goalsData={goalsData} />}
         <div className="flex items-start flex-col justify-center w-full space-y-10">
           <span className="font-medium text-lg">Live Win Probability</span>
@@ -177,7 +183,7 @@ function MatchStats({ fixtureData, goalsData }: { fixtureData: any; goalsData: a
 
       <div className="flex flex-col items-start gap-8">
 
-        <div className="bg-black text-white rounded-full py-1 px-2 sm:px-3 md:ml-8">{fixtureData?.fixture?.status?.short}</div>
+        <div className="bg-black dark:bg-white dark:text-black text-white rounded-full py-1 px-2 sm:px-3 md:ml-8">{fixtureData?.fixture?.status?.short}</div>
 
       </div>
 

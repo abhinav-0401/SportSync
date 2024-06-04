@@ -66,7 +66,7 @@ export default function Bonanza() {
             </div>
             <div className="flex gap-20">
               {/* <Button variant={"secondary"} className="italic hidden xl:block">Click here to know more</Button> */}
-              <Button className="italic">Click here to know more</Button>
+              <Button className="italic dark:bg-white">Click here to know more</Button>
             </div>
           </div>
         </div>
