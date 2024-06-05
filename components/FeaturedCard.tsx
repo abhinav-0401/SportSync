@@ -26,7 +26,7 @@ export default function FeaturedCard() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 md:bg-white/60 md:dark:bg-[#45474A80] mx-2 min-[425px]:mx-12 rounded-xl py-4 md:py-7 px-4 md:px-10">
+    <div className="flex flex-col gap-4 md:bg-white/60 md:dark:bg-[#45474A80] mx-2 min-[425px]:mx-12 rounded-xl py-4 md:py-7 px-4 md:px-1 md:mx-0">
       <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">Featured Match</h2>
 
       <div className="flex flex-col gap-6 bg-white/60 dark:bg-[#45474A80] md:mx-0 py-8 md:px-4 px-12 rounded-xl md:!bg-transparent">

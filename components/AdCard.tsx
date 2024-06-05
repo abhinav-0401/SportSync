@@ -38,7 +38,7 @@ export default function AdCard() {
   }, []);
 
   return (
-    <div className="md:flex flex-col items-center justify-center gap-4 hidden rounded-xl bg-white/60 dark:bg-[#45474A80] py-7 px-8">
+    <div className="md:flex flex-col items-center justify-center gap-4 hidden rounded-xl bg-white/60 dark:bg-[#45474A80] py-7 px-3">
       <h3 className="font-semibold">Advertisement</h3>
       <Carousel>
         <CarouselContent className="flex items-center">
