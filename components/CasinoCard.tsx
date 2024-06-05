@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import { Button } from "./ui/button";
 
@@ -12,6 +14,7 @@ import {
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface Props {
   title: string;
@@ -23,15 +26,20 @@ interface Props {
 export default function CasinoCard({ title, description, imageUrl, redirectUrl }: Props) {
   const router = useRouter();
 
+  const [readMore, setReadMore] = useState(false);
+
   return (
-    <div className="flex max-h-[500px] min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg">
+    <div className={readMore ? "flex max-h-fit min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg dark:shadow-white" : "flex max-h-[500px] min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg dark:shadow dark:shadow-white"}>
       <div className="min-w-full">
         <Image src={imageUrl === "" ? "/article-1.png" : imageUrl} className='rounded-lg' alt={title} width={350} height={250} />
       </div>
       <div className="flex flex-1 flex-col justify-between h-full">
         <div className="flex flex-col gap-2 px-2">
           <div className="text-xl md:text-2xl font-semibold dark:text-[#E6E6DD] text-black">{title}</div>
-          <p className="text-gray-700 h-[120px] dark:text-[#E6E6DD] text-ellipsis overflow-y-hidden">{description}</p>
+          <p className="text-gray-700 h-fit dark:text-[#E6E6DD] text-ellipsis overflow-y-hidden">
+            <span className={readMore ? 'line-clamp-none' : 'line-clamp-4'}>{description}</span>
+            <span className='text-[#3E6BEC] font-semibold hover:opacity-50 cursor-pointer' onClick={() => setReadMore(!readMore)}>{readMore ? "Read Less" : "Read More"}</span>
+          </p>
           <span className='md:hidden'>...</span>
         </div>
         <div className="flex w-full justify-end">
