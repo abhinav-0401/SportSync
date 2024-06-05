@@ -66,7 +66,10 @@ export default function Cricket() {
     <div className="bg-[#E6E6DD] dark:bg-black">
       <Toaster />
       <div className="bg-[#E6E6DD] dark:bg-black px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
-        <div className="flex justify-center w-full mb-4 lg:justify-start">
+        <div className="hidden md:flex lg:hidden w-full items-center justify-center">
+          <span className="text-2xl font-semibold tracking-wide">CRICKET</span>
+        </div>
+        <div className="flex justify-center w-full mb-4 md:hidden lg:flex lg:justify-start">
           <Tabs defaultValue="cricket" className="w-2/3 lg:w-fit" onValueChange={handleTabChange}>
             <TabsList className="flex w-full justify-between rounded-full bg-white/40 dark:bg-[#45474a80]">
               <TabsTrigger className="flex-grow rounded-full dark:text-[#E6E6DD80]" value="football">Football</TabsTrigger>
@@ -75,7 +78,7 @@ export default function Cricket() {
           </Tabs>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:items-start flex-grow h-full gap-4 md:gap-10 justify-between">
+        <div className="flex flex-col md:flex-row lg:items-start flex-grow h-full gap-4 md:gap-10 justify-between">
           <div className="hidden lg:block sticky top-28">
             <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
               {/* <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
@@ -118,7 +121,7 @@ export default function Cricket() {
           </div>
           
 
-          <div className="flex-grow">
+          <div className="flex-grow md:w-3/4 lg:w-full">
             <Tabs defaultValue="live" className="w-full">
               <TabsList className="flex w-full justify-between bg-transparent">
                 <TabsTrigger className="flex-grow" variant={"outline"} value="live" onClick={() => handleInnerTabChange("live")}>Live</TabsTrigger>
@@ -151,7 +154,15 @@ export default function Cricket() {
             </Tabs>
           </div>
 
-          <div className="flex flex-col w-full items-center gap-10 lg:max-w-[300px] lg:min-w-[200px]">
+          <div className="flex flex-col w-full items-center gap-10 lg:max-w-[300px] lg:min-w-[200px] md:w-1/4 lg:w-full">
+          <div className="hidden md:flex lg:hidden justify-center w-full">
+          <Tabs defaultValue="football" className="" onValueChange={handleTabChange}>
+            <TabsList className="flex w-full justify-between rounded-full bg-white/40 dark:bg-[#45474a80]">
+              <TabsTrigger className="flex-grow rounded-full dark:text-[#E6E6DD80]" value="football">Football</TabsTrigger>
+              <TabsTrigger className="flex-grow rounded-full" value="cricket">Cricket</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
             <AdCard />
             <FeaturedCard />
             <HotTopics />

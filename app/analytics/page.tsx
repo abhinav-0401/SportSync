@@ -89,11 +89,10 @@ function TabData() {
     <Tabs defaultValue="live" className="w-full">
       <Toaster />
       <TabsList className="flex w-full justify-between bg-transparent overflow-x-scroll md:overflow-x-hidden overflow-y-hidden">
-        <TabsTrigger className="flex-grow" variant={"outline"} value="live">Live</TabsTrigger>
-        <TabsTrigger className="flex-grow" variant={"outline"} value="score">Score Card</TabsTrigger>
-        <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Summary</TabsTrigger>
+        <TabsTrigger className="flex-grow" variant={"outline"} value="live">Info</TabsTrigger>
+        <TabsTrigger className="flex-grow" variant={"outline"} value="score">Scorecard</TabsTrigger>
+        <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Team</TabsTrigger>
         {/* <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger> */}
-        <TabsTrigger className="flex-grow" variant={"outline"} value="table">Table</TabsTrigger>
       </TabsList>
       <TabsContent value="live" className="flex w-full flex-col px-4 gap-12 md:gap-16 lg:gap-20">
         {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchStats scoreCard={scoreCard} leanBack={leanBack} /> : <div className="font-bold text-3xl">NOTHING TO SHOW</div>}
