@@ -48,7 +48,7 @@ export default function AdCard() {
                 <CarouselItem key={index}>
                   <a target="_blank" href={`http://${ad?.data?.redirectUrl}`}>
                     <div className="flex flex-col items-center">
-                      <Image src={ad?.data?.imageUrl ?? "ad.png"} alt="advertisement" height={126} width={213} unoptimized />
+                      <Image src={ad?.data?.imageUrl ?? "/ad.png"} alt="advertisement" height={126} width={213} unoptimized />
                       <div className="flex flex-col items-center gap-2 pt-3">
                         <h4>{ad?.data?.title}</h4>
                         <div className="text-wrap text-center dark:text-[#E6E6DDCC]">

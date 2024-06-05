@@ -69,7 +69,7 @@ export default function Artcile() {
         <div className="flex flex-col lg:flex-row justify-between">
 
           <div className="flex flex-col gap-10 px-4 sm:px-8 md:px-16">
-            <div className="flex bg-white/40 px-1 py-1 rounded-full">
+            <div className="flex bg-[#45474A80] px-1 py-1 rounded-full">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
               <Input type="search" className=" mx-4 border-0 focus-visible:ring-0 bg-transparent" />
               <Button className="rounded-full dark:bg-white px-10">Search</Button>

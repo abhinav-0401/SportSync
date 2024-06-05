@@ -91,7 +91,7 @@ export default function Cricket() {
                   <Tag name="Women" onClick={() => handleTagClick('Women')} />
                 </div>
 
-                <div className="flex flex-col gap-6">
+                {/* <div className="flex flex-col gap-6">
                   <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
                   <div className="flex flex-col w-full pl-8">
                     <ul className="flex flex-col gap-4">
@@ -112,7 +112,7 @@ export default function Cricket() {
                       <li>Sri Lanka</li>
                     </ul>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

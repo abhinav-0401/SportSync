@@ -66,7 +66,7 @@ export default function Bonanza() {
             </div>
             <div className="flex gap-20">
               {/* <Button variant={"secondary"} className="italic hidden xl:block">Click here to know more</Button> */}
-              <Button className="italic">Click here to know more</Button>
+              <Button className="italic dark:bg-white">Click here to know more</Button>
             </div>
           </div>
         </div>
@@ -83,10 +83,10 @@ export default function Bonanza() {
         {/* prizes */}
         <div className="flex flex-col gap-10">
           <h3 className="text-2xl font-bold dark:text-[#E6E6DD]">Prizes</h3>
-          <div className="flex overflow-x-scroll gap-4 justify-between">
-            <Image src="/prizes-1.png" className="max-height-[50px] md:max-height-[343px] md:max-width-[330px]" alt="win prize 600" height={343} width={330} />
-            <Image src="/prizes-2.png" alt="win prize pic 2" height={343} width={330} />
-            <Image src="/prizes-3.png" alt="win prize pic 3" height={343} width={330} />
+          <div className="flex overflow-x-scroll md:overflow-x-auto gap-4 justify-between md:justify-evenly">
+            <Image src="/prizes-1.png" className="lg:h-[400px] lg:w-[400px]" alt="win prize 600" height={343} width={330} />
+            <Image src="/prizes-2.png" className="lg:h-[400px] lg:w-[400px]" alt="win prize pic 2" height={343} width={330} />
+            <Image src="/prizes-3.png" className="lg:h-[400px] lg:w-[400px]" alt="win prize pic 3" height={343} width={330} />
           </div>
         </div>
 
@@ -94,7 +94,7 @@ export default function Bonanza() {
         <div className="flex flex-col dark:text-[#E6E6DD] md:flex-row gap-10">
           <div className="flex flex-col gap-10">
             <h3 className="text-2xl font-bold dark:text-[#E6E6DD] text-center md:text-left">Where can I participate?</h3>
-            <div className="flex overflow-x-scroll justify-between gap-6">
+            <div className="flex overflow-x-scroll md:overflow-x-auto justify-between gap-6">
               <div className="flex flex-1 flex-col items-center justify-betweeen gap-6">
                 <Image src="/where-1.png" alt="Indian Premier League" height={145} width={139} />
                 <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold dark:text-[#E6E6DD]">Indian Premier League</h3>
