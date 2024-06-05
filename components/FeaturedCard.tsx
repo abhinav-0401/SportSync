@@ -36,7 +36,7 @@ export default function FeaturedCard() {
 
           <div className="flex flex-col items-center gap-6">
             <Image src="/india.png" height={20} width={30} alt="india" />
-            <div className="font-semibold text-sm min-[400px]:text-base dark:text-[#E6E6DD]">{featuredMatch?.matchInfo?.team1?.teamName}</div>
+            <div className="font-semibold text-sm text-center dark:text-[#E6E6DD]">{featuredMatch?.matchInfo?.team1?.teamName}</div>
             <div className="text-sm min-[400px]:text-base font-semibold dark:text-[#E6E6DD]">
               {
                 featuredMatch?.matchScore?.team1Score?.inngs1?.runs
@@ -46,11 +46,11 @@ export default function FeaturedCard() {
             </div>
           </div>
 
-          <div className="font-bold">Vs</div>
+          <div className="font-bold text-sm">Vs</div>
 
           <div className="flex flex-col items-center gap-6 text-[#45474A]">
             <Image src="/england.png" height={20} width={30} alt="england" />
-            <div className="font-semibold text-sm min-[400px]:text-base">{featuredMatch?.matchInfo?.team2?.teamName}</div>
+            <div className="font-semibold text-sm text-center">{featuredMatch?.matchInfo?.team2?.teamName}</div>
             <div className="text-sm min-[400px]:text-base font-semibold">
               {
                 featuredMatch?.matchScore?.team2Score?.inngs1?.runs

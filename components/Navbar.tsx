@@ -34,8 +34,8 @@ export default function Navbar() {
             <button className="text-black flex items-center dark:text-black md:dark:text-[#E6E6DD] font-semibold" onClick={themeChange}>
               {
                 theme === 'light'
-                ? <Image src={"/dark_mode_icon_bg.jpg"} alt="change theme to dark mode" height={20} width={20} />
-                : <Image src={"/light_mode_icon.png"} alt="change theme to ligh mode" height={20} width={20} />
+                ? <Image src={"/dark_mode_thumb.png"} alt="change theme to dark mode" height={30} width={30} />
+                : <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={30} width={30} />
               }
             </button>
           </li>
@@ -61,8 +61,8 @@ export default function Navbar() {
               <button className="text-black font-bold text-2xl dark:text-[#E6E6DD]" onClick={themeChange}>
                 {
                   theme === 'light'
-                    ? <Image src={"/dark_mode_icon_bg.jpg"} alt="change theme to dark mode" height={20} width={20} />
-                    : <Image src={"/light_mode_icon.png"} alt="change theme to ligh mode" height={20} width={20} />
+                    ? <Image src={"/dark_mode_thumb.png"} alt="change theme to dark mode" height={30} width={30} />
+                    : <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={30} width={30} />
                 }
               </button>
             </li>

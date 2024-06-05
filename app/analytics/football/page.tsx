@@ -116,8 +116,8 @@ function TabData() {
             : <div className="text-3xl font-bold">NOTHING TO SHOW</div>
         }
 
-        {<MatchStats fixtureData={fixtureData} goalsData={goalsData} />}
-        <div className="flex items-start flex-col justify-center w-full space-y-10">
+        {/* {<MatchStats fixtureData={fixtureData} goalsData={goalsData} />} */}
+        {/* <div className="flex items-start flex-col justify-center w-full space-y-10">
           <span className="font-medium text-lg">Live Win Probability</span>
           <div className="w-full flex items-center justify-center space-x-5">
             <span className="w-fit">IND</span>
@@ -127,7 +127,7 @@ function TabData() {
             </div>
             <span className="w-fit">ENG</span>
           </div>
-        </div>
+        </div> */}
       </TabsContent>
       <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <MatchSummary summaryData={summaryData} />
