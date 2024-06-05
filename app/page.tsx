@@ -291,14 +291,27 @@ function ExcitingOffers() {
           {/* {Array.from({ length: 3 }).map((_, index) => (
             <OfferCard key={index} />
           ))} */}
+          <div className="flex items-center justify-center lg:items-start">
+            <div className="bg-black rounded-full lg:hidden p-1 px-1.5 cursor-pointer">
+              <Image src={"/leftArrow.png"} alt="arrow" width={10} height={10} unoptimized />
+            </div>
+            <div className="flex flex-col items-center justify-center -space-y-36">
+              <span className="brightness-50"><OfferCard /></span>
+              <div className="flex flex-col items-start justify-center ml-5 backdrop-opacity-50 w-[250px]">
+                <span className="text-[#D9D9D9CC] border-b border-[#FFFFFF33] pb-1">Game card</span>
+                <span className="text-[#D9D9D980] text-xs">
+                “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipisc elit. Turpis donec amet proin auctor nec in diam aenean viverra. 
+                </span>
+              </div>
+            </div>
+          </div>
           <span className="lg:block hidden"><OfferCard /></span>
           <span className="xl:block hidden"><OfferCard /></span>
-          <span className=""><OfferCard /></span>
         <div className="flex flex-col justify-center items-center md:flex-grow-1">
-          <p className="p-4 w-72 text-[#45474A] dark:text-[#E6E6DD] font-medium text-left">
+          <p className="p-4 w-72 text-[#45474A] dark:text-[#E6E6DD] font-medium text-center lg:text-left">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
           </p>
-          <button className="mx-20 my-8 border-2 p-4 bg-black dark:bg-[#45474A] dark:text-[#E6E6DD] text-white italic border-black rounded-xl w-72 flex items-center justify-center space-x-2">
+          <button className="mx-20 hidden lg:flex my-8 border-2 p-4 bg-black dark:bg-[#45474A] dark:text-[#E6E6DD] text-white italic border-black rounded-xl w-72 items-center justify-center space-x-2">
             <Image src={"/arrow.png"} alt="arrow" width={20} height={20} className="rotate-180" />
             <span>Click here <span className="hidden md:inline">to know more</span></span>
           </button>
@@ -311,7 +324,7 @@ function ExcitingOffers() {
 function OfferCard() {
   return (
     <div className="flex justify-center items-center mx-2">
-      <Image src="/footballImage.png" alt="Logo" width={400} height={500} className="w-auto lg:max-w-52 lg:min-h-[240px] xl:max-w-[300px] max-w-[300px] sm:max-w-[400px] md:max-w-[600px] xl:min-h-[320px] my-2 rounded-lg shadow-2xl shadow-[#D9D9D980]" unoptimized />
+      <Image src="/footballImage.png" alt="Logo" width={400} height={500} className="w-[250px] lg:w-[270px] lg:min-h-[240px] xl:max-w-[300px] max-w-[300px] sm:max-w-[400px] md:max-w-[600px] xl:min-h-[320px] my-2 rounded-lg shadow-2xl shadow-[#D9D9D980]" unoptimized />
     </div>
   );
 }

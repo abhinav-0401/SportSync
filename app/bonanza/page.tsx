@@ -97,22 +97,22 @@ export default function Bonanza() {
             <div className="flex overflow-x-scroll md:overflow-x-auto justify-between gap-6">
               <div className="flex flex-1 flex-col items-center justify-betweeen gap-6">
                 <Image src="/where-1.png" alt="Indian Premier League" height={145} width={139} />
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold dark:text-[#E6E6DD]">Indian Premier League</h3>
-                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap">
+                <h3 className="text-sm sm:text-base lg:text-xl font-semibold dark:text-[#E6E6DD] text-center">Indian Premier League</h3>
+                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap text-center">
                   “Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit. Turpis donec amet proin
                 </p>
               </div>
               <div className="flex flex-1 flex-col justify-betweeen items-center gap-6">
                 <Image src="/where-1.png" alt="Indian Premier League" height={145} width={139} />
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold">Indian Premier League</h3>
-                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap">
+                <h3 className="text-sm sm:text-base lg:text-xl font-semibold text-center">Indian Premier League</h3>
+                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap text-center">
                   “Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit. Turpis donec amet proin
                 </p>
               </div>
               <div className="flex flex-1 flex-col justify-betweeen items-center gap-6">
                 <Image src="/where-1.png" alt="Indian Premier League" height={145} width={139} />
-                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold">Indian Premier League</h3>
-                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap">
+                <h3 className="text-sm sm:text-base lg:text-xl font-semibold text-center">Indian Premier League</h3>
+                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap text-center">
                   “Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit. Turpis donec amet proin
                 </p>
               </div>
