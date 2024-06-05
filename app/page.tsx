@@ -13,6 +13,7 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Home() {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
 
+
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 640);
@@ -72,7 +73,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
             >
               {isSmallScreen ? "Click here" : (<div className="flex items-center justify-center space-x-2">
                 <span><Link href={"/bonanza"}>Click here to know more</Link></span>
-                <Image src={"/arrow.png"} alt="arrow" width={20} height={20} />
+                <Image src={"/arrow.png"} alt="arrow" width={28} height={20} />
               </div>)}
             </button>
           </div>
@@ -116,7 +117,7 @@ function NewLogoImages() {
     <div className="flex md:gap-4 lg:items-center flex-shrink-0">
       <div className="relative w-fit justify-center items-center mx-2">
         <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] mt-28 mb-20 min-[425px]:min-w-[400px] md:min-w-[220px] min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg hover:" unoptimized />
-        <div className="absolute min-h-[172px] min-[425px]:min-h-[276px] md:min-h-[240px] xl:min-h-[276px] min-[425px]:top-1/4 top-1/3 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[10%] gap-4">
+        <div className="absolute min-h-[172px] min-[425px]:min-h-[276px] md:min-h-[240px] xl:min-h-[276px] min-[425px]:top-1/4 top-1/3 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[5%] gap-4">
           <div className="text-white border-b border-b-white/20 w-full pb-4 text-xs sm:text-lg md:text-base">Game Card</div>
           <div className="text-[#D9D9D980]/50 italic line-clamp-3 min-[425px]:line-clamp-none text-xs sm:text-sm md:text-xs">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.

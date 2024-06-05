@@ -1,13 +1,18 @@
-
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import { useState } from "react";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
+  const [isChecked, setIsChecked] = useState(false)
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked)
+  }
   const router = useRouter();
   const clickHandler = () => {
     router.push('/');
@@ -30,7 +35,7 @@ export default function Navbar() {
           <li><Link href="/casino" className="text-black dark:text-black md:dark:text-[#E6E6DD] hover:text-gray-700">Casino</Link></li>
           <li><Link href="/cricket-article" className="text-black dark:text-black md:dark:text-[#E6E6DD] hover:text-gray-700">Articles</Link></li>
           {/* <li><Link href="/favourites" className="text-black dark:text-[#E6E6DD] hover:text-gray-700">Favourites</Link></li> */}
-          <li>
+          {/* <li>
             <button className="text-black flex items-center dark:text-black md:dark:text-[#E6E6DD] font-semibold" onClick={themeChange}>
               {
                 theme === 'light'
@@ -38,7 +43,23 @@ export default function Navbar() {
                 : <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={30} width={30} />
               }
             </button>
-          </li>
+          </li> */}
+          
+          <label htmlFor="Toggle1" className="inline-flex items-center space-x-4 cursor-pointer dark:text-gray-800">
+            <span className="relative">
+              <input id="Toggle1" type="checkbox" className="hidden peer" onClick={themeChange} />
+              <div className="w-12 h-6 rounded-full shadow-inner bg-[#FFFFFF99] dark:bg-[#45474A] peer-checked:dark:bg-violet-600">
+              {
+                theme === 'dark'
+                && <Image src={"/dark_mode_thumb.png"} alt="change theme to dark mode" height={20} width={20} className="pt-0.5 ml-0.5" />
+              }
+              </div>
+              <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto">
+                {theme === "light" && <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={20} width={20} />}
+              </div>
+            </span>
+          </label>
+
         </ul>
       </div>
 
@@ -57,7 +78,7 @@ export default function Navbar() {
             <li><Link href="/casino" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Casino</Link></li>
             <li><Link href="/cricket-article" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Articles</Link></li>
             {/* <li><Link href="/favourites" className="hover:text-black/40">Favourites</Link></li> */}
-            <li>
+            {/* <li>
               <button className="text-black font-bold text-2xl dark:text-[#E6E6DD]" onClick={themeChange}>
                 {
                   theme === 'light'
@@ -65,7 +86,21 @@ export default function Navbar() {
                     : <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={30} width={30} />
                 }
               </button>
-            </li>
+            </li> */}
+            <label htmlFor="Toggle1" className="inline-flex items-center space-x-4 cursor-pointer dark:text-gray-800">
+            <span className="relative">
+              <input id="Toggle1" type="checkbox" className="hidden peer" onClick={themeChange} />
+              <div className="w-12 h-6 rounded-full shadow-inner bg-[#FFFFFF99] dark:bg-[#45474A] peer-checked:dark:bg-violet-600">
+              {
+                theme === 'dark'
+                && <Image src={"/dark_mode_thumb.png"} alt="change theme to dark mode" height={20} width={20} className="pt-0.5 ml-0.5" />
+              }
+              </div>
+              <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto">
+                {theme === "light" && <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={20} width={20} />}
+              </div>
+            </span>
+          </label>
           </ul>
         </SheetContent>
       </Sheet>
