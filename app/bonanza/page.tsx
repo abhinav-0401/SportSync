@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase";
+import Link from "next/link";
 
 export default function Bonanza() {
   const [surprise, setSurprise] = useState<any>(null);
@@ -44,7 +45,7 @@ export default function Bonanza() {
   }, []);
 
   return (
-    <div className="flex flex-col bg-[#E6E6DD] dark:bg-black">
+    <div className="flex flex-col pb-12 bg-[#E6E6DD] dark:bg-black">
       <div className="bg-[#E6E6DD] dark:bg-black px-6 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 gap-8 flex min-w-[100vw] flex-col">
 
         <header className="flex flex-col items-center text-2xl sm:text-3xl lg:text-4xl font-bold">
@@ -66,7 +67,15 @@ export default function Bonanza() {
             </div>
             <div className="flex gap-20">
               {/* <Button variant={"secondary"} className="italic hidden xl:block">Click here to know more</Button> */}
-              <Button className="italic dark:bg-white">Click here to know more</Button>
+              <Button className="italic dark:bg-white">
+                <Link href={"#prizes"}>
+                  <div className="flex gap-2 fill-white">
+                    <span>Click here to know more</span>
+                    <Image src="right_arrow.svg" alt="right arrow" height={10} width={29} className="dark:block hidden" />
+                    <Image src="right_arrow_light.svg" alt="right arrow" className="dark:hidden" height={10} width={29} />
+                  </div>
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -81,7 +90,7 @@ export default function Bonanza() {
         </div>
 
         {/* prizes */}
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10" id="prizes">
           <h3 className="text-2xl font-bold dark:text-[#E6E6DD]">Prizes</h3>
           <div className="flex overflow-x-scroll md:overflow-x-auto gap-4 justify-between md:justify-evenly">
             <Image src="/prizes-1.png" className="lg:h-[400px] lg:w-[400px]" alt="win prize 600" height={343} width={330} />

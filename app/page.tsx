@@ -116,7 +116,7 @@ function NewLogoImages() {
     <div className="flex md:gap-4 lg:items-center flex-shrink-0">
       <div className="relative w-fit justify-center items-center mx-2">
         <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] mt-28 mb-20 min-[425px]:min-w-[400px] md:min-w-[220px] min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg hover:" unoptimized />
-        <div className="absolute min-h-[172px] min-[425px]:min-h-[276px] md:min-h-[240px] xl:min-h-[276px] min-[425px]:top-1/4 top-1/3 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[10%] gap-4">
+        <div className="absolute min-h-[172px] min-[425px]:min-h-[276px] md:min-h-[240px] xl:min-h-[276px] min-[425px]:top-1/4 top-1/3 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[10%] gap-4 hover:shadow shadow-black dark:shadow-white">
           <div className="text-white border-b border-b-white/20 w-full pb-4 text-xs sm:text-lg md:text-base">Game Card</div>
           <div className="text-[#D9D9D980]/50 italic line-clamp-3 min-[425px]:line-clamp-none text-xs sm:text-sm md:text-xs">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
@@ -293,7 +293,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
     //     <p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin”</p>
     //   </div>
     // </div>
-    <div className="flex hover:cursor-pointer hover:bg-white/50 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
+    <div className="flex hover:cursor-pointer hover:bg-white/50 dark:hover:bg-[#45474A66]/40 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
         <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
       </div>
@@ -307,7 +307,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
 
 function ExcitingOffers() {
   return (
-    <div className="px-4 sm:px-8 pt-6 pb-12 dark:text-[#E6E6DD]">
+    <div className="px-4 sm:px-8 pt-6 pb-12 md:pb-20 dark:text-[#E6E6DD]">
       <h2 className="my-20 font-bold text-3xl text-center md:text-left">Exciting Offers</h2>
       <div className="flex flex-col md:flex-row gap-8 lg:gap-2 xl:gap-4 md:justify-between">
           {/* {Array.from({ length: 3 }).map((_, index) => (
@@ -340,8 +340,8 @@ function ExcitingOffers() {
 
 function OfferCard() {
   return (
-    <div className="relative w-fit justify-center items-center mx-2">
-      <Image src="/footballImage.png" alt="Logo" width={400} height={500} className="w-auto lg:max-w-52 lg:min-h-[240px] xl:max-w-[300px] max-w-[260px] min-[400px]:max-w-[300px]  min-[500px]:max-w-[400px] min-[600px]:max-w-[500px] md:max-w-[200px] md:min-h-[240px] xl:min-h-[320px] my-2 rounded-lg shadow-2xl dark:shadow-[#D9D9D980]" unoptimized />
+    <div className="relative w-fit justify-center items-center mx-2 hover:shadow shadow-black dark:shadow-white">
+      <Image src="/footballImage.png" alt="Logo" width={400} height={500} className="w-auto lg:max-w-52 lg:min-h-[240px] xl:max-w-[300px] max-w-[260px] min-[400px]:max-w-[300px]  min-[500px]:max-w-[400px] min-[600px]:max-w-[500px] md:max-w-[200px] md:min-h-[240px] xl:min-h-[320px] my-2 rounded-lg " unoptimized />
       <div className="absolute inset-0 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[10%] gap-4">
         <div className="text-white border-b border-b-white/20 w-full pb-4 text-xs sm:text-lg md:text-base">Game Card</div>
         <div className="text-[#D9D9D980]/50 italic text-xs line-clamp-3 min-[425px]:line-clamp-none sm:text-sm md:text-xs">

@@ -40,7 +40,7 @@ export default function IndividualArticle({ params }: Props) {
 
   return (
 
-    <div className="bg-[#E6E6DD] dark:bg-black px-4 sm:px-10 lg:px-12 xl:px-20">
+    <div className="bg-[#E6E6DD] dark:bg-black px-4 pb-20 sm:px-10 lg:px-12 xl:px-20">
       <Toaster />
       <div className="flex flex-col gap-12 px-4 py-4 sm:px-12 sm:py-8 lg:px-16 xl:px-24 lg:py-16">
 
@@ -144,7 +144,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
     //     <p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin”</p>
     //   </div>
     // </div>
-    <div className="flex flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
+    <div className="flex hover:cursor-pointer hover:bg-white/50 dark:hover:bg-[#45474A66]/40 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
         <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
       </div>
