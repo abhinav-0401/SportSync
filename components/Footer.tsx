@@ -14,10 +14,14 @@ export default function Footer() {
           “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis<br></br> donec amet proin auctor nec in diam aenean viverra. Risus eget morbi a commodo 
         </div>
         <div className="flex gap-4 bg-blend-exclusion">
-          <Image src="/insta.png" className="bg-blend-exclusion" alt="instagram" height={20} width={28} unoptimized />
-          <Image src="/fb.png" className="bg-blend-exclusion" alt="facebook" height={20} width={20} unoptimized />
-          <Image src="/twitter.png" className="bg-blend-exclusion" alt="twitter" height={20} width={20} unoptimized />
-          <Image src="/linkedinLogo.png" className="bg-blend-exclusion" alt="linkedin" height={20} width={20} unoptimized />
+          <Image src="/instagram_svg_dark.svg" className="dark:hidden" alt="insta" height={30} width={30} unoptimized />
+          <Image src="/instagram_svg_light.svg" className="hidden dark:block" alt="insta" height={30} width={30} unoptimized />
+          <Image src="/fb_svg_dark.svg" className="dark:hidden" alt="facebook" height={20} width={30} unoptimized />
+          <Image src="/fb_svg_light.svg" className="hidden dark:block" alt="facebook" height={20} width={30} unoptimized />
+          <Image src="/twitter_svg_dark.svg" className="dark:hidden" alt="linkedin" height={30} width={30} unoptimized />
+          <Image src="/twitter_svg_light.svg" className="hidden dark:block" alt="linkedin" height={30} width={30} unoptimized />
+          <Image src="/linkedin_svg_dark.svg" className="dark:hidden" alt="linkedin" height={40} width={40} unoptimized />
+          <Image src="/linkedin_svg_light.svg" className="hidden dark:block" alt="linkedin" height={40} width={40} unoptimized />
         </div>
       </div>
 

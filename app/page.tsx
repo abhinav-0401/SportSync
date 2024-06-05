@@ -49,18 +49,18 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
           </h3>
           <div className="flex justify-between min-[425px]:gap-12 min-[425px]:justify-center w-full md:gap-10 lg:gap-16 my-12 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-sm min-[425px]:text-base lg:mx-24 xl:mx-28">
             <span className="flex gap-2">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} className="rounded-full hidden md:block dark:hidden" unoptimized />
-              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full block md:hidden dark:block" unoptimized />
+              <Image src="/cricket_bullet_dark_new.png" alt="cricket" height={15} width={20} className="rounded-full hidden md:block dark:hidden" unoptimized />
+              <Image src="/cricket_bullet_new.png" alt="cricket" height={15} width={20} className="rounded-full block md:hidden dark:block" unoptimized />
               <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Cricket</span>
             </span>
             <span className="flex gap-2">
-              <Image src="/cricket-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full hidden md:block dark:hidden"/>
-              <Image src="/bulletDarkCricket.png" alt="cricket" height={15} width={20} className="rounded-full dark:block block md:hidden" unoptimized />
+              <Image src="/football_bullet_dark_new.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full hidden md:block dark:hidden"/>
+              <Image src="/football_bullet_new.png" alt="cricket" height={15} width={20} className="rounded-full dark:block block md:hidden" unoptimized />
               <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Football</span>
             </span>
             <span className="flex gap-2">
-              <Image src="/casino-bullet.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full hidden md:block dark:hidden" />
-              <Image src="/bulletDarkCasino.png" alt="cricket" height={15} width={20} className="rounded-full dark:block block md:hidden" unoptimized />
+              <Image src="/casino_bullet_dark_new.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full hidden md:block dark:hidden" />
+              <Image src="/casino_bullet_new.png" alt="cricket" height={15} width={20} className="rounded-full dark:block block md:hidden" unoptimized />
               <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Casinos</span>
             </span>
             {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
@@ -77,7 +77,8 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
             </button>
           </div>
         </div>
-        <LogoImages />
+        {/* <LogoImages /> */}
+        <NewLogoImages />
       </div>
 
       <div className="mb-12 md:my-12 w-full px-4 bg-[#e6e6dd] dark:bg-black flex items-center hover:cursor-pointer text-[#E6E6DD]" onClick={() => router.push("/bonanza")}>
@@ -87,7 +88,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
           <div className="flex flex-col items-center justify-center space-y-5">
             <span className="text-3xl tracking-wider md:block hidden font-semibold">FESTIVE BONANZA</span>
             <span className="text-center hidden md:block text-sm md:text-base max-w-3xl">
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
             </span>
           </div>
         </div>
@@ -101,6 +102,27 @@ function LogoImages() {
   return (
     <div className="flex md:gap-4 lg:items-center flex-shrink-0">
       <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] mt-28 mb-20 min-[425px]:min-w-[400px] md:min-w-[220px] min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg hover:" unoptimized />
+      
+      <div className="flex flex-col justify-center">
+        <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] hidden md:block my-2 mt-6" unoptimized />
+        <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] mt-6 hidden md:block" unoptimized />
+      </div>
+    </div>
+  );
+}
+
+function NewLogoImages() {
+  return (
+    <div className="flex md:gap-4 lg:items-center flex-shrink-0">
+      <div className="relative w-fit justify-center items-center mx-2">
+        <Image src="/footballImage.png" alt="Logo" width={250} height={200} className="md:min-h-[240px] mt-28 mb-20 min-[425px]:min-w-[400px] md:min-w-[220px] min-[770px]:min-w-[260px] min-[900px]:min-w-[300px] min-[1100px]:min-w-[350px] xl:min-w-[400px] drop-shadow-2xl shadow-2xl shadow-[#E6E6DD40] rounded-lg hover:" unoptimized />
+        <div className="absolute min-h-[172px] min-[425px]:min-h-[276px] md:min-h-[240px] xl:min-h-[276px] min-[425px]:top-1/4 top-1/3 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[10%] gap-4">
+          <div className="text-white border-b border-b-white/20 w-full pb-4 text-xs sm:text-lg md:text-base">Game Card</div>
+          <div className="text-[#D9D9D980]/50 italic line-clamp-3 min-[425px]:line-clamp-none text-xs sm:text-sm md:text-xs">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
+          </div>
+        </div>
+      </div>
       <div className="flex flex-col justify-center">
         <Image src="/Rectangle 118.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] hidden md:block my-2 mt-6" unoptimized />
         <Image src="/Rectangle 119.png" alt="Logo" width={97} height={94} className="min-h-24 min-w-24 md:min-w-[90px] min-[900px]:min-w-[120px] mt-6 hidden md:block" unoptimized />
@@ -271,7 +293,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
     //     <p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin”</p>
     //   </div>
     // </div>
-    <div className="flex flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
+    <div className="flex hover:cursor-pointer hover:bg-white/50 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
         <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
       </div>
@@ -285,36 +307,31 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
 
 function ExcitingOffers() {
   return (
-    <div className="px-4 py-6 dark:text-[#E6E6DD]">
+    <div className="px-4 sm:px-8 pt-6 pb-12 dark:text-[#E6E6DD]">
       <h2 className="my-20 font-bold text-3xl text-center md:text-left">Exciting Offers</h2>
-      <div className="flex flex-col lg:flex-row lg:justify-between">
+      <div className="flex flex-col md:flex-row gap-8 lg:gap-2 xl:gap-4 md:justify-between">
           {/* {Array.from({ length: 3 }).map((_, index) => (
             <OfferCard key={index} />
           ))} */}
-          <div className="flex items-center justify-center lg:items-start">
-            <div className="bg-black rounded-full lg:hidden p-1 px-1.5 cursor-pointer">
-              <Image src={"/leftArrow.png"} alt="arrow" width={10} height={10} unoptimized />
-            </div>
-            <div className="flex flex-col items-center justify-center -space-y-36">
-              <span className="brightness-50"><OfferCard /></span>
-              <div className="flex flex-col items-start justify-center ml-5 backdrop-opacity-50 w-[250px]">
-                <span className="text-[#D9D9D9CC] border-b border-[#FFFFFF33] pb-1">Game card</span>
-                <span className="text-[#D9D9D980] text-xs">
-                “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. “Lorem ipsum dolor sit amet, consectetur adipisc elit. Turpis donec amet proin auctor nec in diam aenean viverra. 
-                </span>
-              </div>
-            </div>
-          </div>
+          <span className="md:block hidden"><OfferCard /></span>
           <span className="lg:block hidden"><OfferCard /></span>
-          <span className="xl:block hidden"><OfferCard /></span>
+          <span className="flex justify-evenly md:block">
+            <Image src="/offer_arrow.png" height={40} width={40} className="h-auto object-contain md:hidden dark:hidden" alt="prev" />
+            <Image src="/offer_arrow_dark.png" height={40} width={40} className="h-auto object-contain hidden dark:block dark:md:hidden" alt="prev" />
+            <OfferCard />
+          </span>
         <div className="flex flex-col justify-center items-center md:flex-grow-1">
-          <p className="p-4 w-72 text-[#45474A] dark:text-[#E6E6DD] font-medium text-center lg:text-left">
+          <p className="p-4 md:text-sm text-[#45474A] dark:text-[#E6E6DD] font-medium text-left">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra.
           </p>
-          <button className="mx-20 hidden lg:flex my-8 border-2 p-4 bg-black dark:bg-[#45474A] dark:text-[#E6E6DD] text-white italic border-black rounded-xl w-72 items-center justify-center space-x-2">
+          {/* <button className="hidden mx-20 my-8 border-2 p-4 bg-black dark:bg-[#45474A] dark:text-[#E6E6DD] text-white italic border-black rounded-xl lg:w-72 md:flex items-center justify-center space-x-2">
             <Image src={"/arrow.png"} alt="arrow" width={20} height={20} className="rotate-180" />
             <span>Click here <span className="hidden md:inline">to know more</span></span>
-          </button>
+          </button> */}
+          <Button className="hidden md:flex dark:bg-white px-6 py-3 gap-3 rounded-lg justify-center">
+            <Image src={"/arrow.png"} alt="arrow" width={20} height={20} className="rotate-180" />
+            <span>Click here to know more</span>
+          </Button>
         </div>
       </div>
     </div>
@@ -323,8 +340,14 @@ function ExcitingOffers() {
 
 function OfferCard() {
   return (
-    <div className="flex justify-center items-center mx-2">
-      <Image src="/footballImage.png" alt="Logo" width={400} height={500} className="w-[250px] lg:w-[270px] lg:min-h-[240px] xl:max-w-[300px] max-w-[300px] sm:max-w-[400px] md:max-w-[600px] xl:min-h-[320px] my-2 rounded-lg shadow-2xl shadow-[#D9D9D980]" unoptimized />
+    <div className="relative w-fit justify-center items-center mx-2">
+      <Image src="/footballImage.png" alt="Logo" width={400} height={500} className="w-auto lg:max-w-52 lg:min-h-[240px] xl:max-w-[300px] max-w-[260px] min-[400px]:max-w-[300px]  min-[500px]:max-w-[400px] min-[600px]:max-w-[500px] md:max-w-[200px] md:min-h-[240px] xl:min-h-[320px] my-2 rounded-lg shadow-2xl dark:shadow-[#D9D9D980]" unoptimized />
+      <div className="absolute inset-0 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[10%] gap-4">
+        <div className="text-white border-b border-b-white/20 w-full pb-4 text-xs sm:text-lg md:text-base">Game Card</div>
+        <div className="text-[#D9D9D980]/50 italic text-xs line-clamp-3 min-[425px]:line-clamp-none sm:text-sm md:text-xs">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. 
+        </div>
+      </div>
     </div>
   );
 }
