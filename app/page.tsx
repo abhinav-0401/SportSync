@@ -163,11 +163,13 @@ function SectionTwo() {
         <div className="flex flex-col items-start gap-8">
 
           <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
-          <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
+          <div className="lg:px-12">
+            <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
+          </div>
 
         </div>
 
-        <div className="flex justify-between px-4 sm:px-8 md:px-16">
+        <div className="flex justify-between px-4 sm:px-8 md:px-16 lg:px-32">
           <div className="flex gap-4">
             <div className="flex flex-col items-center gap-2 md:gap-4">
               <Image src="/india.png" alt='india' width={36} height={24} />

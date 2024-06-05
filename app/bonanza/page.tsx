@@ -101,37 +101,37 @@ export default function Bonanza() {
 
         {/* where can i participate? */}
         <div className="flex flex-col dark:text-[#E6E6DD] md:flex-row gap-10">
-          <div className="flex flex-col gap-10">
-            <h3 className="text-2xl font-bold dark:text-[#E6E6DD] text-center md:text-left">Where can I participate?</h3>
-            <div className="flex overflow-x-scroll md:overflow-x-auto justify-between gap-6">
+          <div className="flex flex-col gap-6">
+            <h3 className="text-2xl font-semibold dark:text-[#E6E6DD] text-center md:text-left">Where can I participate?</h3>
+            <div className="flex overflow-x-scroll md:overflow-x-auto justify-between gap-4 md:gap-6">
               <div className="flex flex-1 flex-col items-center justify-betweeen gap-6">
                 <Image src="/where-1.png" alt="Indian Premier League" height={145} width={139} />
                 <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold dark:text-[#E6E6DD]">Indian Premier League</h3>
-                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap">
+                <p className="italic text-[#45474A] dark:text-[#E6E6DD] text-center font-normal text-xs sm:text-sm text-wrap">
                   “Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit. Turpis donec amet proin
                 </p>
               </div>
               <div className="flex flex-1 flex-col justify-betweeen items-center gap-6">
                 <Image src="/where-1.png" alt="Indian Premier League" height={145} width={139} />
                 <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold">Indian Premier League</h3>
-                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap">
+                <p className="italic text-[#45474A] dark:text-[#E6E6DD] text-center font-normal text-xs sm:text-sm text-wrap">
                   “Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit. Turpis donec amet proin
                 </p>
               </div>
               <div className="flex flex-1 flex-col justify-betweeen items-center gap-6">
                 <Image src="/where-1.png" alt="Indian Premier League" height={145} width={139} />
                 <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold">Indian Premier League</h3>
-                <p className="italic text-[#45474A] dark:text-[#E6E6DD] font-normal text-xs sm:text-sm text-wrap">
+                <p className="italic text-[#45474A] dark:text-[#E6E6DD] text-center font-normal text-xs sm:text-sm text-wrap">
                   “Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit. Turpis donec amet proin
                 </p>
               </div>
             </div>
           </div>
-          <div className="flex-1 flex flex-col gap-12 justify-end items-center">
-            <div className="flex flex-col gap-6 items-center">
-              <h1 className="text-2xl lg:text-3xl font-bold">CONFUSED?!</h1>
+          <div className="flex-1 flex flex-col gap-8 justify-end items-center">
+            <div className="flex flex-col gap-4 items-center">
+              <h1 className="text-2xl lg:text-3xl font-semibold">CONFUSED?!</h1>
               <div className="text-sm md:text-base lg:text-lg text-wrap text-[#45474A] dark:text-[#E6E6DD] text-center font-normal">
-                Want us to surprise for you? “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin
+                Want us to surprise for you? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin
               </div>
             </div>
             {/* <Button className="italic w-full dark:text-[#45474A] dark:bg-white">Click here to get a surprise</Button> */}
