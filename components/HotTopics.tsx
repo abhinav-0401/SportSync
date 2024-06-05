@@ -86,7 +86,7 @@ function HotTopic({ hotTopic }: any) {
       <div className="flex flex-col gap-2 items-center">
         <h4 className={readMore ? "font-semibold text-base sm:text-lg line-clamp-none lg:text-xl" : "font-semibold text-base sm:text-lg line-clamp-2 lg:text-xl"}>{hotTopic?.story?.hline}</h4>
         <div className={readMore ? "text-wrap font-normal line-clamp-none text-sm text-[#45474A] dark:text-[#E6E6DDCC]" : "text-wrap font-normal line-clamp-4 text-sm text-[#45474A] dark:text-[#E6E6DDCC]"}>
-          <span className={readMore ? 'line-clamp-none' : 'line-clamp-4'}>{hotTopic?.story?.intro}</span>
+          <span className={readMore ? 'line-clamp-none' : 'line-clamp-3'}>{hotTopic?.story?.intro}</span>
           <span className='text-[#3E6BEC] font-semibold hover:opacity-50 cursor-pointer' onClick={() => setReadMore(!readMore)}>{readMore ? "Read Less" : "Read More"}</span>
         </div>
       </div>

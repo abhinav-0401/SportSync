@@ -29,7 +29,7 @@ export default function CasinoCard({ title, description, imageUrl, redirectUrl }
   const [readMore, setReadMore] = useState(false);
 
   return (
-    <div className={readMore ? "flex max-h-fit min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg" : "flex max-h-[500px] min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg"}>
+    <div className={readMore ? "flex max-h-fit min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg dark:shadow-white" : "flex max-h-[500px] min-h-[500px] flex-col max-w-[350px] items-center gap-5 p-5 pb-8 bg-white/66 dark:bg-[#45474a80] rounded-xl border border-solid border-gray-300/66 shadow-lg dark:shadow dark:shadow-white"}>
       <div className="min-w-full">
         <Image src={imageUrl === "" ? "/article-1.png" : imageUrl} className='rounded-lg' alt={title} width={350} height={250} />
       </div>
