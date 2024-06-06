@@ -3,6 +3,7 @@
 import AdCard from "@/components/AdCard";
 // import DayMatchList from "@/components/DayMatchList";
 import FeaturedCard from "@/components/FeaturedCard";
+import HorizontalTag from "@/components/HorizontalTag";
 import HotTopics from "@/components/HotTopics";
 import Tag from "@/components/tag";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,10 @@ export default function Cricket() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async (listType: "live" | "upcoming" | "recent", type?: string) => {
+    if (!type) {
+      setCurrentType("All");
+    }
+
     try {
       const response = await axios.get(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
       console.log(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
@@ -45,6 +50,7 @@ export default function Cricket() {
   };
 
   const handleTagClick = (type: string) => {
+    setCurrentType(type);
     fetchData(currentListType, type);
   };
 
@@ -66,6 +72,7 @@ export default function Cricket() {
     <div className="bg-[#E6E6DD] dark:bg-black">
       <Toaster />
       <div className="bg-[#E6E6DD] dark:bg-black px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16 sm:gap-10 lg:gap-20 flex flex-col w-full">
+
         <div className="hidden md:flex lg:hidden w-full items-center justify-center">
           <span className="text-2xl font-semibold tracking-wide">CRICKET</span>
         </div>
@@ -79,12 +86,10 @@ export default function Cricket() {
         </div>
 
         <div className="flex flex-col md:flex-row lg:items-start flex-grow h-full gap-4 md:gap-10 justify-between">
+
           <div className="hidden lg:block sticky top-28">
             <div className="flex flex-col justify-center items-center md:gap-10 min-h-full mb-4 sm:mb-8 lg:mb-16 min-w-full lg:max-w-[260px] lg:min-w-[200px]">
-              {/* <div className="flex lg:w-full w-5/6 bg-white/40 dark:bg-[#45474A] px-1 py-1 rounded-2xl">
-              <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
-              <Input type="search" placeholder="Indian Premier League" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
-            </div> */}
+
               <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
                 <div className="flex flex-wrap w-full gap-3">
                   <Tag name="All" onClick={() => fetchData(currentListType)} />
@@ -94,34 +99,21 @@ export default function Cricket() {
                   <Tag name="Women" onClick={() => handleTagClick('Women')} />
                 </div>
 
-                {/* <div className="flex flex-col gap-6">
-                  <h2 className="lg:text-xl xl:text-xl font-bold">Regions</h2>
-                  <div className="flex flex-col w-full pl-8">
-                    <ul className="flex flex-col gap-4">
-                      <li>India</li>
-                      <li>Bangladesh</li>
-                      <li>Nepal</li>
-                      <li>Sri Lanka</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-6">
-                  <h2 className="lg:text-xl xl:text-xl font-bold">Competitions</h2>
-                  <div className="flex flex-col w-full pl-8">
-                    <ul className="flex flex-col gap-4">
-                      <li>India</li>
-                      <li>Bangladesh</li>
-                      <li>Nepal</li>
-                      <li>Sri Lanka</li>
-                    </ul>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
           
 
-          <div className="flex-grow md:w-3/4 lg:w-full">
+          <div className="flex-grow md:w-3/4 lg:w-full flex flex-col gap-8 md:gap-12">
+
+            <div className="w-full flex gap-4 md:overflow-x-auto overflow-x-scroll lg:hidden">
+              <HorizontalTag name="All" active={currentType === "All"} onClick={() => fetchData(currentListType)} />
+              <HorizontalTag name="International" active={currentType === "International"} onClick={() => handleTagClick('International')} />
+              <HorizontalTag name="League" active={currentType === "League"} onClick={() => handleTagClick('League')} />
+              <HorizontalTag name="Domestic" active={currentType === "Domestic"} onClick={() => handleTagClick('Domestic')} />
+              <HorizontalTag name="Women" active={currentType === "Women"} onClick={() => handleTagClick('Women')} />
+            </div>
+
             <Tabs defaultValue="live" className="w-full">
               <TabsList className="flex w-full justify-between bg-transparent">
                 <TabsTrigger className="flex-grow" variant={"outline"} value="live" onClick={() => handleInnerTabChange("live")}>Live</TabsTrigger>
@@ -129,9 +121,6 @@ export default function Cricket() {
                 <TabsTrigger className="flex-grow" variant={"outline"} value="completed" onClick={() => handleInnerTabChange("recent")}>Completed</TabsTrigger>
               </TabsList>
               <TabsContent value="live" className="flex w-full flex-col gap-10">
-                {/* {data?.map((match: any, index: number) => (
-                  <DayMatchList key={index} schedule={match} />
-                ))} */}
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
                   {/* <Button className="w-fit">See more</Button> */}
@@ -155,14 +144,14 @@ export default function Cricket() {
           </div>
 
           <div className="flex flex-col w-full items-center gap-10 lg:max-w-[300px] lg:min-w-[200px] md:w-1/4 lg:w-full">
-          <div className="hidden md:flex lg:hidden justify-center w-full">
-          <Tabs defaultValue="football" className="" onValueChange={handleTabChange}>
-            <TabsList className="flex w-full justify-between rounded-full bg-white/40 dark:bg-[#45474a80]">
-              <TabsTrigger className="flex-grow rounded-full dark:text-[#E6E6DD80]" value="football">Football</TabsTrigger>
-              <TabsTrigger className="flex-grow rounded-full" value="cricket">Cricket</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
+            <div className="hidden md:flex lg:hidden justify-center w-full">
+              <Tabs defaultValue="football" className="" onValueChange={handleTabChange}>
+                <TabsList className="flex w-full justify-between rounded-full bg-white/40 dark:bg-[#45474a80]">
+                  <TabsTrigger className="flex-grow rounded-full dark:text-[#E6E6DD80]" value="football">Football</TabsTrigger>
+                  <TabsTrigger className="flex-grow rounded-full" value="cricket">Cricket</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
             <AdCard />
             <FeaturedCard />
             <HotTopics />
