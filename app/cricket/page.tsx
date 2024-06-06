@@ -121,9 +121,6 @@ export default function Cricket() {
                 <TabsTrigger className="flex-grow" variant={"outline"} value="completed" onClick={() => handleInnerTabChange("recent")}>Completed</TabsTrigger>
               </TabsList>
               <TabsContent value="live" className="flex w-full flex-col gap-10">
-                {/* {data?.map((match: any, index: number) => (
-                  <DayMatchList key={index} schedule={match} />
-                ))} */}
                 <DayMatchList schedule={data} />
                 <div className="flex w-full justify-center">
                   {/* <Button className="w-fit">See more</Button> */}
