@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useState } from "react";
@@ -47,7 +47,7 @@ export default function Navbar() {
           
           <label htmlFor="Toggle1" className="inline-flex items-center space-x-4 cursor-pointer dark:text-gray-800">
             <span className="relative">
-              <input id="Toggle1" type="checkbox" className="hidden peer" onClick={themeChange} />
+              <input id="Toggle1" type="checkbox" className="hidden peer" onClick={themeChange} checked={theme === 'light' ? true : false} />
               <div className="w-12 h-6 rounded-full shadow-inner bg-[#FFFFFF99] dark:bg-[#45474A] peer-checked:dark:bg-violet-600">
               {
                 theme === 'dark'
@@ -55,7 +55,7 @@ export default function Navbar() {
               }
               </div>
               <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto">
-                {theme === "light" && <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={20} width={20} />}
+                {theme === "light" && <Image src={"/light_mode_thumb.png"} alt="change theme to light mode" height={20} width={20} />}
               </div>
             </span>
           </label>
@@ -73,7 +73,9 @@ export default function Navbar() {
             <SheetTitle className="text-black">Menu</SheetTitle>
           </SheetHeader>
           <ul className="pt-6 flex flex-col gap-4 text-lg">
-            <li><Link href="/cricket" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Cricket</Link></li>
+            <SheetClose>
+              <li><Link href="/cricket" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Cricket</Link></li>
+            </SheetClose>
             <li><Link href="/football" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Football</Link></li>
             <li><Link href="/casino" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Casino</Link></li>
             <li><Link href="/cricket-article" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Articles</Link></li>
@@ -89,7 +91,7 @@ export default function Navbar() {
             </li> */}
             <label htmlFor="Toggle1" className="inline-flex items-center space-x-4 cursor-pointer dark:text-gray-800">
             <span className="relative">
-              <input id="Toggle1" type="checkbox" className="hidden peer" onClick={themeChange} />
+              <input id="Toggle1" type="checkbox" className="hidden peer" onClick={themeChange} checked={theme === 'light' ? true : false} />
               <div className="w-12 h-6 rounded-full shadow-inner bg-[#FFFFFF99] dark:bg-[#45474A] peer-checked:dark:bg-violet-600">
               {
                 theme === 'dark'
@@ -97,7 +99,7 @@ export default function Navbar() {
               }
               </div>
               <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto">
-                {theme === "light" && <Image src={"/light_mode_thumb.png"} alt="change theme to ligh mode" height={20} width={20} />}
+                {theme === "light" && <Image src={"/light_mode_thumb.png"} alt="change theme to light mode" height={20} width={20} />}
               </div>
             </span>
           </label>
