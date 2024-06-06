@@ -14,7 +14,6 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
   try {
     const response = await axios.request(options);
-    console.log(response.data);
     return Response.json({ article: response.data });
   } catch (error) {
     console.error(error);

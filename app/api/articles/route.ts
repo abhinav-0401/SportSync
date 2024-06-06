@@ -12,11 +12,9 @@ export async function GET(req: Request) {
 
   try {
     const response = await axios.request(options);
-    console.log(response.data);
     const filteredData = response.data?.storyList?.filter((story: any) => {
       return story?.hasOwnProperty("story");
     });
-    console.log(filteredData);
     return Response.json({ list: filteredData });
   } catch (error) {
     console.error(error);

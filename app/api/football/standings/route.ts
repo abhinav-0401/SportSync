@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
   try {
     const response = await axios.request(options);
-    console.log(response.data);
+    
     if (response.data.response?.length > 0) {
       return Response.json({ data: response.data.response[0].league });
     } else {

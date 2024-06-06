@@ -27,13 +27,11 @@ export default function Bonanza() {
     docs.forEach(doc => {
       promotionsArr.push({ id: doc.id, data: doc.data() });
     });
-    console.log("promotionsArr: ", promotionsArr);
 
     let surpriseArr = [];
     surpriseArr = promotionsArr.filter((promotion: any) => {
       return promotion?.data?.type === "surprise";
     });
-    console.log("surpriseArr: ", surpriseArr);
 
     if (surpriseArr.length > 0) {
       setSurprise(surpriseArr[surpriseArr.length - 1]);

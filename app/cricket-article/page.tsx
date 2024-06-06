@@ -34,7 +34,6 @@ export default function Artcile() {
   async function getArticles() {
     const response = await axios.get("/api/articles");
     setArticlesData(response.data);
-    console.log(response.data);
 
     if (!response.data?.list?.length) {
       toast.error("Could not fetch articles");

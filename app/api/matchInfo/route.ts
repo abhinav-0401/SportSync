@@ -15,7 +15,6 @@ export async function GET(req: Request) {
 
   try {
     const response = await axios.request(options);
-    console.log(response.data);
     return Response.json(response.data);
   } catch (error) {
     console.error(error);

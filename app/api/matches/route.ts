@@ -6,8 +6,6 @@ export async function GET(req: Request) {
   const type = searchParams.get("type");
   const listType = searchParams.get("listType");
 
-  console.log("type", type);
-
   const options = {
     method: "GET",
     url: `https://cricbuzz-cricket.p.rapidapi.com/matches/v1/${listType}`,
@@ -20,7 +18,7 @@ export async function GET(req: Request) {
   try {
     const response = await axios.request(options);
     const data = response.data;
-    // console.log(data);
+
     const typeMatches = data.typeMatches.filter((item: any) => {
       if (type) {
         return item.matchType.toLowerCase() === type.toLowerCase()
@@ -28,7 +26,7 @@ export async function GET(req: Request) {
         return true;
       }
     });
-    console.log("typeMatches: ", typeMatches);
+
     let matchesArr: any[] = [];
     typeMatches.forEach((item: any) => {
       item.seriesMatches.forEach((seriesMatch: any) => {
@@ -37,7 +35,7 @@ export async function GET(req: Request) {
         }
       });
     });
-    // console.log(matchesArr);
+
     return NextResponse.json(matchesArr);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";

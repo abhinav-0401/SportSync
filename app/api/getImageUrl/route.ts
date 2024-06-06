@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
 export async function GET(req: NextRequest) {
-  console.log("Request received");
+
   const { searchParams } = new URL(req.url);
   const imageId = searchParams.get("imageId");
-  console.log("Image ID:", imageId);
 
   if (!imageId) {
     return NextResponse.json(
@@ -25,8 +24,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const response = await axios.request(options);
-    console.log("Response received:", response.config.url);
-    console.log(response.data);
+
     return NextResponse.json({ url: response.config.url, data: response.data });
   } catch (error) {
     console.error("Error fetching image URL:", error);

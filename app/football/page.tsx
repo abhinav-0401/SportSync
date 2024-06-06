@@ -41,9 +41,8 @@ export default function Football() {
 
     try {
       const response = await axios.get(`/api/football/fixtures?listType=${listType}${type ? `&type=${type}` : ''}`);
-      console.log(`/api/football/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
       setData(response.data);
-      console.log(response.data);
+      
       if (!response.data?.length) {
         toast.error(`There are currently no ${listType} matches of the selected type.`);
       }
@@ -56,7 +55,6 @@ export default function Football() {
 
   async function getLeagues() {
     const res = await axios.get('/api/football/currentLeagues');
-    console.log("currentLeagues: ", res.data);
 
     if (!res.data?.length) {
       toast.error("Could not fetch leagues!");
@@ -73,7 +71,6 @@ export default function Football() {
   };
 
   const handleTabChange = (tab: any) => {
-    console.log(tab);
     router.push(`/${tab}`);
   };
 
@@ -211,7 +208,6 @@ export default function Football() {
 }
 
 function DayMatchList({ schedule, currentLeague }: any) {
-  console.log("day match list: ", schedule);
 
   let filteredArr = schedule?.filter((match: any) => {
     if (currentLeague === 0) { return true; }
@@ -219,8 +215,6 @@ function DayMatchList({ schedule, currentLeague }: any) {
       return match?.league?.id === currentLeague;
     }
   });
-
-  console.log("filteredArr schedule: ", filteredArr);
 
   return (
     <div className="flex flex-col gap-10">

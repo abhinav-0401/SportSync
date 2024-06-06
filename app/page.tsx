@@ -141,7 +141,6 @@ function SectionTwo() {
     try {
       const response = await axios.get("/api/matches?listType=live");
       setFeaturedMatch(response.data[0]);
-      console.log(response.data);
 
       if (!response.data?.length) {
         toast.error("Could not fetch Featured Match!");
@@ -242,7 +241,6 @@ function TopPicks() {
   async function getArticles() {
     const response = await axios.get("/api/articles");
     setArticlesData(response.data);
-    console.log(response.data);
 
     if (!response.data?.list?.length) {
       toast.error("Could not fetch articles");

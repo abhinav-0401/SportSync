@@ -29,7 +29,6 @@ function TabData() {
 
   async function getScoreCard() {
     const res = await axios.get(`/api/matchInfo/scoreCard?matchId=${matchId}`);
-    console.log(res.data);
     setScoreCard(res.data);
 
     if (!res.data?.scoreCard) {
@@ -39,7 +38,6 @@ function TabData() {
 
   async function getLeanBack() {
     const res = await axios.get(`/api/matchInfo/leanBack?matchId=${matchId}`);
-    console.log(res.data);
     setLeanBack(res.data);
     if (res.status != 200) {
       toast.error("Could not fetch striker and non striker player scores");
@@ -49,9 +47,7 @@ function TabData() {
 
   async function getPointsTable() {
     const res = await axios.get(`/api/matchInfo/pointsTable?seriesId=${seriesId}`);
-    console.log(res.data);
     setPointsTable(res.data);
-    console.log("pointsTable length: ", res.data?.pointsTable?.length);
     if (!res.data?.pointsTable?.length) {
       toast.error("Could not fetch points table");
     }
@@ -61,7 +57,6 @@ function TabData() {
     if (matchId) {
       const docRef = doc(db, "summary", `${matchId}`);
       const docSnap = await getDoc(docRef);
-      console.log("summary data: ", docSnap.data());
       setSummaryData(docSnap.data());
       
       // if (!docSnap.data()) {

@@ -6,8 +6,6 @@ export async function GET(req: Request) {
   const listType = searchParams.get("listType");
   const type = searchParams.get("type");
 
-  console.log(type);
-
   let fixtureParams = {};
   if (listType === "live") {
     fixtureParams = {
@@ -34,7 +32,6 @@ export async function GET(req: Request) {
   try {
     const response = await axios.request(options);
     const data = response.data;
-    console.log(data);
 
     if (!type) {
       return NextResponse.json(response.data.response);
