@@ -79,7 +79,11 @@ export default function Football() {
 
   function handleInnerTabChange(tabValue: "live" | "upcoming" | "recent") {
     setCurrentListType(tabValue);
-    fetchData(tabValue, currentType);
+    if (currentType !== "All") {
+      fetchData(tabValue, currentType);
+    } else {
+      fetchData(tabValue);
+    }
   }
 
   useEffect(() => {

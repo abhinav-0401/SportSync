@@ -61,7 +61,11 @@ export default function Cricket() {
 
   function handleInnerTabChange(tabValue: "live" | "upcoming" | "recent") {
     setCurrentListType(tabValue);
-    fetchData(tabValue);
+    if (currentType !== "All") {
+      fetchData(tabValue, currentType);
+    } else {
+      fetchData(tabValue);
+    }
   }
 
   useEffect(() => {
