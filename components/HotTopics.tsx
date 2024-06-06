@@ -15,7 +15,6 @@ export default function HotTopics() {
   async function getArticles() {
     const response = await axios.get("/api/articles");
     setHotTopicsData(response.data);
-    console.log("hotTopics: ", response.data);
 
     if (!response.data?.list?.length) {
       toast.error("Could not fetch articles");

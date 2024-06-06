@@ -29,7 +29,6 @@ function TabData() {
 
   async function getScoreCard() {
     const res = await axios.get(`/api/matchInfo/scoreCard?matchId=${matchId}`);
-    console.log(res.data);
     setScoreCard(res.data);
 
     if (!res.data?.scoreCard) {
@@ -39,7 +38,6 @@ function TabData() {
 
   async function getLeanBack() {
     const res = await axios.get(`/api/matchInfo/leanBack?matchId=${matchId}`);
-    console.log(res.data);
     setLeanBack(res.data);
     if (res.status != 200) {
       toast.error("Could not fetch striker and non striker player scores");
@@ -49,9 +47,7 @@ function TabData() {
 
   async function getPointsTable() {
     const res = await axios.get(`/api/matchInfo/pointsTable?seriesId=${seriesId}`);
-    console.log(res.data);
     setPointsTable(res.data);
-    console.log("pointsTable length: ", res.data?.pointsTable?.length);
     if (!res.data?.pointsTable?.length) {
       toast.error("Could not fetch points table");
     }
@@ -61,12 +57,11 @@ function TabData() {
     if (matchId) {
       const docRef = doc(db, "summary", `${matchId}`);
       const docSnap = await getDoc(docRef);
-      console.log("summary data: ", docSnap.data());
       setSummaryData(docSnap.data());
       
-      if (!docSnap.data()) {
-        toast.error("Could not fetch summary!");
-      }
+      // if (!docSnap.data()) {
+      //   toast.error("Could not fetch summary!");
+      // }
     }
   }
 
@@ -224,32 +219,38 @@ function MatchStats({ scoreCard, leanBack }: { scoreCard: any; leanBack: any; })
 
 function MatchSummary({ summaryData } : { summaryData: any;}) {
 
-  console.log("summaryData from MatchSummary: ", summaryData);
+  if (summaryData) {
+    return (
+      <div className="flex flex-col gap-8">
 
-  return (
-    <div className="flex flex-col gap-8">
+        <div className="flex flex-col items-start gap-8">
 
-      <div className="flex flex-col items-start gap-8">
+          <h3 className="font-bold text-xl text-center w-full md:text-left">Summary</h3>
 
-        <h3 className="font-bold text-xl text-center w-full md:text-left">Summary</h3>
+        </div>
 
-      </div>
+        <div className="flex items-center gap-4 md:gap-8">
+          <Image src={summaryData?.imageUrl ?? "/analytics-summary.png"} alt="summary" className="min-w-[150px] rounded-md min-h-[150px]" height={177} width={182} unoptimized />
 
-      <div className="flex items-center gap-4 md:gap-8">
-        <Image src={summaryData?.imageUrl ?? "/analytics-summary.png"} alt="summary" className="min-w-[150px] rounded-md min-h-[150px]" height={177} width={182} unoptimized />
-
-        <div className="flex flex-col gap-2 sm:gap-4 md:gap-8">
-          <h3 className="font-semibold text-lg md:text-xl lg:text-2xl">{summaryData?.title}</h3>
-          <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
-            {summaryData?.keyPoints}
+          <div className="flex flex-col gap-2 sm:gap-4 md:gap-8">
+            <h3 className="font-semibold text-lg md:text-xl lg:text-2xl">{summaryData?.title}</h3>
+            <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+              {summaryData?.keyPoints}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
-        {summaryData?.content}
-      </div>
+        <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+          {summaryData?.content}
+        </div>
 
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return (
+      <div className="w-full text-center p-12 font-bold text-2xl">
+        NO SUMMARY
+      </div>
+    );
+  }
 }

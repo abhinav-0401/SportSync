@@ -38,7 +38,6 @@ function TabData() {
 
   async function getPointsTable() {
     const res = await axios.get(`/api/football/standings?leagueId=${leagueId}&season=${fixtureData?.league?.season}`);
-    console.log(res.data);
     setPointsTable(res.data);
 
     if (!res.data?.length) {
@@ -48,7 +47,6 @@ function TabData() {
 
   async function getStats() {
     const res = await axios.get(`/api/football/stats?matchId=${matchId}`);
-    console.log("stats: ", res.data);
     setStatsData(res.data.data);
 
     if (!res.data?.data) {
@@ -58,7 +56,6 @@ function TabData() {
 
   async function getFixtureData() {
     const res = await axios.get(`/api/football/fixture/${matchId}`);
-    console.log("Fixture: ", res.data.data.response[0]);
     setFixtureData(res.data.data.response[0]);
 
     if (!res.data?.length) {
@@ -68,7 +65,6 @@ function TabData() {
     let goalEvents = res.data?.data?.response[0]?.events?.filter((event: any) => {
       return event?.type?.toLowerCase() === "goal";
     });
-    console.log("goalEvents", goalEvents);
     setGoalsData(goalEvents);
   }
 
@@ -76,12 +72,12 @@ function TabData() {
     if (matchId) {
       const docRef = doc(db, "footballSummary", `${matchId}`);
       const docSnap = await getDoc(docRef);
-      console.log("summary data: ", docSnap.data());
+
       setSummaryData(docSnap.data());
 
-      if (!docSnap.data()) {
-        toast.error("Could not fetch summary!");
-      }
+      // if (!docSnap.data()) {
+      //   toast.error("Could not fetch summary!");
+      // }
     }
   }
 
@@ -281,7 +277,6 @@ type FootballProps = {
 }
 
 function FootballScoreCard({ fixtureData, scoreCard, homeId, awayId }: FootballProps) {
-  // console.log("hehe", scoreCard?.scoreCard[0].batTeamDetails?.batsmenData)
 
   const [homeEvents, setHomeEvents] = useState<any[]>([]);
   const [awayEvents, setAwayEvents] = useState<any[]>([]);
@@ -295,7 +290,6 @@ function FootballScoreCard({ fixtureData, scoreCard, homeId, awayId }: FootballP
     });
     setHomeEvents(home);
     setAwayEvents(away);
-    console.log("events", home, away);
   }, []);
 
   return (
@@ -330,7 +324,6 @@ function FootballResponsiveTable({ eventsData, score }: { eventsData: any[], sco
   let lessThanHalfEvents = reversedEvents?.filter((event: any, idx: number) => {
     return event?.time?.elapsed < 45;
   });
-  console.log("event arr", greaterThanHalfEvents, lessThanHalfEvents);
 
   return (
     <Table className='mb-12'>
@@ -419,32 +412,38 @@ function FootballTeamStats({ statsData }: StatsProps) {
 
 function MatchSummary({ summaryData }: { summaryData: any; }) {
 
-  console.log("summaryData from MatchSummary: ", summaryData);
+  if (summaryData) {
+    return (
+      <div className="flex flex-col gap-8">
 
-  return (
-    <div className="flex flex-col gap-8">
+        <div className="flex flex-col items-start gap-8">
 
-      <div className="flex flex-col items-start gap-8">
+          <h3 className="font-bold text-xl text-center w-full md:text-left">Summary</h3>
 
-        <h3 className="font-bold text-xl text-center w-full md:text-left">Summary</h3>
+        </div>
 
-      </div>
+        <div className="flex items-center gap-4 md:gap-8">
+          <Image src={summaryData?.imageUrl ?? "/analytics-summary.png"} alt="summary" className="min-w-[150px] min-h-[150px] rounded-md" height={177} width={182} unoptimized />
 
-      <div className="flex items-center gap-4 md:gap-8">
-        <Image src={summaryData?.imageUrl ?? "/analytics-summary.png"} alt="summary" className="min-w-[150px] min-h-[150px] rounded-md" height={177} width={182} unoptimized />
-
-        <div className="flex flex-col gap-2 sm:gap-4 md:gap-8">
-          <h3 className="font-semibold text-lg md:text-xl lg:text-2xl">{summaryData?.title}</h3>
-          <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
-            {summaryData?.keyPoints}
+          <div className="flex flex-col gap-2 sm:gap-4 md:gap-8">
+            <h3 className="font-semibold text-lg md:text-xl lg:text-2xl">{summaryData?.title}</h3>
+            <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+              {summaryData?.keyPoints}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
-        {summaryData?.content}
-      </div>
+        <div className="font-normal text-base md:text-lg lg:text-xl text-[#45474A] dark:text-[#E6E6DD]">
+          {summaryData?.content}
+        </div>
 
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return (
+      <div className="w-full text-center p-12 font-bold text-2xl">
+        NO SUMMARY
+      </div>
+    );
+  }
 }

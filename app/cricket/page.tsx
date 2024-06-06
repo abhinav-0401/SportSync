@@ -36,9 +36,9 @@ export default function Cricket() {
 
     try {
       const response = await axios.get(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
-      console.log(`/api/matches?listType=${listType}${type ? `&type=${type}` : ''}`);
+
       setData(response.data);
-      console.log(response.data);
+
       if (!response.data?.length) {
         toast.error(`There are currently no ${listType} matches of the selected type.`);
       }
@@ -55,13 +55,16 @@ export default function Cricket() {
   };
 
   const handleTabChange = (tab: any) => {
-    console.log(tab);
     router.push(`/${tab}`);
   };
 
   function handleInnerTabChange(tabValue: "live" | "upcoming" | "recent") {
     setCurrentListType(tabValue);
-    fetchData(tabValue);
+    if (currentType !== "All") {
+      fetchData(tabValue, currentType);
+    } else {
+      fetchData(tabValue);
+    }
   }
 
   useEffect(() => {
@@ -191,8 +194,6 @@ function MatchCard({ match }: MatchCardProps) {
   const [imageData2, setImageData2] = useState<any | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // console.log(match);
-
   // const fetchImageUrl = async (imageId: string, setImageUrl: (url: string) => void, setImageData: (data: any) => void) => {
   //   try {
   //     const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
@@ -201,7 +202,6 @@ function MatchCard({ match }: MatchCardProps) {
   //     // const blob = await res.blob();
   //     // const b = await blob.arrayBuffer();
 
-  //     console.log(response.data);
   //     setImageUrl(response.data.url);
   //     setImageData(response.data.data);
   //   } catch (error) {
@@ -219,7 +219,6 @@ function MatchCard({ match }: MatchCardProps) {
 
   // async function getMatchDetails(matchId: number) {
   //   const res = await axios.get(`/api/matchInfo?matchId=${matchId}`);
-  //   console.log(res.data);
   // }
 
   // useEffect(() => {

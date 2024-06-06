@@ -3,7 +3,6 @@ import axios from "axios";
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const matchId = searchParams.get("matchId");
-  console.log("matchId: ", matchId);
 
   const options = {
     method: 'GET',
@@ -16,7 +15,6 @@ export async function GET(req: Request) {
 
   try {
     const response = await axios.request(options);
-    console.log(response.data);
     return Response.json(response.data);
   } catch (error) {
     console.error(error);

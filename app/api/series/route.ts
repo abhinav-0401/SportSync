@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   try {
     const response = await axios.request(options);
     const data = response.data;
-    // console.log(response);
+
     if (type) {
       const filteredData = data.matchScheduleMap.filter((item: any) =>
         item.scheduleAdWrapper?.matchScheduleList.some(
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
             schedule.seriesCategory.toLowerCase() === type.toLowerCase()
         )
       );
-      //  console.log(filteredData);
+
       return NextResponse.json(filteredData);
     } else {
       return NextResponse.json(data);

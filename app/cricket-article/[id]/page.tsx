@@ -18,7 +18,6 @@ export default function IndividualArticle({ params }: Props) {
 
   async function getArticle() {
     const response = await axios.get(`/api/articles/${id}`);
-    console.log(response.data);
     setArticleData(response.data);
 
     if (response.status != 200) {
@@ -30,7 +29,6 @@ export default function IndividualArticle({ params }: Props) {
     let filteredArr = contents?.filter((content: any) => {
       return content?.hasOwnProperty("content");
     });
-    console.log(filteredArr);
     return filteredArr;
   }
   
@@ -90,7 +88,6 @@ function TopPicks() {
   async function getArticles() {
     const response = await axios.get("/api/articles");
     setArticlesData(response.data);
-    console.log(response.data);
 
     if (!response.data?.list?.length) {
       toast.error("Could not fetch articles");

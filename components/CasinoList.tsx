@@ -26,7 +26,6 @@ export default function CasinoList({ type }: Props) {
       casinoArr.push({ id: doc.id, data: doc.data() });
     });
     setCasinoData(casinoArr);
-    console.log("casinoData: ", casinoArr);
   }
 
   useEffect(() => {

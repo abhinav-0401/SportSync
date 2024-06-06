@@ -15,7 +15,6 @@ export default function FeaturedCard() {
     try {
       const response = await axios.get("/api/matches?listType=live");
       setFeaturedMatch(response.data[0]);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

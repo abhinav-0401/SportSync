@@ -11,7 +11,6 @@ type Props = {
 }
 
 function ScoreCard({ scoreCard }: Props) {
-  // console.log("hehe", scoreCard?.scoreCard[0].batTeamDetails?.batsmenData)
 
   return (
     <div className='flex flex-col items-start justify-center space-y-7'>

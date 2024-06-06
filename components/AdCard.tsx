@@ -23,13 +23,11 @@ export default function AdCard() {
     docs.forEach(doc => {
       promotionsArr.push({ id: doc.id, data: doc.data() });
     });
-    console.log("promotionsArr: ", promotionsArr);
 
     let adArr = [];
     adArr = promotionsArr.filter((promotion: any) => {
       return promotion?.data?.type === "ad";
     });
-    console.log("adArr: ", adArr);
     setAds(adArr);
   }
 
