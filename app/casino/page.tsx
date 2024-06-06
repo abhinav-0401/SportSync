@@ -7,9 +7,9 @@ import CasinoList from "@/components/CasinoList";
 export default function Casino() {
   return (
     <div className="bg-[#E6E6DD] dark:bg-black min-h-screen">
-      <div className="flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-16">
+      <div className="flex flex-col gap-20 px-4 py-4 sm:px-10 sm:py-8 lg:px-20 lg:py-10">
         
-        <div className="px-8 sm:px-16 md:px-24 lg:px-32 flex flex-col gap-20">
+        <div className="px-8 sm:px-16 md:px-24 lg:px-32 flex flex-col gap-10">
             <div className="flex justify-center mt-4 font-bold text-4xl">
               <h1>CASINO</h1>
             </div>
