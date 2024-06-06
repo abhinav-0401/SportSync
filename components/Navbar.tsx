@@ -9,6 +9,7 @@ import { useState } from "react";
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [isChecked, setIsChecked] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked)
@@ -63,7 +64,7 @@ export default function Navbar() {
         </ul>
       </div>
 
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
           <Image src="/hamburger.png" alt="menu button" width={30} height={20} className="dark:hidden md:hidden" />
           <Image src="/hamburger-new.png" alt="menu button" width={30} height={20} className="hidden dark:block dark:md:hidden" />
@@ -73,12 +74,10 @@ export default function Navbar() {
             <SheetTitle className="text-black">Menu</SheetTitle>
           </SheetHeader>
           <ul className="pt-6 flex flex-col gap-4 text-lg">
-            <SheetClose>
-              <li><Link href="/cricket" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Cricket</Link></li>
-            </SheetClose>
-            <li><Link href="/football" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Football</Link></li>
-            <li><Link href="/casino" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Casino</Link></li>
-            <li><Link href="/cricket-article" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Articles</Link></li>
+            <li onClick={() => setOpen(!open)}><Link href="/cricket" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Cricket</Link></li>
+            <li onClick={() => setOpen(!open)}><Link href="/football" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Football</Link></li>
+            <li onClick={() => setOpen(!open)}><Link href="/casino" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Casino</Link></li>
+            <li onClick={() => setOpen(!open)}><Link href="/cricket-article" className="text-black hover:text-black/40 dark:text-[#E6E6DD]">Articles</Link></li>
             {/* <li><Link href="/favourites" className="hover:text-black/40">Favourites</Link></li> */}
             {/* <li>
               <button className="text-black font-bold text-2xl dark:text-[#E6E6DD]" onClick={themeChange}>
