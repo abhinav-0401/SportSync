@@ -240,12 +240,19 @@ function TopPicks() {
 
   async function getArticles() {
     const response = await axios.get("/api/articles");
-    setArticlesData(response.data);
+
+    if (response.data?.list?.length > 6) {
+      setArticlesData(response.data?.list?.slice(0, 6));
+    } else {
+      setArticlesData(response.data?.list);
+    }
+    
 
     if (!response.data?.list?.length) {
       toast.error("Could not fetch articles");
     }
   }
+
 
   return (
     <div className="px-4 my-6 dark:text-[#E6E6DD]">
@@ -256,7 +263,7 @@ function TopPicks() {
           <PickCard key={index} />
         ))} */}
         {
-          articlesData?.list?.map((article: any, index: number) => {
+          articlesData?.map((article: any, index: number) => {
             return (
               <PickCard key={index}
                 title={article?.story?.hline}
