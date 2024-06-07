@@ -2,6 +2,7 @@
 
 import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
+import { blobToPng } from "@/lib/blobtopng";
 import axios from "axios";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -136,69 +137,112 @@ function SectionTwo() {
   const router = useRouter();
 
   const [featuredMatch, setFeaturedMatch] = useState<any>(null);
+  const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/matches?listType=live");
-      setFeaturedMatch(response.data[0]);
+      const match = response.data[0];
+      setFeaturedMatch(match);
 
       if (!response.data?.length) {
         toast.error("Could not fetch Featured Match!");
+      } else {
+        const team1ImageId = match.matchInfo.team1.imageId;
+        const team2ImageId = match.matchInfo.team2.imageId;
+        fetchImages(team1ImageId, team2ImageId);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const fetchImages = async (team1ImageId: number, team2ImageId: number) => {
+    const fetchImage = async (imageId: number): Promise<string | null> => {
+      try {
+        const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+        const options = {
+          method: 'GET',
+          url: imageUrl,
+          params: { p: 'de', d: 'high' },
+          headers: {
+            'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
+            'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+          },
+          responseType: 'blob' as const
+        };
+
+        const response = await axios.request(options);
+        const blob = response.data;
+
+        return await blobToPng(blob);
+      } catch (error) {
+        console.error(`Error fetching image for imageId ${imageId}:`, error);
+        return null;
+      }
+    };
+
+    const team1Png = await fetchImage(team1ImageId);
+    setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
+
+    await delay(200); // Add delay of 200ms between requests
+
+    const team2Png = await fetchImage(team2ImageId);
+    setFlagImages(prev => ({ ...prev, [team2ImageId.toString()]: team2Png! }));
+  }
 
   return (
     <>
-      <span className="md:hidden"><FeaturedCard /></span>
-      <Toaster />
-      <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
-        {/* <FeaturedCard /> */}
-        <div className="flex flex-col items-start gap-8">
+     <span className="md:hidden"><FeaturedCard /></span>
+    <Toaster />
+    <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
+      {/* <FeaturedCard /> */}
+      <div className="flex flex-col items-start gap-8">
 
-          <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
-          <div className="lg:px-12">
-            <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
-          </div>
-
+        <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
+        <div className="lg:px-12">
+          <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
         </div>
 
-        <div className="flex justify-between px-4 sm:px-8 md:px-16 lg:px-32">
-          <div className="flex gap-4">
-            <div className="flex flex-col items-center gap-2 md:gap-4">
-              <Image src="/india.png" alt='india' width={36} height={24} />
-              <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team1?.teamName}</div>
-            </div>
-            <div className="font-medium text-base md:text-lg">
-              {
-                featuredMatch?.matchScore?.team1Score?.inngs1?.runs
-                  ? <span>{featuredMatch?.matchScore?.team1Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team1Score?.inngs1?.wickets}</span>
-                  : <span>Yet to Bat</span>
-              }
-            </div>
+      </div>
+
+      <div className="flex justify-between px-4 sm:px-8 md:px-16 lg:px-32">
+        <div className="flex gap-4">
+          <div className="flex flex-col items-center gap-2 md:gap-4">
+            <Image src={flagImages[featuredMatch?.matchInfo?.team1?.imageId]} alt='india' width={36} height={24} />
+            <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team1?.teamName}</div>
           </div>
-          <div className="flex gap-2">
-            <div className="font-medium text-sm min-[370px]:text-base md:text-lg">
-              {
-                featuredMatch?.matchScore?.team2Score?.inngs1?.runs
-                  ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span>
-                  : <span>Yet to Bat</span>
-              }
-            </div>
-            <div className="flex flex-col items-center gap-2 md:gap-4">
-              <Image src="/england.png" alt='india' width={36} height={24} />
-              <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team2?.teamName}</div>
-            </div>
+          <div className="font-medium text-base md:text-lg">
+            {
+              featuredMatch?.matchScore?.team1Score?.inngs1?.runs
+                ? <span>{featuredMatch?.matchScore?.team1Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team1Score?.inngs1?.wickets}</span>
+                : <span>Yet to Bat</span>
+            }
           </div>
         </div>
+        <div className="flex gap-2">
+          <div className="font-medium text-sm min-[370px]:text-base md:text-lg">
+            {
+              featuredMatch?.matchScore?.team2Score?.inngs1?.runs
+                ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span>
+                : <span>Yet to Bat</span>
+            }
+          </div>
+          <div className="flex flex-col items-center gap-2 md:gap-4">
+            <Image src={flagImages[featuredMatch?.matchInfo?.team2?.imageId]} alt='india' width={36} height={24} />
+            <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team2?.teamName}</div>
+          </div>
+        </div>
+      </div>
 
-        <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>
+      <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>
 
         
         {/* <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
@@ -233,25 +277,88 @@ function SectionTwo() {
 
 function TopPicks() {
   const [articlesData, setArticlesData] = useState<any>(null);
+  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     getArticles();
   }, []);
 
   async function getArticles() {
-    const response = await axios.get("/api/articles");
+    // const response = await axios.get("/api/articles");
 
-    if (response.data?.list?.length > 6) {
-      setArticlesData(response.data?.list?.slice(0, 6));
-    } else {
-      setArticlesData(response.data?.list);
-    }
+    // if (response.data?.list?.length > 6) {
+    //   setArticlesData(response.data?.list?.slice(0, 6));
+    // } else {
+    //   setArticlesData(response.data?.list);
+    // }
     
+    try {
+      const response = await axios.get("/api/articles");
+      const articles = response.data;
 
-    if (!response.data?.list?.length) {
-      toast.error("Could not fetch articles");
+      if (response.data?.list?.length > 6) {
+        setArticlesData(response.data?.list?.slice(0, 6));
+      } else {
+        setArticlesData(response.data?.list);
+      }
+
+      if (!articles?.list?.length) {
+        console.error("Could not fetch articles");
+      } else {
+        fetchImages(articles?.list);
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
     }
   }
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const fetchImages = async (articles: any) => {
+    const newImagesData: { [key: string]: string } = {};
+
+    for (const article of articles) {
+      const imageId = article?.story?.imageId;
+      const articleId = article?.story?.id;
+
+      if (!imageId || !articleId) continue;
+
+      const cacheKey = `image_${imageId}`;
+      const cachedImage = localStorage.getItem(cacheKey);
+
+      if (cachedImage) {
+        newImagesData[articleId] = cachedImage;
+      } else {
+        try {
+          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+          const options = {
+            method: 'GET',
+            url: imageUrl,
+            params: { p: 'de', d: 'high' },
+            headers: {
+              'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+            },
+            responseType: 'blob' as const
+          };
+
+          const response = await axios.request(options);
+          const blob = response.data;
+
+          const pngUrl = await blobToPng(blob);
+          newImagesData[articleId] = pngUrl;
+          localStorage.setItem(cacheKey, pngUrl);
+
+          await delay(200); // Add delay of 200ms between requests
+        } catch (error) {
+          console.error(`Error fetching image for article ${articleId}:`, error);
+        }
+      }
+    }
+
+    setImagesData(newImagesData);
+  };
 
 
   return (
@@ -268,7 +375,7 @@ function TopPicks() {
               <PickCard key={index}
                 title={article?.story?.hline}
                 description={article?.story?.intro}
-                imageUrl={"/article-3.png"}
+                imageUrl={imagesData[article?.story?.id]}
                 date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
                 id={article?.story?.id ?? 0}
               />
@@ -303,7 +410,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
     // </div>
     <div className="flex hover:cursor-pointer hover:bg-white/50 dark:hover:bg-[#45474A66]/40 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
-        <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
+        <Image src={imageUrl} className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Loading" width={134} height={90} />
       </div>
       <div className="flex flex-col items-center md:items-start">
         <h2 className="font-bold line-clamp-2 text-xs sm:text-sm md:text-base">{title}</h2>
