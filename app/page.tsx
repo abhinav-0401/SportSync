@@ -139,15 +139,22 @@ function SectionTwo() {
   const [featuredMatch, setFeaturedMatch] = useState<any>(null);
   const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/matches?listType=live");
-      setFeaturedMatch(response.data[0]);
+      const match = response.data[0];
+      setFeaturedMatch(match);
 
       if (!response.data?.length) {
         toast.error("Could not fetch Featured Match!");
       } else {
-        fetchFlags(featuredMatch?.matchInfo);
+        const team1ImageId = match.matchInfo.team1.imageId;
+        const team2ImageId = match.matchInfo.team2.imageId;
+        fetchImages(team1ImageId, team2ImageId);
       }
     } catch (error) {
       console.error(error);
@@ -156,12 +163,9 @@ function SectionTwo() {
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-  const fetchFlags = async (featuredMatch: any) => {
-    const newImagesData: { [key: string]: string } = {};
-
-    for (const match of featuredMatch) {
+  const fetchImages = async (team1ImageId: number, team2ImageId: number) => {
+    const fetchImage = async (imageId: number): Promise<string | null> => {
       try {
-        const imageId = match?.team1?.imageId;
         const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
 
         const options = {
@@ -169,7 +173,7 @@ function SectionTwo() {
           url: imageUrl,
           params: { p: 'de', d: 'high' },
           headers: {
-            'x-rapidapi-key': `${process.env.RAPIDAPI_KEY}`,
+            'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
             'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
           },
           responseType: 'blob' as const
@@ -178,66 +182,67 @@ function SectionTwo() {
         const response = await axios.request(options);
         const blob = response.data;
 
-        const pngUrl = await blobToPng(blob);
-        console.log(pngUrl)
-        newImagesData[match?.team1?.teamId] = pngUrl;
-
-        await delay(200);
+        return await blobToPng(blob);
       } catch (error) {
-        console.error(`Error fetching image for article ${match?.team1?.teamId}:`, error);
+        console.error(`Error fetching image for imageId ${imageId}:`, error);
+        return null;
       }
-    }
-  }
+    };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+    const team1Png = await fetchImage(team1ImageId);
+    setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
+
+    await delay(200); // Add delay of 200ms between requests
+
+    const team2Png = await fetchImage(team2ImageId);
+    setFlagImages(prev => ({ ...prev, [team2ImageId.toString()]: team2Png! }));
+  }
 
   return (
     <>
-      <span className="md:hidden"><FeaturedCard /></span>
-      <Toaster />
-      <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
-        {/* <FeaturedCard /> */}
-        <div className="flex flex-col items-start gap-8">
+     <span className="md:hidden"><FeaturedCard /></span>
+    <Toaster />
+    <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
+      {/* <FeaturedCard /> */}
+      <div className="flex flex-col items-start gap-8">
 
-          <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
-          <div className="lg:px-12">
-            <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
-          </div>
-
+        <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
+        <div className="lg:px-12">
+          <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
         </div>
 
-        <div className="flex justify-between px-4 sm:px-8 md:px-16 lg:px-32">
-          <div className="flex gap-4">
-            <div className="flex flex-col items-center gap-2 md:gap-4">
-              <Image src="/india.png" alt='india' width={36} height={24} />
-              <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team1?.teamName}</div>
-            </div>
-            <div className="font-medium text-base md:text-lg">
-              {
-                featuredMatch?.matchScore?.team1Score?.inngs1?.runs
-                  ? <span>{featuredMatch?.matchScore?.team1Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team1Score?.inngs1?.wickets}</span>
-                  : <span>Yet to Bat</span>
-              }
-            </div>
+      </div>
+
+      <div className="flex justify-between px-4 sm:px-8 md:px-16 lg:px-32">
+        <div className="flex gap-4">
+          <div className="flex flex-col items-center gap-2 md:gap-4">
+            <Image src={flagImages[featuredMatch?.matchInfo?.team1?.imageId]} alt='india' width={36} height={24} />
+            <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team1?.teamName}</div>
           </div>
-          <div className="flex gap-2">
-            <div className="font-medium text-sm min-[370px]:text-base md:text-lg">
-              {
-                featuredMatch?.matchScore?.team2Score?.inngs1?.runs
-                  ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span>
-                  : <span>Yet to Bat</span>
-              }
-            </div>
-            <div className="flex flex-col items-center gap-2 md:gap-4">
-              <Image src="/england.png" alt='india' width={36} height={24} />
-              <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team2?.teamName}</div>
-            </div>
+          <div className="font-medium text-base md:text-lg">
+            {
+              featuredMatch?.matchScore?.team1Score?.inngs1?.runs
+                ? <span>{featuredMatch?.matchScore?.team1Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team1Score?.inngs1?.wickets}</span>
+                : <span>Yet to Bat</span>
+            }
           </div>
         </div>
+        <div className="flex gap-2">
+          <div className="font-medium text-sm min-[370px]:text-base md:text-lg">
+            {
+              featuredMatch?.matchScore?.team2Score?.inngs1?.runs
+                ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span>
+                : <span>Yet to Bat</span>
+            }
+          </div>
+          <div className="flex flex-col items-center gap-2 md:gap-4">
+            <Image src={flagImages[featuredMatch?.matchInfo?.team2?.imageId]} alt='india' width={36} height={24} />
+            <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team2?.teamName}</div>
+          </div>
+        </div>
+      </div>
 
-        <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>
+      <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>
 
         
         {/* <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
@@ -301,35 +306,45 @@ function TopPicks() {
     const newImagesData: { [key: string]: string } = {};
 
     for (const article of articles) {
-      try {
-        const imageId = article?.story?.imageId;
-        const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+      const imageId = article?.story?.imageId;
+      const articleId = article?.story?.id;
 
-        const options = {
-          method: 'GET',
-          url: imageUrl,
-          params: { p: 'de', d: 'high' },
-          headers: {
-            'x-rapidapi-key': `${process.env.RAPIDAPI_KEY}`,
-            'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
-          },
-          responseType: 'blob' as const
-        };
+      if (!imageId || !articleId) continue;
 
-        const response = await axios.request(options);
-        const blob = response.data;
+      const cacheKey = `image_${imageId}`;
+      const cachedImage = localStorage.getItem(cacheKey);
 
-        const pngUrl = await blobToPng(blob);
-        console.log(pngUrl)
-        newImagesData[article?.story?.id] = pngUrl;
+      if (cachedImage) {
+        newImagesData[articleId] = cachedImage;
+      } else {
+        try {
+          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
 
-        await delay(200);
-      } catch (error) {
-        console.error(`Error fetching image for article ${article?.story?.id}:`, error);
+          const options = {
+            method: 'GET',
+            url: imageUrl,
+            params: { p: 'de', d: 'high' },
+            headers: {
+              'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+            },
+            responseType: 'blob' as const
+          };
+
+          const response = await axios.request(options);
+          const blob = response.data;
+
+          const pngUrl = await blobToPng(blob);
+          newImagesData[articleId] = pngUrl;
+          localStorage.setItem(cacheKey, pngUrl);
+
+          await delay(200); // Add delay of 200ms between requests
+        } catch (error) {
+          console.error(`Error fetching image for article ${articleId}:`, error);
+        }
       }
     }
 
-    // console.log(newImagesData)
     setImagesData(newImagesData);
   };
 
