@@ -2,6 +2,7 @@
 
 import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
+import { blobToPng } from "@/lib/blobtopng";
 import axios from "axios";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -136,6 +137,7 @@ function SectionTwo() {
   const router = useRouter();
 
   const [featuredMatch, setFeaturedMatch] = useState<any>(null);
+  const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
 
   const fetchData = async () => {
     try {
@@ -144,11 +146,48 @@ function SectionTwo() {
 
       if (!response.data?.length) {
         toast.error("Could not fetch Featured Match!");
+      } else {
+        fetchFlags(featuredMatch?.matchInfo);
       }
     } catch (error) {
       console.error(error);
     }
   };
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const fetchFlags = async (featuredMatch: any) => {
+    const newImagesData: { [key: string]: string } = {};
+
+    for (const match of featuredMatch) {
+      try {
+        const imageId = match?.team1?.imageId;
+        const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+        const options = {
+          method: 'GET',
+          url: imageUrl,
+          params: { p: 'de', d: 'high' },
+          headers: {
+            'x-rapidapi-key': `${process.env.RAPIDAPI_KEY}`,
+            'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+          },
+          responseType: 'blob' as const
+        };
+
+        const response = await axios.request(options);
+        const blob = response.data;
+
+        const pngUrl = await blobToPng(blob);
+        console.log(pngUrl)
+        newImagesData[match?.team1?.teamId] = pngUrl;
+
+        await delay(200);
+      } catch (error) {
+        console.error(`Error fetching image for article ${match?.team1?.teamId}:`, error);
+      }
+    }
+  }
 
   useEffect(() => {
     fetchData();
@@ -233,19 +272,67 @@ function SectionTwo() {
 
 function TopPicks() {
   const [articlesData, setArticlesData] = useState<any>(null);
+  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     getArticles();
   }, []);
 
   async function getArticles() {
-    const response = await axios.get("/api/articles");
-    setArticlesData(response.data);
+    try {
+      const response = await axios.get("/api/articles");
+      const articles = response.data;
 
-    if (!response.data?.list?.length) {
-      toast.error("Could not fetch articles");
+      setArticlesData(articles);
+
+      if (!articles?.list?.length) {
+        console.error("Could not fetch articles");
+      } else {
+        fetchImages(articles?.list);
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
     }
   }
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const fetchImages = async (articles: any) => {
+    const newImagesData: { [key: string]: string } = {};
+
+    for (const article of articles) {
+      try {
+        const imageId = article?.story?.imageId;
+        const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+        const options = {
+          method: 'GET',
+          url: imageUrl,
+          params: { p: 'de', d: 'high' },
+          headers: {
+            'x-rapidapi-key': `${process.env.RAPIDAPI_KEY}`,
+            'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+          },
+          responseType: 'blob' as const
+        };
+
+        const response = await axios.request(options);
+        const blob = response.data;
+
+        const pngUrl = await blobToPng(blob);
+        console.log(pngUrl)
+        newImagesData[article?.story?.id] = pngUrl;
+
+        await delay(200);
+      } catch (error) {
+        console.error(`Error fetching image for article ${article?.story?.id}:`, error);
+      }
+    }
+
+    // console.log(newImagesData)
+    setImagesData(newImagesData);
+  };
+
 
   return (
     <div className="px-4 my-6 dark:text-[#E6E6DD]">
@@ -261,7 +348,7 @@ function TopPicks() {
               <PickCard key={index}
                 title={article?.story?.hline}
                 description={article?.story?.intro}
-                imageUrl={"/article-3.png"}
+                imageUrl={imagesData[article?.story?.id]}
                 date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
                 id={article?.story?.id ?? 0}
               />
@@ -296,7 +383,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
     // </div>
     <div className="flex hover:cursor-pointer hover:bg-white/50 dark:hover:bg-[#45474A66]/40 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
-        <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
+        <Image src={imageUrl} className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Loading" width={134} height={90} />
       </div>
       <div className="flex flex-col items-center md:items-start">
         <h2 className="font-bold line-clamp-2 text-xs sm:text-sm md:text-base">{title}</h2>
