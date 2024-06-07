@@ -31,6 +31,25 @@ export default function IndividualArticle({ params }: Props) {
     });
     return filteredArr;
   }
+
+  function removePatternedWords(str: string) {
+    // Define the regular expression pattern
+    const pattern = /@[BLI]\d+\$/g;
+
+    if (!str) {
+      return str;
+    }
+    // Replace the matched patterns with an empty string
+    return str.replace(pattern, '');
+  }
+
+  function filterFormatString(contentArr: any[]) {
+    let formatFilteredArr = contentArr?.map((content: any) => {
+      return removePatternedWords(content?.content?.contentValue);
+    });
+    
+    return formatFilteredArr;
+  }
   
   useEffect(() => {
     getArticle();
@@ -60,10 +79,10 @@ export default function IndividualArticle({ params }: Props) {
           </div>
 
           <div className="flex flex-col gap-2">
-            {getContent(articleData?.article?.content as any[])?.map((content: any, index: number) => {
+            {filterFormatString(getContent(articleData?.article?.content))?.map((content: any, index: number) => {
               return (
                 <div key={index} className="text-base md:text-lg font-medium">
-                  {content?.content?.contentValue}
+                  {content}
                 </div>
               );
             })}
