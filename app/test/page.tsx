@@ -10,10 +10,10 @@ const App: React.FC = () => {
       // Step 1: Fetch the blob from the API
       const options = {
         method: 'GET',
-        url: 'https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c495790/i.jpg',
+        url: 'https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c495782/i.jpg',
         params: {p: 'de', d: 'high'},
         headers: {
-          'x-rapidapi-key': `${process.env.RAPIDAPI_KEY}`,
+          'x-rapidapi-key': `${process.env.NEXT_APP_RAPIDAPI_KEY}`,
           'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
         },
         responseType: 'blob' as const
@@ -21,6 +21,7 @@ const App: React.FC = () => {
       
       const response = await axios.request(options);
       const blob = response.data;
+      console.log(process.env.NEXT_APP_RAPIDAPI_KEY)
 
       // Step 2: Convert blob to a PNG
       const imageUrl = URL.createObjectURL(blob);
