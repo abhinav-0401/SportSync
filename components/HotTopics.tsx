@@ -80,8 +80,6 @@ export default function HotTopics() {
 function HotTopic({ hotTopic }: any) {
   // const [readMore, setReadMore] = useState(false);
 
-  console.log("hotTopic with id? ", hotTopic);
-
   return (
     <div className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4">
       <Image src={"/ad.png"} alt="hot topic" className="min-w-[161px]" height={126} width={213} />

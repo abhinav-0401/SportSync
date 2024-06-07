@@ -91,17 +91,7 @@ function TabData() {
       </TabsList>
       <TabsContent value="live" className="flex w-full flex-col px-4 gap-12 md:gap-16 lg:gap-20">
         {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchStats scoreCard={scoreCard} leanBack={leanBack} /> : <div className="font-bold text-3xl">NOTHING TO SHOW</div>}
-        {/* <div className="flex items-start flex-col justify-center w-full space-y-10">
-          <span className="font-medium text-lg">Live Win Probability</span>
-          <div className="w-full flex items-center justify-center space-x-5">
-            <span className="w-fit">IND</span>
-            <div className="w-full flex items-center justify-center">
-              <div className="border-2 border-[#9ABE9A] w-3/4"></div>
-              <div className="border-2 border-[#FF5E57] w-1/4"></div>
-            </div>
-            <span className="w-fit">ENG</span>
-          </div>
-        </div> */}
+
       </TabsContent>
       <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <MatchSummary summaryData={summaryData} />
@@ -109,6 +99,9 @@ function TabData() {
       <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <Suspense fallback={<div>Loading...</div>}>
           {scoreCard?.scoreCard && scoreCard?.scoreCard[0] && <ScoreCard scoreCard={scoreCard} />}
+          {!scoreCard?.scoreCard?.length && <div className="w-full text-center p-12 font-bold text-2xl">
+            MATCH HASN&apos;T STARTED YET
+          </div>}
         </Suspense>
       </TabsContent>
       {/* <TabsContent value="stats" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">

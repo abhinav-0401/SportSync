@@ -12,6 +12,8 @@ type Props = {
 
 function ScoreCard({ scoreCard }: Props) {
 
+  console.log("scorecard: ", scoreCard);
+
   return (
     <div className='flex flex-col items-start justify-center space-y-7'>
       <span className='font-medium text-lg'>Score Card</span>
