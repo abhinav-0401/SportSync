@@ -27,7 +27,7 @@ export default function IndividualArticle({ params }: Props) {
 
   function getContent(contents: any[]): any[] {
     let filteredArr = contents?.filter((content: any) => {
-      return content?.hasOwnProperty("content");
+      return content?.hasOwnProperty("content") && content?.content?.contentType?.toLowerCase() === "text";
     });
     return filteredArr;
   }
@@ -48,6 +48,7 @@ export default function IndividualArticle({ params }: Props) {
       return removePatternedWords(content?.content?.contentValue);
     });
     
+    console.log("formatFilteredArr: ", formatFilteredArr);
     return formatFilteredArr;
   }
   

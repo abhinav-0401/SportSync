@@ -87,11 +87,12 @@ function BatterResponsiveTable({ batsmenData }: { batsmenData: any[] }) {
       <TableBody>
         {
           Object.entries(batsmenData).map((batter, idx) => {
+            console.log("batter[1]: ", batter[1]);
             return (
               <TableRow key={idx}>
                 <TableCell className="font-medium">{batter[1].batName}</TableCell>
                 <TableCell>{batter[1].runs}</TableCell>
-                <TableCell>{batter[1].fours}</TableCell>
+                <TableCell>{batter[1].balls}</TableCell>
                 <TableCell className="">{batter[1].fours}</TableCell>
                 <TableCell className="">{batter[1].sixes}</TableCell>
                 <TableCell className="text-right">{batter[1].strikeRate}</TableCell>
