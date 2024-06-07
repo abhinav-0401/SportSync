@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -77,16 +78,17 @@ export default function HotTopics() {
 }
 
 function HotTopic({ hotTopic }: any) {
-  const [readMore, setReadMore] = useState(false);
+  // const [readMore, setReadMore] = useState(false);
 
   return (
     <div className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4">
       <Image src={"/ad.png"} alt="hot topic" className="min-w-[161px]" height={126} width={213} />
       <div className="flex flex-col gap-2 items-center">
-        <h4 className={readMore ? "font-semibold text-base sm:text-lg line-clamp-none lg:text-xl" : "font-semibold text-base sm:text-lg line-clamp-2 lg:text-xl"}>{hotTopic?.story?.hline}</h4>
-        <div className={readMore ? "text-wrap font-normal line-clamp-none text-sm text-[#45474A] dark:text-[#E6E6DDCC]" : "text-wrap font-normal line-clamp-4 text-sm text-[#45474A] dark:text-[#E6E6DDCC]"}>
-          <span className={readMore ? 'line-clamp-none' : 'line-clamp-3'}>{hotTopic?.story?.intro}</span>
-          <span className='text-[#3E6BEC] font-semibold hover:opacity-50 cursor-pointer' onClick={() => setReadMore(!readMore)}>{readMore ? "Read Less" : "Read More"}</span>
+        <h4 className="font-semibold text-base sm:text-lg line-clamp-2 lg:text-xl">{hotTopic?.story?.hline}</h4>
+        <div className={"text-wrap font-normal line-clamp-4 text-sm text-[#45474A] dark:text-[#E6E6DDCC]"}>
+          <span className={'line-clamp-3'}>{hotTopic?.story?.intro}</span>
+          {/* <span className='text-[#3E6BEC] font-semibold hover:opacity-50 cursor-pointer' onClick={() => setReadMore(!readMore)}>{readMore ? "Read Less" : "Read More"}</span> */}
+          <span className='text-[#3E6BEC] font-semibold hover:opacity-50 cursor-pointer'><Link href={`/cricket-article/${hotTopic?.story?.id}`}>Read More</Link></span>
         </div>
       </div>
     </div>

@@ -15,6 +15,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import Lottie from "lottie-react";
+import animationData from "@/lotties/load_err.json";
 
 interface MatchCardProps {
   match: any;
@@ -124,24 +126,43 @@ export default function Cricket() {
                 <TabsTrigger className="flex-grow" variant={"outline"} value="completed" onClick={() => handleInnerTabChange("recent")}>Completed</TabsTrigger>
               </TabsList>
               <TabsContent value="live" className="flex w-full flex-col gap-10">
-                <DayMatchList schedule={data} />
-                <div className="flex w-full justify-center">
-                  {/* <Button className="w-fit">See more</Button> */}
-                </div>
+                {
+                  data
+                    ? <>
+                        <DayMatchList schedule={data} />
+                        <div className="flex w-full justify-center">
+                          {/* <Button className="w-fit">See more</Button> */}
+                        </div>
+                      </>
+                      : <Lottie animationData={animationData} />
+                }
+                
               </TabsContent>
 
               <TabsContent value="upcoming" className="flex w-full flex-col gap-10">
-                <DayMatchList schedule={data} />
-                <div className="flex w-full justify-center">
-                  {/* <Button className="w-fit">See more</Button> */}
-                </div>
+                {
+                  data
+                  ? <>
+                      <DayMatchList schedule={data} />
+                      <div className="flex w-full justify-center">
+                        {/* <Button className="w-fit">See more</Button> */}
+                      </div>
+                    </>
+                  : <Lottie animationData={animationData} />
+                }
               </TabsContent>
 
               <TabsContent value="completed" className="flex w-full flex-col gap-10">
-                <DayMatchList schedule={data} />
-                <div className="flex w-full justify-center">
-                  {/* <Button className="w-fit">See more</Button> */}
-                </div>                
+                {
+                  data
+                    ? <>
+                        <DayMatchList schedule={data} />
+                        <div className="flex w-full justify-center">
+                          {/* <Button className="w-fit">See more</Button> */}
+                        </div>
+                      </>
+                    : <Lottie animationData={animationData} />
+                }            
               </TabsContent>
             </Tabs>
           </div>
