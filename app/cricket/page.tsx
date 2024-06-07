@@ -302,7 +302,7 @@ function MatchCard({ match }: MatchCardProps) {
 
       <div className="flex gap-12 py-4 justify-between">
         <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push(`/analytics?matchId=${match?.matchInfo?.matchId}&seriesId=${match?.matchInfo?.seriesId}`)}>Analytics</Button>
-        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push("/cricket-article")}>Article</Button>
+        <Button className="flex-1 dark:bg-[#E6E6DD]" onClick={() => router.push("/cricket-article")}>Summary</Button>
       </div>
     </div>
   );

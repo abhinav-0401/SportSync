@@ -14,11 +14,11 @@ export default function Casino() {
               <h1>CASINO</h1>
             </div>
 
-          <div className="flex bg-white/65 dark:bg-[#45474A80] px-1 py-1 rounded-full">
+            {/* <div className="flex bg-white/65 dark:bg-[#45474A80] px-1 py-1 rounded-full">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
               <Input type="search" placeholder="Best Casino Bars" className="rounded-full mx-4 border-0 focus-visible:ring-0 bg-transparent" />
               <Button className="px-10 dark:bg-white rounded-full">Search</Button>
-            </div>
+            </div> */}
         </div>
 
         <div className="flex-grow">
