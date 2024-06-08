@@ -48,6 +48,7 @@ function TabData() {
   async function getPointsTable() {
     const res = await axios.get(`/api/matchInfo/pointsTable?seriesId=${seriesId}`);
     setPointsTable(res.data);
+    console.log(res.data);
     if (!res.data?.pointsTable?.length) {
       toast.error("Could not fetch points table");
     }
@@ -87,6 +88,7 @@ function TabData() {
         <TabsTrigger className="flex-grow" variant={"outline"} value="live">Info</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="score">Scorecard</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Team</TabsTrigger>
+        {pointsTable?.pointsTable?.length && <TabsTrigger className="flex-grow" variant={"outline"} value="table">Table</TabsTrigger>}
         {/* <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger> */}
       </TabsList>
       <TabsContent value="live" className="flex w-full flex-col px-4 gap-12 md:gap-16 lg:gap-20">

@@ -68,11 +68,11 @@ export default function Artcile() {
         <div className="flex flex-col lg:flex-row justify-between">
 
           <div className="flex flex-col gap-10 px-2 sm:px-8 md:px-16">
-            <div className="flex bg-[#FFFFFFA6] dark:bg-[#45474A80] px-1 py-1 rounded-full">
+            {/* <div className="flex bg-[#FFFFFFA6] dark:bg-[#45474A80] px-1 py-1 rounded-full">
               <Image src="/search.png" className="ml-4 object-contain" alt="search" width={18} height={18} />
               <Input type="search" className=" mx-4 border-0 focus-visible:ring-0 bg-transparent" placeholder="Indian Premeir League |" />
               <Button className="rounded-full dark:bg-white px-10">Search</Button>
-            </div>
+            </div> */}
             <div className="flex flex-col items-center gap-8">
               {articlesData?.list?.map((article: any, index: number) => {
                 return (

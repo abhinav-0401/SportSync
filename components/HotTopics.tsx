@@ -15,7 +15,12 @@ export default function HotTopics() {
 
   async function getArticles() {
     const response = await axios.get("/api/articles");
-    setHotTopicsData(response.data);
+
+    if (response.data?.list?.length > 3) {
+      setHotTopicsData(response.data?.list?.slice(0, 3));
+    } else {
+      setHotTopicsData(response.data?.list);
+    }
 
     if (!response.data?.list?.length) {
       toast.error("Could not fetch articles");
@@ -55,7 +60,7 @@ export default function HotTopics() {
             </div>
           );
         })} */}
-        {hotTopicsData?.list?.map((hotTopic: any, index: number) => {
+        {hotTopicsData?.map((hotTopic: any, index: number) => {
           return (
             // <div key={index} className="flex flex-col lg:items-center border-b-2 py-4 border-[#45474A] gap-4">
             //   <Image src={"/ad.png"} alt="hot topic" className="min-w-[161px]" height={126} width={213} />

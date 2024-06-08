@@ -284,11 +284,23 @@ function TopPicks() {
   }, []);
 
   async function getArticles() {
+    // const response = await axios.get("/api/articles");
+
+    // if (response.data?.list?.length > 6) {
+    //   setArticlesData(response.data?.list?.slice(0, 6));
+    // } else {
+    //   setArticlesData(response.data?.list);
+    // }
+    
     try {
       const response = await axios.get("/api/articles");
       const articles = response.data;
 
-      setArticlesData(articles);
+      if (response.data?.list?.length > 6) {
+        setArticlesData(response.data?.list?.slice(0, 6));
+      } else {
+        setArticlesData(response.data?.list);
+      }
 
       if (!articles?.list?.length) {
         console.error("Could not fetch articles");
@@ -361,7 +373,7 @@ function TopPicks() {
           <PickCard key={index} />
         ))} */}
         {
-          articlesData?.list?.map((article: any, index: number) => {
+          articlesData?.map((article: any, index: number) => {
             return (
               <PickCard key={index}
                 title={article?.story?.hline}
