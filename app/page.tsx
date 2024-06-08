@@ -2,7 +2,7 @@
 
 import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
-import { blobToPng } from "@/lib/blobtopng";
+import { blobToBase64, blobToPng } from "@/lib/blobtopng";
 import axios from "axios";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -192,7 +192,7 @@ function SectionTwo() {
     const team1Png = await fetchImage(team1ImageId);
     setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
 
-    await delay(200); // Add delay of 200ms between requests
+    await delay(300); // Add delay of 200ms between requests
 
     const team2Png = await fetchImage(team2ImageId);
     setFlagImages(prev => ({ ...prev, [team2ImageId.toString()]: team2Png! }));
@@ -303,6 +303,7 @@ function TopPicks() {
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   const fetchImages = async (articles: any) => {
+    await delay(200)
     const newImagesData: { [key: string]: string } = {};
 
     for (const article of articles) {
@@ -313,6 +314,7 @@ function TopPicks() {
 
       const cacheKey = `image_${imageId}`;
       const cachedImage = localStorage.getItem(cacheKey);
+      console.log(cachedImage)
 
       if (cachedImage) {
         newImagesData[articleId] = cachedImage;
@@ -325,7 +327,7 @@ function TopPicks() {
             url: imageUrl,
             params: { p: 'de', d: 'high' },
             headers: {
-              'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+              'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
               'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
             },
             responseType: 'blob' as const
@@ -334,11 +336,12 @@ function TopPicks() {
           const response = await axios.request(options);
           const blob = response.data;
 
-          const pngUrl = await blobToPng(blob);
-          newImagesData[articleId] = pngUrl;
-          localStorage.setItem(cacheKey, pngUrl);
+          // const pngUrl = await blobToPng(blob);
+          const base64Url = await blobToBase64(blob);
+          newImagesData[articleId] = base64Url;
+          localStorage.setItem(cacheKey, base64Url);
 
-          await delay(200); // Add delay of 200ms between requests
+          await delay(300); // Add delay of 200ms between requests
         } catch (error) {
           console.error(`Error fetching image for article ${articleId}:`, error);
         }
