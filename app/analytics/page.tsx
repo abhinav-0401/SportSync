@@ -48,7 +48,7 @@ function TabData() {
   async function getPointsTable() {
     const res = await axios.get(`/api/matchInfo/pointsTable?seriesId=${seriesId}`);
     setPointsTable(res.data);
-    console.log(res.data);
+    // console.log(res.data);
     if (!res.data?.pointsTable?.length) {
       toast.error("Could not fetch points table");
     }

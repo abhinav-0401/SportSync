@@ -12,8 +12,6 @@ type Props = {
 
 function ScoreCard({ scoreCard }: Props) {
 
-  console.log("scorecard: ", scoreCard);
-
   return (
     <div className='flex flex-col items-start justify-center space-y-7'>
       <span className='font-medium text-lg'>Score Card</span>
@@ -89,7 +87,6 @@ function BatterResponsiveTable({ batsmenData }: { batsmenData: any[] }) {
       <TableBody>
         {
           Object.entries(batsmenData).map((batter, idx) => {
-            console.log("batter[1]: ", batter[1]);
             return (
               <TableRow key={idx}>
                 <TableCell className="font-medium">{batter[1].batName}</TableCell>
