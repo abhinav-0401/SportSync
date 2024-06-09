@@ -1,5 +1,6 @@
 "use client"
 
+import { useAppSelector } from "@/redux/hooks";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -47,8 +48,7 @@ export default function IndividualArticle({ params }: Props) {
     let formatFilteredArr = contentArr?.map((content: any) => {
       return removePatternedWords(content?.content?.contentValue);
     });
-    
-    console.log("formatFilteredArr: ", formatFilteredArr);
+  
     return formatFilteredArr;
   }
   
@@ -101,20 +101,22 @@ export default function IndividualArticle({ params }: Props) {
 function TopPicks() {
   const [articlesData, setArticlesData] = useState<any>(null);
 
+  const articles = useAppSelector(state => state.articles.articles);
+
   useEffect(() => {
     getArticles();
-  }, []);
+  }, [articles]);
 
   async function getArticles() {
-    const response = await axios.get("/api/articles");
+    // const response = await axios.get("/api/articles");
 
-    if (response.data?.list?.length > 6) {
-      setArticlesData(response.data?.list?.slice(0, 6));
+    if (articles?.list?.length > 6) {
+      setArticlesData(articles?.list?.slice(0, 6));
     } else {
-      setArticlesData(response.data?.list);
+      setArticlesData(articles?.list);
     }
 
-    if (!response.data?.list?.length) {
+    if (!articles?.list?.length) {
       toast.error("Could not fetch articles");
     }
   }

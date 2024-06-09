@@ -3,6 +3,7 @@
 import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
 import { blobToBase64, blobToPng } from "@/lib/blobtopng";
+import { useAppSelector } from "@/redux/hooks";
 import axios from "axios";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -278,28 +279,21 @@ function SectionTwo() {
 function TopPicks() {
   const [articlesData, setArticlesData] = useState<any>(null);
   const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
-
+  
+  const articles = useAppSelector(state => state.articles.articles);
   useEffect(() => {
     getArticles();
-  }, []);
+  }, [articles]);
+
 
   async function getArticles() {
-    // const response = await axios.get("/api/articles");
-
-    // if (response.data?.list?.length > 6) {
-    //   setArticlesData(response.data?.list?.slice(0, 6));
-    // } else {
-    //   setArticlesData(response.data?.list);
-    // }
     
     try {
-      const response = await axios.get("/api/articles");
-      const articles = response.data;
 
-      if (response.data?.list?.length > 6) {
-        setArticlesData(response.data?.list?.slice(0, 6));
+      if (articles?.list?.length > 6) {
+        setArticlesData(articles?.list?.slice(0, 6));
       } else {
-        setArticlesData(response.data?.list);
+        setArticlesData(articles?.list);
       }
 
       if (!articles?.list?.length) {
@@ -326,7 +320,7 @@ function TopPicks() {
 
       const cacheKey = `image_${imageId}`;
       const cachedImage = localStorage.getItem(cacheKey);
-      console.log(cachedImage)
+      // console.log(cachedImage)
 
       if (cachedImage) {
         newImagesData[articleId] = cachedImage;
@@ -413,7 +407,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
     // </div>
     <div className="flex hover:cursor-pointer hover:bg-white/50 dark:hover:bg-[#45474A66]/40 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
-        <Image src={imageUrl} className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Loading" width={134} height={90} />
+        <Image src={imageUrl} className="min-w-[120px] rounded-md md:min-w-[134px] md:h-auto object-contain" alt="Loading" width={134} height={90} />
       </div>
       <div className="flex flex-col items-center md:items-start">
         <h2 className="font-bold line-clamp-2 text-xs sm:text-sm md:text-base">{title}</h2>

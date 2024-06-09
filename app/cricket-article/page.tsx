@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast, Toaster } from "react-hot-toast";
+import { useAppSelector } from "@/redux/hooks";
 
 interface ArticleData {
   title: string;
@@ -31,18 +32,20 @@ export default function Artcile() {
 
   const router = useRouter();
 
-  async function getArticles() {
-    const response = await axios.get("/api/articles");
-    setArticlesData(response.data);
+  const articlesList = useAppSelector(state => state.articles.articles);
 
-    if (!response.data?.list?.length) {
-      toast.error("Could not fetch articles");
-    }
+  async function getArticles() {
+    // const response = await axios.get("/api/articles");
+    setArticlesData(articlesList);
+
+    // if (!articlesList?.list?.length) {
+    //   toast.error("Could not fetch articles");
+    // }
   }
 
   useEffect(() => {
     getArticles();
-  }, []);
+  }, [articlesList]);
 
   const currentDate = new Date().toLocaleString();
 

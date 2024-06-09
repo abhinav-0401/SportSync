@@ -1,5 +1,6 @@
 "use client"
 
+import { useAppSelector } from "@/redux/hooks";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,22 +10,24 @@ import toast, { Toaster } from "react-hot-toast";
 export default function HotTopics() {
   const [hotTopicsData, setHotTopicsData] = useState<any>(null);
 
+  const articles = useAppSelector(state => state.articles.articles);
+
   useEffect(() => {
     getArticles();
-  }, []);
+  }, [articles]);
 
   async function getArticles() {
-    const response = await axios.get("/api/articles");
+    // const response = await axios.get("/api/articles");
 
-    if (response.data?.list?.length > 3) {
-      setHotTopicsData(response.data?.list?.slice(0, 3));
+    if (articles?.list?.length > 3) {
+      setHotTopicsData(articles?.list?.slice(0, 3));
     } else {
-      setHotTopicsData(response.data?.list);
+      setHotTopicsData(articles?.list);
     }
 
-    if (!response.data?.list?.length) {
-      toast.error("Could not fetch articles");
-    }
+    // if (!articles?.list?.length) {
+    //   toast.error("Could not fetch articles");
+    // }
   }
 
   const topics = [
