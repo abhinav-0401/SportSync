@@ -11,6 +11,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast, Toaster } from "react-hot-toast";
 import { useAppSelector } from "@/redux/hooks";
+import { blobToBase64 } from "@/lib/blobtopng";
 
 interface ArticleData {
   title: string;
@@ -29,6 +30,7 @@ const imgUrls: string[] = [
 export default function Artcile() {
 
   const [articlesData, setArticlesData] = useState<any>(null);
+  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
 
   const router = useRouter();
 
@@ -37,11 +39,62 @@ export default function Artcile() {
   async function getArticles() {
     // const response = await axios.get("/api/articles");
     setArticlesData(articlesList);
+    fetchImages(articlesList?.list);
 
     // if (!articlesList?.list?.length) {
     //   toast.error("Could not fetch articles");
     // }
   }
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  async function fetchImages(articles: any) {
+    await delay(200)
+    const newImagesData: { [key: string]: string } = {};
+
+    for (const article of articles) {
+      const imageId = article?.story?.imageId;
+      const articleId = article?.story?.id;
+
+      if (!imageId || !articleId) continue;
+
+      const cacheKey = `image_${imageId}`;
+      const cachedImage = localStorage.getItem(cacheKey);
+      // console.log(cachedImage)
+
+      if (cachedImage) {
+        newImagesData[articleId] = cachedImage;
+      } else {
+        try {
+          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+          const options = {
+            method: 'GET',
+            url: imageUrl,
+            params: { p: 'de', d: 'high' },
+            headers: {
+              'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
+              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+            },
+            responseType: 'blob' as const
+          };
+
+          const response = await axios.request(options);
+          const blob = response.data;
+
+          // const pngUrl = await blobToPng(blob);
+          const base64Url = await blobToBase64(blob);
+          newImagesData[articleId] = base64Url;
+          localStorage.setItem(cacheKey, base64Url);
+
+          await delay(300); // Add delay of 200ms between requests
+        } catch (error) {
+          console.error(`Error fetching image for article ${articleId}:`, error);
+        }
+      }
+    }
+
+    setImagesData(newImagesData);
+  };
 
   useEffect(() => {
     getArticles();
@@ -83,7 +136,8 @@ export default function Artcile() {
                     <ArticleCard 
                       title={article?.story?.hline}
                       description={article?.story?.intro}
-                      imageUrl={"/article-3.png"}
+                      // imageUrl={"/article-3.png"}
+                      imageUrl={imagesData[article?.story?.id]}
                       date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
                     />
                   </span>

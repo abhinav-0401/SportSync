@@ -14,6 +14,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 interface MatchCardProps {
   match: any;
@@ -110,13 +117,13 @@ export default function Football() {
 
               <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
                 <div className="flex flex-wrap w-full gap-3">
-                  <Tag name="All" onClick={() => fetchData(currentListType)} />
-                  <Tag name="Asia" onClick={() => handleTagClick('Asia')} />
-                  <Tag name="Africa" onClick={() => handleTagClick('Africa')} />
-                  <Tag name="Australia" onClick={() => handleTagClick('Australia')} />
-                  <Tag name="Europe" onClick={() => handleTagClick('Europe')} />
-                  <Tag name="North America" onClick={() => handleTagClick('North America')} />
-                  <Tag name="South America" onClick={() => handleTagClick('South America')} />
+                  <Tag active={currentType === "All"} name="All" onClick={() => fetchData(currentListType)} />
+                  <Tag active={currentType === "Asia"} name="Asia" onClick={() => handleTagClick('Asia')} />
+                  <Tag active={currentType === "Africa"} name="Africa" onClick={() => handleTagClick('Africa')} />
+                  <Tag active={currentType === "Australia"} name="Australia" onClick={() => handleTagClick('Australia')} />
+                  <Tag active={currentType === "Europe"} name="Europe" onClick={() => handleTagClick('Europe')} />
+                  <Tag active={currentType === "North America"} name="North America" onClick={() => handleTagClick('North America')} />
+                  <Tag active={currentType === "South America"} name="South America" onClick={() => handleTagClick('South America')} />
                 </div>
 
                 <div className="flex flex-col gap-6">
@@ -125,12 +132,26 @@ export default function Football() {
                     <ul className="flex flex-col gap-4">
                       <li onClick={() => setCurrentLeague(0)}>All</li>
                       {
-                        leagues.map((league: any, index: number) => {
+                        leagues?.slice(0, 5).map((league: any, index: number) => {
                           return (
-                            <li key={index} onClick={() => setCurrentLeague(league?.league?.id)}>{league?.league?.name}</li>
+                            <li key={index} className="cursor-pointer" onClick={() => setCurrentLeague(league?.league?.id)}>{league?.league?.name}</li>
                           );
                         })
                       }
+                      <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                          <AccordionTrigger>View more leagues</AccordionTrigger>
+                          <AccordionContent className="flex flex-col gap-2">
+                            {
+                              leagues?.slice(4).map((league: any, index: number) => {
+                                return (
+                                  <li key={index} className="cursor-pointer" onClick={() => setCurrentLeague(league?.league?.id)}>{league?.league?.name}</li>
+                                );
+                              })
+                            }
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
                     </ul>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
 "use client"
 
+import { blobToBase64 } from "@/lib/blobtopng";
 import { useAppSelector } from "@/redux/hooks";
 import axios from "axios";
 import Image from "next/image";
@@ -16,10 +17,39 @@ export default function IndividualArticle({ params }: Props) {
   const id = params.id;
 
   const [articleData, setArticleData] = useState<any>(null);
+  const [articleImgUrl, setArticleImgUrl] = useState<any>(null);
 
   async function getArticle() {
     const response = await axios.get(`/api/articles/${id}`);
     setArticleData(response.data);
+    try {
+      const imageUrl: string = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${response.data?.article?.coverImage?.id}/i.jpg`;
+      // console.log(imageUrl)
+
+      const options = {
+        method: 'GET',
+        url: imageUrl,
+        params: { p: 'de', d: 'high' },
+        headers: {
+          'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
+          'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+        },
+        responseType: 'blob' as const
+      };
+
+      const res = await axios.request(options);
+      const blob = res.data;
+
+      // const pngUrl = await blobToPng(blob);
+      const base64Url = await blobToBase64(blob);
+      setArticleImgUrl(base64Url);
+      // newImagesData[articleId] = base64Url;
+      // localStorage.setItem(cacheKey, base64Url);
+
+      // await delay(300); // Add delay of 200ms between requests
+    } catch (error) {
+      console.error(`Error fetching image for article ${id}:`, error);
+    }
 
     if (response.status != 200) {
       toast.error("Could not fetch the article!");
@@ -73,7 +103,7 @@ export default function IndividualArticle({ params }: Props) {
         </header>
 
         <div className="flex flex-col gap-8">
-          <Image src="/individualArticle.png" alt="individual article" className="w-full" height={1000} width={500} />
+          <Image src={articleImgUrl ?? "/individualArticle.png"} alt="individual article" className="w-full rounded-md" height={1000} width={500} />
 
           <div className="font-semibold">
             {articleData?.article?.intro}
@@ -100,12 +130,9 @@ export default function IndividualArticle({ params }: Props) {
 
 function TopPicks() {
   const [articlesData, setArticlesData] = useState<any>(null);
+  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
 
   const articles = useAppSelector(state => state.articles.articles);
-
-  useEffect(() => {
-    getArticles();
-  }, [articles]);
 
   async function getArticles() {
     // const response = await axios.get("/api/articles");
@@ -116,10 +143,66 @@ function TopPicks() {
       setArticlesData(articles?.list);
     }
 
-    if (!articles?.list?.length) {
-      toast.error("Could not fetch articles");
-    }
+    fetchImages(articles?.list);
+
+    // if (!articles?.list?.length) {
+    //   toast.error("Could not fetch articles");
+    // }
   }
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  async function fetchImages(articles: any) {
+    await delay(200)
+    const newImagesData: { [key: string]: string } = {};
+
+    for (const article of articles) {
+      const imageId = article?.story?.imageId;
+      const articleId = article?.story?.id;
+
+      if (!imageId || !articleId) continue;
+
+      const cacheKey = `image_${imageId}`;
+      const cachedImage = localStorage.getItem(cacheKey);
+      // console.log(cachedImage)
+
+      if (cachedImage) {
+        newImagesData[articleId] = cachedImage;
+      } else {
+        try {
+          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+          const options = {
+            method: 'GET',
+            url: imageUrl,
+            params: { p: 'de', d: 'high' },
+            headers: {
+              'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
+              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+            },
+            responseType: 'blob' as const
+          };
+
+          const response = await axios.request(options);
+          const blob = response.data;
+
+          // const pngUrl = await blobToPng(blob);
+          const base64Url = await blobToBase64(blob);
+          newImagesData[articleId] = base64Url;
+          localStorage.setItem(cacheKey, base64Url);
+
+          await delay(300); // Add delay of 200ms between requests
+        } catch (error) {
+          console.error(`Error fetching image for article ${articleId}:`, error);
+        }
+      }
+    }
+
+    setImagesData(newImagesData);
+  };
+
+  useEffect(() => {
+    getArticles();
+  }, [articles]);
 
   return (
     <div className="px-4 pb-6 mt-6 dark:text-[#E6E6DD]">
@@ -135,7 +218,8 @@ function TopPicks() {
               <PickCard key={index}
                 title={article?.story?.hline}
                 description={article?.story?.intro}
-                imageUrl={"/article-3.png"}
+                // imageUrl={"/article-3.png"}
+                imageUrl={imagesData[article?.story?.id]}
                 date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
                 id={article?.story?.id ?? 0}
               />
@@ -170,7 +254,7 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
     // </div>
     <div className="flex hover:cursor-pointer hover:bg-white/50 dark:hover:bg-[#45474A66]/40 p-4 rounded-md flex-row items-center md:items-start max-w-[300px] md:min-w-[350px] md:max-w-[350px] lg:max-w-[400px] md:flex-row gap-4 lg:min-w-[400px] md:max-h-[150px]" onClick={() => router.push(`/cricket-article/${id}`)}>
       <div>
-        <Image src="/Rectangle 120.png" className="min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
+        <Image src={imageUrl} className="rounded-md min-w-[120px] md:min-w-[134px] md:h-auto object-contain" alt="Top Picks Card" width={134} height={90} />
       </div>
       <div className="flex flex-col items-center md:items-start">
         <h2 className="font-bold line-clamp-2 text-xs sm:text-sm md:text-base">{title}</h2>
