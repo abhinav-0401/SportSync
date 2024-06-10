@@ -97,11 +97,11 @@ export default function Cricket() {
 
               <div className="lg:flex flex-col hidden gap-10 dark:bg-[#45474a80] bg-white/60 dark:text-[#E6E6DD] min-h-full py-4 px-6 rounded-2xl">
                 <div className="flex flex-wrap w-full gap-3">
-                  <Tag name="All" onClick={() => fetchData(currentListType)} />
-                  <Tag name="International" onClick={() => handleTagClick('International')} />
-                  <Tag name="League" onClick={() => handleTagClick('League')} />
-                  <Tag name="Domestic" onClick={() => handleTagClick('Domestic')} />
-                  <Tag name="Women" onClick={() => handleTagClick('Women')} />
+                  <Tag active={currentType === "All"} name="All" onClick={() => fetchData(currentListType)} />
+                  <Tag active={currentType === "International"} name="International" onClick={() => handleTagClick('International')} />
+                  <Tag active={currentType === "League"} name="League" onClick={() => handleTagClick('League')} />
+                  <Tag active={currentType === "Domestic"} name="Domestic" onClick={() => handleTagClick('Domestic')} />
+                  <Tag active={currentType === "Women"} name="Women" onClick={() => handleTagClick('Women')} />
                 </div>
 
               </div>
