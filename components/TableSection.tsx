@@ -27,7 +27,7 @@ function TableSection({ seriesName, pointsTable }: Props) {
       {
         pointsTable?.pointsTable && pointsTable?.pointsTable?.map((group: any, index: number) => {
           return (
-            <Table className='mb-12'>
+            <Table key={index} className='mb-12'>
               <TableCaption>{group?.groupName}</TableCaption>
               <TableHeader>
                 <TableRow>
