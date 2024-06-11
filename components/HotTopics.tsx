@@ -2,87 +2,73 @@
 
 import { blobToBase64 } from "@/lib/blobtopng";
 import { useAppSelector } from "@/redux/hooks";
+import { setImage } from "@/redux/slices/imageSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchArticles } from "@/redux/thunks/articlesThunk";
+import { fetchImage } from "@/redux/thunks/imagesThunk";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function HotTopics() {
+  const dispatch = useDispatch<AppDispatch>();
   const [hotTopicsData, setHotTopicsData] = useState<any>(null);
-
-  const articles = useAppSelector(state => state.articles.articles);
-  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
+  const articles = useSelector((state: RootState) => state.articles.articles);
+  const images = useSelector((state: RootState) => state.images);
+  const status = useSelector((state: RootState) => state.articles.status);
+  const error = useSelector((state: RootState) => state.articles.error);
 
   useEffect(() => {
-    getArticles();
-  }, [articles]);
-
-  async function getArticles() {
-    // const response = await axios.get("/api/articles");
-
-    if (articles?.list?.length > 3) {
-      setHotTopicsData(articles?.list?.slice(0, 3));
-    } else {
-      setHotTopicsData(articles?.list);
+    if (status === 'idle') {
+      dispatch(fetchArticles());
     }
-
-    fetchImages(articles?.list);
-
-    // if (!articles?.list?.length) {
-    //   toast.error("Could not fetch articles");
-    // }
-  }
+    if (status === 'succeeded' && articles?.length > 3) {
+      setHotTopicsData(articles?.slice(0, 3));
+    } 
+    else if (status === 'succeeded') {
+      setHotTopicsData(articles);
+    }
+  }, [status, dispatch, articles]);
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  async function fetchImages(articles: any) {
-    await delay(200)
-    const newImagesData: { [key: string]: string } = {};
 
-    for (const article of articles) {
-      const imageId = article?.story?.imageId;
-      const articleId = article?.story?.id;
-
-      if (!imageId || !articleId) continue;
-
-      const cacheKey = `image_${imageId}`;
-      const cachedImage = localStorage.getItem(cacheKey);
-      // console.log(cachedImage)
-
-      if (cachedImage) {
-        newImagesData[articleId] = cachedImage;
-      } else {
-        try {
-          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
-
-          const options = {
-            method: 'GET',
-            url: imageUrl,
-            params: { p: 'de', d: 'high' },
-            headers: {
-              'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
-              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
-            },
-            responseType: 'blob' as const
-          };
-
-          const response = await axios.request(options);
-          const blob = response.data;
-
-          // const pngUrl = await blobToPng(blob);
-          const base64Url = await blobToBase64(blob);
-          newImagesData[articleId] = base64Url;
-          localStorage.setItem(cacheKey, base64Url);
-
-          await delay(300); // Add delay of 200ms between requests
-        } catch (error) {
-          console.error(`Error fetching image for article ${articleId}:`, error);
+  useEffect(() => {
+    const fetchImages = async () => {
+      for (const article of articles) {
+        const imageId = article?.story?.imageId;
+        const cacheKey = `image_${imageId}`;
+        const storedImage = localStorage.getItem(cacheKey);
+        if (storedImage) {
+          dispatch(setImage({ imageId: imageId, imageUrl: storedImage }));
+        } else {
+          const action = await dispatch(fetchImage(imageId));
+          if (fetchImage.fulfilled.match(action)) {
+            const { imageId, imageUrl } = action.payload as { imageId: number, imageUrl: string };
+            localStorage.setItem(cacheKey, imageUrl);
+          }
         }
+        await delay(200); // Add delay to avoid hitting rate limit
       }
-    }
+    };
 
-    setImagesData(newImagesData);
-  };
+    if (status === 'succeeded') {
+      fetchImages();
+    }
+  }, [status, articles, dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
+
+  // console.log(hotTopicsData)
 
   const topics = [
     {
@@ -129,7 +115,7 @@ export default function HotTopics() {
             //     </div>
             //   </div>
             // </div>
-            <HotTopic hotTopic={hotTopic} imageUrl={imagesData[hotTopic?.story?.id]} key={index} />
+            <HotTopic hotTopic={hotTopic} imageUrl={images[hotTopic?.story?.imageId]} key={index} />
           );
         })}
       </div>

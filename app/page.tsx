@@ -2,8 +2,12 @@
 
 import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
-import { blobToBase64, blobToPng } from "@/lib/blobtopng";
+import { blobToPng } from "@/lib/blobtopng";
 import { useAppSelector } from "@/redux/hooks";
+import { setImage } from "@/redux/slices/imageSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchArticles } from "@/redux/thunks/articlesThunk";
+import { fetchImage } from "@/redux/thunks/imagesThunk";
 import axios from "axios";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -11,6 +15,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Home() {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
@@ -192,6 +198,7 @@ function SectionTwo() {
 
     const team1Png = await fetchImage(team1ImageId);
     setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
+    console.log(team1Png)
 
     await delay(300); // Add delay of 200ms between requests
 
@@ -277,86 +284,53 @@ function SectionTwo() {
 }
 
 function TopPicks() {
-  const [articlesData, setArticlesData] = useState<any>(null);
-  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
-  
-  const articles = useAppSelector(state => state.articles.articles);
+  const dispatch = useDispatch<AppDispatch>();
+  const articles = useSelector((state: RootState) => state.articles.articles);
+  const images = useSelector((state: RootState) => state.images);
+  const status = useSelector((state: RootState) => state.articles.status);
+  const error = useSelector((state: RootState) => state.articles.error);
+
   useEffect(() => {
-    getArticles();
-  }, [articles]);
-
-
-  async function getArticles() {
-    
-    try {
-
-      if (articles?.list?.length > 6) {
-        setArticlesData(articles?.list?.slice(0, 6));
-      } else {
-        setArticlesData(articles?.list);
-      }
-
-      if (!articles?.list?.length) {
-        console.error("Could not fetch articles");
-      } else {
-        fetchImages(articles?.list);
-      }
-    } catch (error) {
-      console.error("Error fetching articles:", error);
+    if (status === 'idle') {
+      dispatch(fetchArticles());
     }
-  }
+  }, [status, dispatch]);
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-  const fetchImages = async (articles: any) => {
-    await delay(200)
-    const newImagesData: { [key: string]: string } = {};
-
-    for (const article of articles) {
-      const imageId = article?.story?.imageId;
-      const articleId = article?.story?.id;
-
-      if (!imageId || !articleId) continue;
-
-      const cacheKey = `image_${imageId}`;
-      const cachedImage = localStorage.getItem(cacheKey);
-      // console.log(cachedImage)
-
-      if (cachedImage) {
-        newImagesData[articleId] = cachedImage;
-      } else {
-        try {
-          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
-
-          const options = {
-            method: 'GET',
-            url: imageUrl,
-            params: { p: 'de', d: 'high' },
-            headers: {
-              'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
-              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
-            },
-            responseType: 'blob' as const
-          };
-
-          const response = await axios.request(options);
-          const blob = response.data;
-
-          // const pngUrl = await blobToPng(blob);
-          const base64Url = await blobToBase64(blob);
-          newImagesData[articleId] = base64Url;
-          localStorage.setItem(cacheKey, base64Url);
-
-          await delay(300); // Add delay of 200ms between requests
-        } catch (error) {
-          console.error(`Error fetching image for article ${articleId}:`, error);
+  useEffect(() => {
+    const fetchImages = async () => {
+      for (const article of articles) {
+        const imageId = article?.story?.imageId;
+        const cacheKey = `image_${imageId}`;
+        const storedImage = localStorage.getItem(cacheKey);
+        if (storedImage) {
+          dispatch(setImage({ imageId: imageId, imageUrl: storedImage }));
+        } else {
+          const action = await dispatch(fetchImage(imageId));
+          if (fetchImage.fulfilled.match(action)) {
+            const { imageId, imageUrl } = action.payload as { imageId: number, imageUrl: string };
+            localStorage.setItem(cacheKey, imageUrl);
+          }
         }
+        await delay(200); // Add delay to avoid hitting rate limit
       }
+    };
+
+    if (status === 'succeeded') {
+      fetchImages();
     }
+  }, [status, articles, dispatch]);
 
-    setImagesData(newImagesData);
-  };
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
+
+  // console.log(images)
 
   return (
     <div className="px-4 my-6 dark:text-[#E6E6DD]">
@@ -367,12 +341,12 @@ function TopPicks() {
           <PickCard key={index} />
         ))} */}
         {
-          articlesData?.map((article: any, index: number) => {
+          articles?.map((article: any, index: number) => {
             return (
               <PickCard key={index}
                 title={article?.story?.hline}
                 description={article?.story?.intro}
-                imageUrl={imagesData[article?.story?.id]}
+                imageUrl={images[article?.story?.imageId]}
                 date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
                 id={article?.story?.id ?? 0}
               />

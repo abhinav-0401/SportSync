@@ -5,20 +5,70 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { blobToPng } from "@/lib/blobtopng";
 
 export default function FeaturedCard() {
   const router = useRouter();
 
   const [featuredMatch, setFeaturedMatch] = useState<any>(null);
+  const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
 
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/matches?listType=live");
-      setFeaturedMatch(response.data[0]);
+      const match = response.data[0];
+      setFeaturedMatch(match);
+
+      if (!response.data?.length) {
+        toast.error("Could not fetch Featured Match!");
+      } else {
+        const team1ImageId = match.matchInfo.team1.imageId;
+        const team2ImageId = match.matchInfo.team2.imageId;
+        fetchImages(team1ImageId, team2ImageId);
+      }
     } catch (error) {
       console.error(error);
     }
   };
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const fetchImages = async (team1ImageId: number, team2ImageId: number) => {
+    const fetchImage = async (imageId: number): Promise<string | null> => {
+      try {
+        const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+        const options = {
+          method: 'GET',
+          url: imageUrl,
+          params: { p: 'de', d: 'high' },
+          headers: {
+            'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
+            'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+          },
+          responseType: 'blob' as const
+        };
+
+        const response = await axios.request(options);
+        const blob = response.data;
+
+        return await blobToPng(blob);
+      } catch (error) {
+        console.error(`Error fetching image for imageId ${imageId}:`, error);
+        return null;
+      }
+    };
+
+    const team1Png = await fetchImage(team1ImageId);
+    setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
+    console.log(team1Png)
+
+    await delay(300); // Add delay of 200ms between requests
+
+    const team2Png = await fetchImage(team2ImageId);
+    setFlagImages(prev => ({ ...prev, [team2ImageId.toString()]: team2Png! }));
+  }
 
   useEffect(() => {
     fetchData();
@@ -34,7 +84,7 @@ export default function FeaturedCard() {
         <div className="flex justify-evenly items-center">
 
           <div className="flex flex-col items-center gap-6">
-            <Image src="/india.png" height={20} width={30} alt="india" />
+            <Image src={flagImages[featuredMatch?.matchInfo?.team1?.imageId]} height={20} width={30} alt="india" />
             <div className="font-semibold text-sm text-center dark:text-[#E6E6DD]">{featuredMatch?.matchInfo?.team1?.teamName}</div>
             <div className="text-sm min-[400px]:text-base font-semibold dark:text-[#E6E6DD]">
               {
@@ -48,7 +98,7 @@ export default function FeaturedCard() {
           <div className="font-bold text-sm">Vs</div>
 
           <div className="flex flex-col items-center gap-6 text-[#45474A]">
-            <Image src="/england.png" height={20} width={30} alt="england" />
+            <Image src={flagImages[featuredMatch?.matchInfo?.team2?.imageId]} height={20} width={30} alt="england" />
             <div className="font-semibold text-sm text-center">{featuredMatch?.matchInfo?.team2?.teamName}</div>
             <div className="text-sm min-[400px]:text-base font-semibold">
               {
