@@ -414,8 +414,9 @@ function ExcitingOffers() {
             <Image src={"/arrow.png"} alt="arrow" width={20} height={20} className="rotate-180" />
             <span>Click here <span className="hidden md:inline">to know more</span></span>
           </button> */}
-          <Button className="hidden md:flex dark:bg-white px-6 py-3 gap-3 rounded-lg justify-center">
-            <Image src={"/arrow.png"} alt="arrow" width={20} height={20} className="rotate-180" />
+          <Button className="hidden md:flex dark:bg-[#45474a] dark:text-[#e6e6dd] px-6 py-3 gap-3 rounded-lg justify-center">
+            <Image src={"/arrow.png"} alt="arrow" width={20} height={20} className="rotate-180 dark:hidden" />
+            <Image src={"/arrow_light.png"} alt="arrow" width={20} height={20} className="hidden dark:block" />
             <span>Click here to know more</span>
           </Button>
         </div>
