@@ -92,7 +92,7 @@ function TabData() {
         {/* <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger> */}
       </TabsList>
       <TabsContent value="live" className="flex w-full flex-col px-4 gap-12 md:gap-16 lg:gap-20">
-        {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchStats scoreCard={scoreCard} leanBack={leanBack} /> : <div className="font-bold text-3xl">NOTHING TO SHOW</div>}
+        {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchStats scoreCard={scoreCard} leanBack={leanBack} /> : <div className="font-bold text-3xl w-full text-center">NOTHING TO SHOW</div>}
 
       </TabsContent>
       <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">

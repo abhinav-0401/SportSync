@@ -108,7 +108,7 @@ function TabData() {
         {
           fixtureData
             ? <MatchStats fixtureData={fixtureData} goalsData={goalsData} />
-            : <div className="text-3xl font-bold">NOTHING TO SHOW</div>
+            : <div className="text-3xl font-bold w-full text-center">NOTHING TO SHOW</div>
         }
 
         {/* {<MatchStats fixtureData={fixtureData} goalsData={goalsData} />} */}
