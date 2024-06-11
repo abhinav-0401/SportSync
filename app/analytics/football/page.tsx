@@ -34,7 +34,6 @@ function TabData() {
   const [fixtureData, setFixtureData] = useState<any>(null);
   const [goalsData, setGoalsData] = useState<any>(null);
   const [statsData, setStatsData] = useState<any>(null);
-  const [summaryData, setSummaryData] = useState<any>(null);
 
   async function getPointsTable() {
     const res = await axios.get(`/api/football/standings?leagueId=${leagueId}&season=${fixtureData?.league?.season}`);
@@ -68,18 +67,18 @@ function TabData() {
     setGoalsData(goalEvents);
   }
 
-  async function getSummary() {
-    if (matchId) {
-      const docRef = doc(db, "footballSummary", `${matchId}`);
-      const docSnap = await getDoc(docRef);
+  // async function getSummary() {
+  //   if (matchId) {
+  //     const docRef = doc(db, "footballSummary", `${matchId}`);
+  //     const docSnap = await getDoc(docRef);
 
-      setSummaryData(docSnap.data());
+  //     setSummaryData(docSnap.data());
 
-      // if (!docSnap.data()) {
-      //   toast.error("Could not fetch summary!");
-      // }
-    }
-  }
+  //     // if (!docSnap.data()) {
+  //     //   toast.error("Could not fetch summary!");
+  //     // }
+  //   }
+  // }
 
   useEffect(() => {
     getFixtureData();
@@ -88,7 +87,7 @@ function TabData() {
   async function getFootballAnalyticsData() {
     await getPointsTable();
     await getStats();
-    await getSummary();
+    // await getSummary();
   }
 
   useEffect(() => {
@@ -126,7 +125,7 @@ function TabData() {
         </div> */}
       </TabsContent>
       <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-        <MatchSummary summaryData={summaryData} />
+        <MatchSummary />
       </TabsContent>
       <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <FootballScoreCard fixtureData={fixtureData} scoreCard={fixtureData?.events} homeId={fixtureData?.teams?.home?.id} awayId={fixtureData?.teams?.away?.id} />
@@ -410,7 +409,24 @@ function FootballTeamStats({ statsData }: StatsProps) {
   )
 }
 
-function MatchSummary({ summaryData }: { summaryData: any; }) {
+function MatchSummary() {
+
+  const searchParams = useSearchParams();
+  const matchId = searchParams.get("matchId");
+  const [summaryData, setSummaryData] = useState<any>(null);
+
+  async function getSummary() {
+    if (matchId) {
+      const docRef = doc(db, "footballSummary", `${matchId}`);
+      const docSnap = await getDoc(docRef);
+
+      setSummaryData(docSnap.data());
+
+      // if (!docSnap.data()) {
+      //   toast.error("Could not fetch summary!");
+      // }
+    }
+  }
 
   if (summaryData) {
     return (
