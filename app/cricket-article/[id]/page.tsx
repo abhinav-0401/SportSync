@@ -104,10 +104,10 @@ export default function IndividualArticle({ params }: Props) {
           <div className="flex w-full justify-between">
             <span className="font-bold text-2xl md:text-4xl">{articleData?.article?.headline}</span>
             <RWebShare data={{ title: articleData?.article?.headline, text: articleData?.article?.intro, url: articleData?.article?.url  }}>
-              <span className="flex flex-col justify-end"><Image src="/shareArticle.png" className="object-contain min-h-[20px] min-w-[20px]" alt="share" height={24} width={24} /></span>
+              <span className="flex flex-col justify-end cursor-pointer"><Image src="/shareArticle.png" className="object-contain min-h-[20px] min-w-[20px]" alt="share" height={24} width={24} /></span>
             </RWebShare>
           </div>
-          <div className="flex font-medium md:text-lg">{new Date(Number(articleData?.article?.publishTime ?? 0)).toLocaleDateString()}</div>
+          <div className="flex font-medium md:text-lg">{new Date(Number(articleData?.article?.publishTime ?? 0)).toDateString().slice(3)}</div>
         </header>
 
         <div className="flex flex-col gap-8">
@@ -120,7 +120,7 @@ export default function IndividualArticle({ params }: Props) {
           <div className="flex flex-col gap-2">
             {filterFormatString(getContent(articleData?.article?.content))?.map((content: any, index: number) => {
               return (
-                <div key={index} className="text-base md:text-lg font-medium">
+                <div key={index} className="text-base dark:text-white/70 md:text-lg font-medium">
                   {content}
                 </div>
               );
