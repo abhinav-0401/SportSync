@@ -1,12 +1,19 @@
 "use client"
 
-import { blobToBase64 } from "@/lib/blobtopng";
+// import { TopPicks } from "@/app/page";
+import { blobToBase64, blobToPng } from "@/lib/blobtopng";
 import { useAppSelector } from "@/redux/hooks";
+import { setImage } from "@/redux/slices/imageSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchArticles } from "@/redux/thunks/articlesThunk";
+import { fetchImage } from "@/redux/thunks/imagesThunk";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RWebShare } from "react-web-share";
 
 type Props = {
@@ -41,7 +48,7 @@ export default function IndividualArticle({ params }: Props) {
       const blob = res.data;
 
       // const pngUrl = await blobToPng(blob);
-      const base64Url = await blobToBase64(blob);
+      const base64Url = await blobToPng(blob);
       setArticleImgUrl(base64Url);
       // newImagesData[articleId] = base64Url;
       // localStorage.setItem(cacheKey, base64Url);
@@ -85,6 +92,7 @@ export default function IndividualArticle({ params }: Props) {
   useEffect(() => {
     getArticle();
   }, []);
+  console.log(articleImgUrl)
 
   return (
 
@@ -129,97 +137,69 @@ export default function IndividualArticle({ params }: Props) {
 }
 
 function TopPicks() {
-  const [articlesData, setArticlesData] = useState<any>(null);
-  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
-
-  const articles = useAppSelector(state => state.articles.articles);
-
-  async function getArticles() {
-    // const response = await axios.get("/api/articles");
-
-    if (articles?.list?.length > 6) {
-      setArticlesData(articles?.list?.slice(0, 6));
-    } else {
-      setArticlesData(articles?.list);
-    }
-
-    fetchImages(articles?.list);
-
-    // if (!articles?.list?.length) {
-    //   toast.error("Could not fetch articles");
-    // }
-  }
-
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  async function fetchImages(articles: any) {
-    await delay(200)
-    const newImagesData: { [key: string]: string } = {};
-
-    for (const article of articles) {
-      const imageId = article?.story?.imageId;
-      const articleId = article?.story?.id;
-
-      if (!imageId || !articleId) continue;
-
-      const cacheKey = `image_${imageId}`;
-      const cachedImage = localStorage.getItem(cacheKey);
-      // console.log(cachedImage)
-
-      if (cachedImage) {
-        newImagesData[articleId] = cachedImage;
-      } else {
-        try {
-          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
-
-          const options = {
-            method: 'GET',
-            url: imageUrl,
-            params: { p: 'de', d: 'high' },
-            headers: {
-              'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
-              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
-            },
-            responseType: 'blob' as const
-          };
-
-          const response = await axios.request(options);
-          const blob = response.data;
-
-          // const pngUrl = await blobToPng(blob);
-          const base64Url = await blobToBase64(blob);
-          newImagesData[articleId] = base64Url;
-          localStorage.setItem(cacheKey, base64Url);
-
-          await delay(300); // Add delay of 200ms between requests
-        } catch (error) {
-          console.error(`Error fetching image for article ${articleId}:`, error);
-        }
-      }
-    }
-
-    setImagesData(newImagesData);
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const articles = useSelector((state: RootState) => state.articles.articles);
+  const images = useSelector((state: RootState) => state.images);
+  const status = useSelector((state: RootState) => state.articles.status);
+  const error = useSelector((state: RootState) => state.articles.error);
 
   useEffect(() => {
-    getArticles();
-  }, [articles]);
+    if (status === 'idle') {
+      dispatch(fetchArticles());
+    }
+  }, [status, dispatch]);
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      for (const article of articles) {
+        const imageId = article?.story?.imageId;
+        // const cacheKey = `image_${imageId}`;
+        // const storedImage = localStorage.getItem(cacheKey);
+        // if (storedImage) {
+        //   dispatch(setImage({ imageId: imageId, imageUrl: storedImage }));
+        // } else {
+          const action = await dispatch(fetchImage(imageId));
+          if (fetchImage.fulfilled.match(action)) {
+            const { imageId, imageUrl } = action.payload as { imageId: number, imageUrl: string };
+            // localStorage.setItem(cacheKey, imageUrl);
+          }
+        // }
+        await delay(200); // Add delay to avoid hitting rate limit
+      }
+    };
+
+    if (status === 'succeeded') {
+      fetchImages();
+    }
+  }, [status, articles, dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
+
+  // console.log(images)
 
   return (
-    <div className="px-4 pb-6 mt-6 dark:text-[#E6E6DD]">
+    <div className="px-4 my-6 dark:text-[#E6E6DD]">
       <Toaster />
-      <h2 className="my-10 font-bold text-3xl text-center md:text-left">Other Articles</h2>
+      <h2 className="my-10 font-bold text-3xl text-center md:text-left">Top Picks</h2>
       <div className="flex flex-col items-center w-full md:flex-row justify-center flex-wrap gap-10">
         {/* {Array.from({ length: 6 }).map((_, index) => (
           <PickCard key={index} />
         ))} */}
         {
-          articlesData?.map((article: any, index: number) => {
+          articles?.map((article: any, index: number) => {
             return (
               <PickCard key={index}
                 title={article?.story?.hline}
                 description={article?.story?.intro}
-                // imageUrl={"/article-3.png"}
-                imageUrl={imagesData[article?.story?.id]}
+                imageUrl={images[article?.story?.imageId]}
                 date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
                 id={article?.story?.id ?? 0}
               />

@@ -40,17 +40,17 @@ export default function HotTopics() {
     const fetchImages = async () => {
       for (const article of articles) {
         const imageId = article?.story?.imageId;
-        const cacheKey = `image_${imageId}`;
-        const storedImage = localStorage.getItem(cacheKey);
-        if (storedImage) {
-          dispatch(setImage({ imageId: imageId, imageUrl: storedImage }));
-        } else {
+        // const cacheKey = `image_${imageId}`;
+        // const storedImage = localStorage.getItem(cacheKey);
+        // if (storedImage) {
+        //   dispatch(setImage({ imageId: imageId, imageUrl: storedImage }));
+        // } else {
           const action = await dispatch(fetchImage(imageId));
           if (fetchImage.fulfilled.match(action)) {
             const { imageId, imageUrl } = action.payload as { imageId: number, imageUrl: string };
-            localStorage.setItem(cacheKey, imageUrl);
+            // localStorage.setItem(cacheKey, imageUrl);
           }
-        }
+        // }
         await delay(200); // Add delay to avoid hitting rate limit
       }
     };

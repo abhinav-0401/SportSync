@@ -12,6 +12,12 @@ import { useRouter } from "next/navigation";
 import { toast, Toaster } from "react-hot-toast";
 import { useAppSelector } from "@/redux/hooks";
 import { blobToBase64 } from "@/lib/blobtopng";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchArticles } from "@/redux/thunks/articlesThunk";
+import { setImage } from "@/redux/slices/imageSlice";
+import { fetchImage } from "@/redux/thunks/imagesThunk";
 
 interface ArticleData {
   title: string;
@@ -29,80 +35,58 @@ const imgUrls: string[] = [
 
 export default function Artcile() {
 
-  const [articlesData, setArticlesData] = useState<any>(null);
-  const [imagesData, setImagesData] = useState<{ [key: string]: string }>({});
+  const dispatch = useDispatch<AppDispatch>();
+  const articles = useSelector((state: RootState) => state.articles.articles);
+  const images = useSelector((state: RootState) => state.images);
+  const status = useSelector((state: RootState) => state.articles.status);
+  const error = useSelector((state: RootState) => state.articles.error);
 
   const router = useRouter();
 
-  const articlesList = useAppSelector(state => state.articles.articles);
-
-  async function getArticles() {
-    // const response = await axios.get("/api/articles");
-    setArticlesData(articlesList);
-    fetchImages(articlesList?.list);
-
-    // if (!articlesList?.list?.length) {
-    //   toast.error("Could not fetch articles");
-    // }
-  }
-
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  async function fetchImages(articles: any) {
-    await delay(200)
-    const newImagesData: { [key: string]: string } = {};
-
-    for (const article of articles) {
-      const imageId = article?.story?.imageId;
-      const articleId = article?.story?.id;
-
-      if (!imageId || !articleId) continue;
-
-      const cacheKey = `image_${imageId}`;
-      const cachedImage = localStorage.getItem(cacheKey);
-      // console.log(cachedImage)
-
-      if (cachedImage) {
-        newImagesData[articleId] = cachedImage;
-      } else {
-        try {
-          const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
-
-          const options = {
-            method: 'GET',
-            url: imageUrl,
-            params: { p: 'de', d: 'high' },
-            headers: {
-              'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
-              'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
-            },
-            responseType: 'blob' as const
-          };
-
-          const response = await axios.request(options);
-          const blob = response.data;
-
-          // const pngUrl = await blobToPng(blob);
-          const base64Url = await blobToBase64(blob);
-          newImagesData[articleId] = base64Url;
-          localStorage.setItem(cacheKey, base64Url);
-
-          await delay(300); // Add delay of 200ms between requests
-        } catch (error) {
-          console.error(`Error fetching image for article ${articleId}:`, error);
-        }
-      }
-    }
-
-    setImagesData(newImagesData);
-  };
 
   useEffect(() => {
-    getArticles();
-  }, [articlesList]);
+    if (status === 'idle') {
+      dispatch(fetchArticles());
+    }
+  }, [status, dispatch]);
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      for (const article of articles) {
+        const imageId = article?.story?.imageId;
+        // const cacheKey = `image_${imageId}`;
+        // const storedImage = localStorage.getItem(cacheKey);
+        // if (storedImage) {
+        //   dispatch(setImage({ imageId: imageId, imageUrl: storedImage }));
+        // } else {
+          const action = await dispatch(fetchImage(imageId));
+          if (fetchImage.fulfilled.match(action)) {
+            const { imageId, imageUrl } = action.payload as { imageId: number, imageUrl: string };
+            // localStorage.setItem(cacheKey, imageUrl);
+          }
+        // }
+        await delay(200); // Add delay to avoid hitting rate limit
+      }
+    };
+
+    if (status === 'succeeded') {
+      fetchImages();
+    }
+  }, [status, articles, dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   const currentDate = new Date().toLocaleString();
 
-  const articles: ArticleData[] = imgUrls.map(url => {
+  const articlesDummyData: ArticleData[] = imgUrls.map(url => {
     return {
       title: "Indian Premier League",
       description: "“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Risus eget morbi a commodo ",
@@ -130,14 +114,14 @@ export default function Artcile() {
               <Button className="rounded-full dark:bg-white px-10">Search</Button>
             </div> */}
             <div className="flex flex-col items-center gap-8">
-              {articlesData?.list?.map((article: any, index: number) => {
+              {articles?.map((article: any, index: number) => {
                 return (
                   <span className="w-full flex flex-col items-center" key={index} onClick={() => router.push(`/cricket-article/${article?.story?.id ?? 0}`)}>
                     <ArticleCard 
                       title={article?.story?.hline}
                       description={article?.story?.intro}
                       // imageUrl={"/article-3.png"}
-                      imageUrl={imagesData[article?.story?.id]}
+                      imageUrl={images[article?.story?.imageId]}
                       date={new Date(Number(article?.story?.pubTime ?? 0)).toLocaleString()}
                     />
                   </span>

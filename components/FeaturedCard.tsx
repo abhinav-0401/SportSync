@@ -62,7 +62,7 @@ export default function FeaturedCard() {
 
     const team1Png = await fetchImage(team1ImageId);
     setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
-    console.log(team1Png)
+    // console.log(team1Png)
 
     await delay(300); // Add delay of 200ms between requests
 
