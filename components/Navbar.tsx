@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAppDispatch } from "@/redux/hooks";
-import { setArticles } from "@/redux/slices/articlesSlice";
+// import { setArticles } from "@/redux/slices/articlesSlice";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -17,16 +17,16 @@ export default function Navbar() {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked)
   }
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  async function getArticles() {
-    const response = await axios.get("/api/articles");
-    dispatch(setArticles(response.data));
-  }
+  // async function getArticles() {
+  //   const response = await axios.get("/api/articles");
+  //   dispatch(setArticles(response.data));
+  // }
 
-  useEffect(() => {
-    getArticles();
-  }, []);
+  // useEffect(() => {
+  //   getArticles();
+  // }, []);
 
   const router = useRouter();
   const clickHandler = () => {
