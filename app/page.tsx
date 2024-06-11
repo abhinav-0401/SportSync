@@ -54,7 +54,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
           <Image src="/logonobg.png" alt="Logo" width={400} height={50} className="max-w-[180px] sm:max-w-[180px] dark:block md:hidden md:max-w-[150px] lg:max-w-[244px]" />
           <Image src="/Black.png" alt="Logo" width={400} height={50} className="max-w-[160px] sm:max-w-[180px] hidden md:block dark:hidden md:max-w-[150px] lg:max-w-[244px]" />
           <h3 className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd] font-semibold text-center md:text-center text-xl min-[400px]:text-2xl md:text-lg lg:text-xl xl:text-2xl">
-            Lorem ipsum dolor sit amet, consectetur
+          #GameOn, ScoresUp<br/>your ultimate scoreboard!
           </h3>
           <div className="flex justify-between min-[425px]:gap-12 min-[425px]:justify-center w-full md:gap-10 lg:gap-16 my-12 sm:mx-16 md:mx-20 lg:text-base md:text-sm text-sm min-[425px]:text-base lg:mx-24 xl:mx-28">
             <span className="flex gap-2">
@@ -70,7 +70,7 @@ function SectionOne({ isSmallScreen }:{isSmallScreen: boolean} ) {
             <span className="flex gap-2">
               <Image src="/casino_bullet_dark_new.png" alt="cricket" height={15} width={20} unoptimized className="rounded-full hidden md:block dark:hidden" />
               <Image src="/casino_bullet_new.png" alt="cricket" height={15} width={20} className="rounded-full dark:block block md:hidden" unoptimized />
-              <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Casinos</span>
+              <span className="text-[#E6E6DD] md:text-black dark:md:text-[#e6e6dd]">Casino</span>
             </span>
             {/* <span className="mx-3 sm:mx-4 md:mx-10">Football</span>
             <span className="mx-3 sm:mx-4 md:mx-10">Casino</span> */}
@@ -208,7 +208,7 @@ function SectionTwo() {
 
   return (
     <>
-     <span className="md:hidden"><FeaturedCard /></span>
+     <span className="md:hidden"><FeaturedCard sport={"cricket"} /></span>
     <Toaster />
     <div className="hidden md:flex pt-4 sm:pt-8 md:pt-16 lg:pt-24  flex-col px-4 gap-12 dark:text-[#E6E6DD]">
       {/* <FeaturedCard /> */}
@@ -341,7 +341,7 @@ function TopPicks() {
           <PickCard key={index} />
         ))} */}
         {
-          articles?.map((article: any, index: number) => {
+          articles.slice(0, 6)?.map((article: any, index: number) => {
             return (
               <PickCard key={index}
                 title={article?.story?.hline}
