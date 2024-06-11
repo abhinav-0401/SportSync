@@ -25,7 +25,7 @@ function TabData() {
   const [scoreCard, setScoreCard] = useState<any>(null);
   const [leanBack, setLeanBack] = useState<any>(null);
   const [pointsTable, setPointsTable] = useState<any>(null);
-  const [summaryData, setSummaryData] = useState<any>(null);
+  // const [summaryData, setSummaryData] = useState<any>(null);
 
   async function getScoreCard() {
     const res = await axios.get(`/api/matchInfo/scoreCard?matchId=${matchId}`);
@@ -54,23 +54,23 @@ function TabData() {
     }
   }
 
-  async function getSummary() {
-    if (matchId) {
-      const docRef = doc(db, "summary", `${matchId}`);
-      const docSnap = await getDoc(docRef);
-      setSummaryData(docSnap.data());
+  // async function getSummary() {
+  //   if (matchId) {
+  //     const docRef = doc(db, "summary", `${matchId}`);
+  //     const docSnap = await getDoc(docRef);
+  //     setSummaryData(docSnap.data());
       
-      // if (!docSnap.data()) {
-      //   toast.error("Could not fetch summary!");
-      // }
-    }
-  }
+  //     // if (!docSnap.data()) {
+  //     //   toast.error("Could not fetch summary!");
+  //     // }
+  //   }
+  // }
 
   async function getCricketAnalyticsData() {
     await getScoreCard();
     await getPointsTable();
     await getLeanBack();
-    await getSummary();
+    // await getSummary();
   }
 
   useEffect(() => {
@@ -92,11 +92,11 @@ function TabData() {
         {/* <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger> */}
       </TabsList>
       <TabsContent value="live" className="flex w-full flex-col px-4 gap-12 md:gap-16 lg:gap-20">
-        {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchStats scoreCard={scoreCard} leanBack={leanBack} /> : <div className="font-bold text-3xl">NOTHING TO SHOW</div>}
+        {scoreCard?.scoreCard && scoreCard?.scoreCard[0] ? <MatchStats scoreCard={scoreCard} leanBack={leanBack} /> : <div className="font-bold text-3xl w-full text-center">NOTHING TO SHOW</div>}
 
       </TabsContent>
       <TabsContent value="summary" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
-        <MatchSummary summaryData={summaryData} />
+        <MatchSummary />
       </TabsContent>
       <TabsContent value="score" className="flex w-full flex-col px-4 md:px-8 lg:px-12 gap-10">
         <Suspense fallback={<div>Loading...</div>}>
@@ -212,7 +212,27 @@ function MatchStats({ scoreCard, leanBack }: { scoreCard: any; leanBack: any; })
   );
 }
 
-function MatchSummary({ summaryData } : { summaryData: any;}) {
+function MatchSummary() {
+
+  const searchParams = useSearchParams();
+  const matchId = searchParams.get("matchId");
+  const [summaryData, setSummaryData] = useState<any>(null);
+
+  async function getSummary() {
+    if (matchId) {
+      const docRef = doc(db, "summary", `${matchId}`);
+      const docSnap = await getDoc(docRef);
+      setSummaryData(docSnap.data());
+
+      // if (!docSnap.data()) {
+      //   toast.error("Could not fetch summary!");
+      // }
+    }
+  }
+
+  useEffect(() => {
+    getSummary();
+  }, []);
 
   if (summaryData) {
     return (

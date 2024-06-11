@@ -74,3 +74,11 @@
       @apply bg-background text-foreground;
     }
   }
+
+html {
+  scrollbar-color: white #e6e6dd;
+}
+
+html.dark {
+  scrollbar-color: grey #45474a;
+}
