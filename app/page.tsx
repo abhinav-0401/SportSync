@@ -2,6 +2,7 @@
 
 import FeaturedCard from "@/components/FeaturedCard";
 import { Button } from "@/components/ui/button";
+import { db } from "@/firebase";
 import { blobToPng } from "@/lib/blobtopng";
 import { useAppSelector } from "@/redux/hooks";
 import { setImage } from "@/redux/slices/imageSlice";
@@ -9,6 +10,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { fetchArticles } from "@/redux/thunks/articlesThunk";
 import { fetchImage } from "@/redux/thunks/imagesThunk";
 import axios from "axios";
+import { collection, getDocs } from "firebase/firestore";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -392,6 +394,26 @@ function PickCard({ title, description, imageUrl, date, id }: PickCardProps) {
 }
 
 function ExcitingOffers() {
+  const [offers, setOffers] = useState<any[]>([]);
+
+  async function getOffers() {
+    const docs = await getDocs(collection(db, "promotions"));
+    
+    const excitingOffers: any[] = [];
+    docs.forEach(doc => {
+      if (doc.data().type === "exciting") {
+        excitingOffers.push(doc.data());
+      }
+    });
+
+    setOffers(excitingOffers);
+    console.log(excitingOffers);
+  }
+
+  useEffect(() => {
+    getOffers();
+  })
+
   return (
     <div className="px-4 sm:px-8 pt-6 pb-12 md:pb-20 dark:text-[#E6E6DD]">
       <h2 className="my-20 font-bold text-3xl text-center md:text-left">Exciting Offers</h2>
@@ -399,12 +421,12 @@ function ExcitingOffers() {
           {/* {Array.from({ length: 3 }).map((_, index) => (
             <OfferCard key={index} />
           ))} */}
-          <span className="md:block hidden"><OfferCard /></span>
-          <span className="lg:block hidden"><OfferCard /></span>
+          <span className="md:block hidden"><OfferCard offer={offers[0]} /></span>
+          <span className="lg:block hidden"><OfferCard offer={offers[1]} /></span>
           <span className="flex justify-evenly md:block">
             <Image src="/offer_arrow.png" height={40} width={40} className="h-auto object-contain md:hidden dark:hidden" alt="prev" />
             <Image src="/offer_arrow_dark.png" height={40} width={40} className="h-auto object-contain hidden dark:block dark:md:hidden" alt="prev" />
-            <OfferCard />
+            <OfferCard offer={offers[2]} />
           </span>
         <div className="flex flex-col justify-center items-center md:flex-grow-1">
           <p className="p-4 md:text-sm text-[#45474A] dark:text-[#E6E6DD] font-medium text-left">
@@ -425,14 +447,14 @@ function ExcitingOffers() {
   );
 }
 
-function OfferCard() {
+function OfferCard({ offer }: { offer: any; }) {
   return (
     <div className="relative w-fit justify-center items-center mx-2 hover:shadow shadow-black dark:shadow-white">
-      <Image src="/footballImage.png" alt="Logo" width={400} height={500} className="w-auto lg:max-w-52 lg:min-h-[240px] xl:max-w-[300px] max-w-[260px] min-[400px]:max-w-[300px]  min-[500px]:max-w-[400px] min-[600px]:max-w-[500px] md:max-w-[200px] md:min-h-[240px] xl:min-h-[320px] my-2 rounded-lg " unoptimized />
+      <Image src={offer?.imageUrl ?? "/footballImage.png"} alt="Logo" width={400} height={500} className="w-auto lg:max-w-52 lg:min-h-[240px] xl:max-w-[300px] max-w-[260px] min-[400px]:max-w-[300px]  min-[500px]:max-w-[400px] min-[600px]:max-w-[500px] md:max-w-[200px] md:min-h-[240px] xl:min-h-[320px] my-2 rounded-lg " unoptimized />
       <div className="absolute inset-0 rounded-lg bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition duration-500 ease-in-out flex flex-col justify-end p-[10%] gap-4">
-        <div className="text-white border-b border-b-white/20 w-full pb-4 text-xs sm:text-lg md:text-base">Game Card</div>
+        <div className="text-white border-b border-b-white/20 w-full pb-4 text-xs sm:text-lg md:text-base">{offer?.title ?? "Game Card"}</div>
         <div className="text-[#D9D9D980]/50 italic text-xs line-clamp-3 min-[425px]:line-clamp-none sm:text-sm md:text-xs">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. 
+          {offer?.content ?? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis donec amet proin auctor nec in diam aenean viverra."} 
         </div>
       </div>
     </div>
