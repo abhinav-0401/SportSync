@@ -15,7 +15,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ title, description, date, ima
     return (
         <div className="flex w-full flex-row md:max-w-fit lg:min-w-full gap-2 ab:gap-5 p-2 sm:p-5 hover:bg-[#45474a80] cursor-pointer bg-white/66 rounded-xl border border-solid border-gray-300/66 shadow-lg">
             <div className="flex md:min-w-fit w-1/3">
-                <Image src={imageUrl} className='md:min-h-full md:max-w-full w-36' alt={title} width={300} height={200} unoptimized />
+                <Image src={imageUrl} className='md:min-h-full md:max-w-full w-36' alt={title} width={330} height={200} unoptimized />
             </div>
             <div className="flex flex-col gap-2 w-2/3">
                 <div className="text-xs sm:text-xl md:text-2xl font-semibold dark:text-[#E6E6DD] text-black">{title}</div>

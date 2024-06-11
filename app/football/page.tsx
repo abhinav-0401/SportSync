@@ -219,7 +219,7 @@ export default function Football() {
           </Tabs>
         </div>
             <AdCard />
-            <FeaturedCard />
+            <FeaturedCard sport={"football"} />
             <HotTopics />
           </div>
         </div>

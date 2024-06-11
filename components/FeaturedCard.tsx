@@ -8,21 +8,28 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { blobToPng } from "@/lib/blobtopng";
 
-export default function FeaturedCard() {
+type FeatureCardProps = {
+  sport: string
+}
+
+export default function FeaturedCard({sport}: FeatureCardProps) {
   const router = useRouter();
 
   const [featuredMatch, setFeaturedMatch] = useState<any>(null);
   const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
+  const cricketMatchUrl = "/api/matches?listType=live";
+  const footballFixtureUrl = "api/football/fixtures?listType=live";
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/matches?listType=live");
+      const response = await axios.get(sport === "cricket" ? cricketMatchUrl : footballFixtureUrl);
       const match = response.data[0];
       setFeaturedMatch(match);
 
       if (!response.data?.length) {
         toast.error("Could not fetch Featured Match!");
-      } else {
+      } 
+      else if (sport === "cricket") {
         const team1ImageId = match.matchInfo.team1.imageId;
         const team2ImageId = match.matchInfo.team2.imageId;
         fetchImages(team1ImageId, team2ImageId);
@@ -75,37 +82,47 @@ export default function FeaturedCard() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 md:bg-white/60 md:dark:bg-[#45474A80] mx-2 min-[425px]:mx-12 rounded-xl py-4 md:py-7 px-4 md:px-1 md:mx-0">
+    <div className="flex flex-col gap-4 md:bg-white/60 md:dark:bg-[#45474A80] mx-2 min-[425px]:mx-12 rounded-xl py-4 md:py-7 px-4 md:px-1 md:mx-0 w-full">
       <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">Featured Match</h2>
 
       <div className="flex flex-col gap-6 bg-white/60 dark:bg-[#45474A80] md:mx-0 py-8 md:px-4 px-12 rounded-xl md:!bg-transparent">
-        <h3 className="text-center font-bold text-base sm:text-lg lg:text-xl dark:text-[#E6E6DD]">{featuredMatch?.matchInfo?.seriesName}</h3>
+        <h3 className="text-center font-bold text-base sm:text-lg lg:text-xl dark:text-[#E6E6DD]">{sport === "cricket" ? featuredMatch?.matchInfo?.seriesName : featuredMatch?.league?.name}</h3>
 
         <div className="flex justify-evenly items-center">
 
           <div className="flex flex-col items-center gap-6">
-            <Image src={flagImages[featuredMatch?.matchInfo?.team1?.imageId]} height={20} width={30} alt="india" />
-            <div className="font-semibold text-sm text-center dark:text-[#E6E6DD]">{featuredMatch?.matchInfo?.team1?.teamName}</div>
+            <Image src={sport === "cricket" ? flagImages[featuredMatch?.matchInfo?.team1?.imageId] : featuredMatch?.teams?.home?.logo} height={20} width={30} alt="india" />
+            <div className="font-semibold text-sm text-center dark:text-[#E6E6DD]">{sport === "cricket" ? featuredMatch?.matchInfo?.team1?.teamName : featuredMatch?.teams?.home?.name}</div>
             <div className="text-sm min-[400px]:text-base font-semibold dark:text-[#E6E6DD]">
-              {
+              {sport === "cricket" ? 
                 featuredMatch?.matchScore?.team1Score?.inngs1?.runs
                   ? <span>{featuredMatch?.matchScore?.team1Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team1Score?.inngs1?.wickets}</span> 
                   : <span>Yet to Bat</span>
-              }
+               : featuredMatch?.score?.fulltime?.home ? <span>
+                Halftime: {featuredMatch?.score?.halftime?.home} <br/>
+                Fulltime: {featuredMatch?.score?.fulltime?.home}
+               </span> : <span>
+               Halftime: {featuredMatch?.score?.halftime?.home}
+               </span>}
             </div>
           </div>
 
           <div className="font-bold text-sm">Vs</div>
 
           <div className="flex flex-col items-center gap-6 text-[#45474A]">
-            <Image src={flagImages[featuredMatch?.matchInfo?.team2?.imageId]} height={20} width={30} alt="england" />
-            <div className="font-semibold text-sm text-center">{featuredMatch?.matchInfo?.team2?.teamName}</div>
+            <Image src={sport === "cricket" ? flagImages[featuredMatch?.matchInfo?.team2?.imageId] : featuredMatch?.teams?.away?.logo} height={20} width={30} alt="england" />
+            <div className="font-semibold text-sm text-center">{sport === "cricket" ? featuredMatch?.matchInfo?.team2?.teamName : featuredMatch?.teams?.away?.name}</div>
             <div className="text-sm min-[400px]:text-base font-semibold">
-              {
+            {sport === "cricket" ? 
                 featuredMatch?.matchScore?.team2Score?.inngs1?.runs
-                  ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span>
+                  ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span> 
                   : <span>Yet to Bat</span>
-              }
+               : featuredMatch?.score?.fulltime?.away ? <span>
+                Halftime: {featuredMatch?.score?.halftime?.away} <br/>
+                Fulltime: {featuredMatch?.score?.fulltime?.away}
+               </span> : <span>
+               Halftime: {featuredMatch?.score?.halftime?.away}
+               </span>}
             </div>
           </div>
 
