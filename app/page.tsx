@@ -332,8 +332,6 @@ function TopPicks() {
     return <div>Error: {error}</div>;
   }
 
-  // console.log(images)
-
   return (
     <div className="px-4 my-6 dark:text-[#E6E6DD]">
       <Toaster />

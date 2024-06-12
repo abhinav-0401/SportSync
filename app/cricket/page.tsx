@@ -47,7 +47,6 @@ export default function Cricket() {
       setError(null);
     } catch (error) {
       setError('Failed to fetch data');
-      // console.error(error);
     }
   };
 
