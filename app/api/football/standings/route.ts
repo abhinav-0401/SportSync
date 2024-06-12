@@ -27,7 +27,7 @@ export async function GET(req: Request) {
       return Response.json({ data: response.data.response })
     }
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return Response.json({ message: "Failed to fetch data" },
       { status: 500 });
   }

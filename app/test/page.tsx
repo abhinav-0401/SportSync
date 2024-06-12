@@ -21,13 +21,13 @@ const App: React.FC = () => {
       
       const response = await axios.request(options);
       const blob = response.data;
-      console.log(process.env.RAPIDAPI_KEY)
+      // console.log(process.env.RAPIDAPI_KEY)
 
       // Step 2: Convert blob to a PNG
       const imageUrl = URL.createObjectURL(blob);
       const img = new Image();
       img.src = imageUrl;
-      console.log(imageUrl)
+      // console.log(imageUrl)
 
       img.onload = () => {
         const canvas = document.createElement('canvas');
@@ -48,7 +48,7 @@ const App: React.FC = () => {
         }
       };
     } catch (error) {
-      console.error('Error fetching or converting the blob:', error);
+      // console.error('Error fetching or converting the blob:', error);
     }
   };
 

@@ -16,7 +16,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     const response = await axios.request(options);
     return Response.json({ article: response.data });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return Response.json({ message: "Failed to fetch article details", error });
   }
 }

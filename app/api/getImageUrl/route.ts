@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ url: response.config.url, data: response.data });
   } catch (error) {
-    console.error("Error fetching image URL:", error);
+    // console.error("Error fetching image URL:", error);
     return NextResponse.json(
       { error: "Failed to fetch image URL" },
       { status: 500 }

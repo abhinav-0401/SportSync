@@ -55,7 +55,7 @@ export default function IndividualArticle({ params }: Props) {
 
       // await delay(300); // Add delay of 200ms between requests
     } catch (error) {
-      console.error(`Error fetching image for article ${id}:`, error);
+      // console.error(`Error fetching image for article ${id}:`, error);
     }
 
     if (response.status != 200) {
@@ -92,7 +92,7 @@ export default function IndividualArticle({ params }: Props) {
   useEffect(() => {
     getArticle();
   }, []);
-  console.log(articleImgUrl)
+  // console.log(articleImgUrl)
 
   return (
 
