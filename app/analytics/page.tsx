@@ -138,7 +138,7 @@ export default function Analytics() {
 
           {/* advertisement */}
           <AdCard />
-          <FeaturedCard sport="cricket" />
+          <FeaturedCard sport={"cricket"} />
           <HotTopics />
 
         </div>

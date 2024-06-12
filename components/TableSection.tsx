@@ -19,6 +19,7 @@ type Props = {
 }
 
 function TableSection({ seriesName, pointsTable }: Props) {
+  // console.log(pointsTable);
 
   return (
     <div className='flex flex-col items-start justify-center space-y-7'>
