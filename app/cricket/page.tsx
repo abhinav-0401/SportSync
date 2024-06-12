@@ -134,7 +134,7 @@ export default function Cricket() {
                           {/* <Button className="w-fit">See more</Button> */}
                         </div>
                       </>
-                      : <Lottie animationData={animationData} />
+                      : <span className="font-bold text-center text-lg p-3">Nothing to show!</span>
                 }
                 
               </TabsContent>
@@ -148,7 +148,8 @@ export default function Cricket() {
                         {/* <Button className="w-fit">See more</Button> */}
                       </div>
                     </>
-                  : <Lottie animationData={animationData} />
+                  : <span className="font-bold text-center text-lg p-3">Nothing to show!</span>
+                  // <Lottie animationData={animationData} />
                 }
               </TabsContent>
 
@@ -161,7 +162,8 @@ export default function Cricket() {
                           {/* <Button className="w-fit">See more</Button> */}
                         </div>
                       </>
-                    : <Lottie animationData={animationData} />
+                    : <span className="font-bold text-center text-lg p-3">Nothing to show!</span>
+                    // <Lottie animationData={animationData} />
                 }            
               </TabsContent>
             </Tabs>
@@ -177,7 +179,7 @@ export default function Cricket() {
               </Tabs>
             </div>
             <AdCard />
-            <FeaturedCard />
+            <FeaturedCard sport={"cricket"} />
             <HotTopics />
           </div>
         </div>
