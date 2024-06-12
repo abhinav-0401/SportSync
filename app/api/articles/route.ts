@@ -17,7 +17,6 @@ export async function GET(req: Request) {
     });
     return Response.json({ list: filteredData });
   } catch (error) {
-    console.error(error);
     return Response.json({ message: "Failed to get news articles", error });
   }
 }

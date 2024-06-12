@@ -166,7 +166,6 @@ function SectionTwo() {
         fetchImages(team1ImageId, team2ImageId);
       }
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -193,14 +192,12 @@ function SectionTwo() {
 
         return await blobToPng(blob);
       } catch (error) {
-        console.error(`Error fetching image for imageId ${imageId}:`, error);
         return null;
       }
     };
 
     const team1Png = await fetchImage(team1ImageId);
     setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
-    console.log(team1Png)
 
     await delay(300); // Add delay of 200ms between requests
 
@@ -332,8 +329,6 @@ function TopPicks() {
     return <div>Error: {error}</div>;
   }
 
-  // console.log(images)
-
   return (
     <div className="px-4 my-6 dark:text-[#E6E6DD]">
       <Toaster />
@@ -407,7 +402,6 @@ function ExcitingOffers() {
     });
 
     setOffers(excitingOffers);
-    console.log(excitingOffers);
   }
 
   useEffect(() => {

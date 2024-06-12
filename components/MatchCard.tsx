@@ -21,7 +21,6 @@ export default function MatchCard({ match }: MatchCardProps) {
       const response = await axios.get(`/api/getImageUrl?imageId=${imageId}`);
       setImageUrl(response.data.url);
     } catch (error) {
-      console.error('Failed to fetch image URL', error);
     }
   };
 
