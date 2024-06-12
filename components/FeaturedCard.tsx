@@ -35,7 +35,6 @@ export default function FeaturedCard({sport}: FeatureCardProps) {
         fetchImages(team1ImageId, team2ImageId);
       }
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -62,7 +61,6 @@ export default function FeaturedCard({sport}: FeatureCardProps) {
 
         return await blobToPng(blob);
       } catch (error) {
-        console.error(`Error fetching image for imageId ${imageId}:`, error);
         return null;
       }
     };
