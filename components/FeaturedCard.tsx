@@ -18,7 +18,8 @@ export default function FeaturedCard({sport}: FeatureCardProps) {
   const [featuredMatch, setFeaturedMatch] = useState<any>(null);
   const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
   const cricketMatchUrl = "/api/matches?listType=live";
-  const footballFixtureUrl = "api/football/fixtures?listType=live";
+  const footballFixtureUrl = "/api/football/fixtures?listType=live";
+  const [isLive, setIsLive] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -29,10 +30,17 @@ export default function FeaturedCard({sport}: FeatureCardProps) {
       if (!response.data?.length) {
         toast.error("Could not fetch Featured Match!");
       } 
-      else if (sport === "cricket") {
+      if (response?.status === 500) {
+        setIsLive(false)
+      }
+      else if (response?.status === 200 && sport === "cricket") {
+        setIsLive(true)
         const team1ImageId = match.matchInfo.team1.imageId;
         const team2ImageId = match.matchInfo.team2.imageId;
         fetchImages(team1ImageId, team2ImageId);
+      }
+      else if (response?.status === 200 && sport === "football") {
+        setIsLive(true)
       }
     } catch (error) {
       // console.error(error);
@@ -85,7 +93,7 @@ export default function FeaturedCard({sport}: FeatureCardProps) {
     <div className="flex flex-col gap-4 md:bg-white/60 md:dark:bg-[#45474A80] mx-2 min-[425px]:mx-12 rounded-xl py-4 md:py-7 px-4 md:px-1 md:mx-0 w-full">
       <h2 className="text-center font-bold text-lg sm:text-xl lg:text-2xl">Featured Match</h2>
 
-      <div className="flex flex-col gap-6 bg-white/60 dark:bg-[#45474A80] md:mx-0 py-8 md:px-4 px-12 rounded-xl md:!bg-transparent">
+      {isLive && <div className="flex flex-col gap-6 bg-white/60 dark:bg-[#45474A80] md:mx-0 py-8 md:px-4 px-12 rounded-xl md:!bg-transparent">
         <h3 className="text-center font-bold text-base sm:text-lg lg:text-xl dark:text-[#E6E6DD]">{sport === "cricket" ? featuredMatch?.matchInfo?.seriesName : featuredMatch?.league?.name}</h3>
 
         <div className="flex justify-evenly items-center">
@@ -98,11 +106,13 @@ export default function FeaturedCard({sport}: FeatureCardProps) {
                 featuredMatch?.matchScore?.team1Score?.inngs1?.runs
                   ? <span>{featuredMatch?.matchScore?.team1Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team1Score?.inngs1?.wickets}</span> 
                   : <span>Yet to Bat</span>
-               : featuredMatch?.score?.fulltime?.home ? <span>
-                Halftime: {featuredMatch?.score?.halftime?.home} <br/>
-                Fulltime: {featuredMatch?.score?.fulltime?.home}
-               </span> : <span>
-               Halftime: {featuredMatch?.score?.halftime?.home}
+               : 
+              //  featuredMatch?.score?.fulltime?.home ? <span>
+              //   Halftime: {featuredMatch?.score?.halftime?.home} <br/>
+              //   Fulltime: {featuredMatch?.score?.fulltime?.home}
+              //  </span> : 
+               <span>
+               Goals: {featuredMatch?.goals?.home}
                </span>}
             </div>
           </div>
@@ -117,19 +127,22 @@ export default function FeaturedCard({sport}: FeatureCardProps) {
                 featuredMatch?.matchScore?.team2Score?.inngs1?.runs
                   ? <span>{featuredMatch?.matchScore?.team2Score?.inngs1?.runs} / {featuredMatch?.matchScore?.team2Score?.inngs1?.wickets}</span> 
                   : <span>Yet to Bat</span>
-               : featuredMatch?.score?.fulltime?.away ? <span>
-                Halftime: {featuredMatch?.score?.halftime?.away} <br/>
-                Fulltime: {featuredMatch?.score?.fulltime?.away}
-               </span> : <span>
-               Halftime: {featuredMatch?.score?.halftime?.away}
+               : 
+              //  featuredMatch?.score?.fulltime?.away ? <span>
+              //   Halftime: {featuredMatch?.score?.halftime?.away} <br/>
+              //   Fulltime: {featuredMatch?.score?.fulltime?.away}
+              //  </span> : 
+               <span>
+               Goals: {featuredMatch?.goals?.away}
                </span>}
             </div>
           </div>
 
         </div>
 
-        <Button className="dark:bg-[#E6E6DD] font-semibold" onClick={() => router.push(`/analytics?matchId=${featuredMatch?.matchInfo?.matchId}&seriesId=${featuredMatch?.matchInfo?.seriesId}`)}>Click here to know more</Button>
-      </div>
+        <Button className="dark:bg-[#E6E6DD] text-xs sm:text-sm font-semibold" onClick={() => router.push(`/analytics?matchId=${featuredMatch?.matchInfo?.matchId}&seriesId=${featuredMatch?.matchInfo?.seriesId}`)}>Click here to know more</Button>
+      </div>}
+      {!isLive && <span className="w-full text-center">No live matches at the moment!</span>}
     </div>
   );
 }

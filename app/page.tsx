@@ -147,6 +147,7 @@ function SectionTwo() {
 
   const [featuredMatch, setFeaturedMatch] = useState<any>(null);
   const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
+  const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -160,7 +161,12 @@ function SectionTwo() {
 
       if (!response.data?.length) {
         toast.error("Could not fetch Featured Match!");
-      } else {
+      } 
+      if (response?.status === 500) {
+        setIsLive(false)
+      }
+      else {
+        setIsLive(true)
         const team1ImageId = match.matchInfo.team1.imageId;
         const team2ImageId = match.matchInfo.team2.imageId;
         fetchImages(team1ImageId, team2ImageId);
@@ -217,13 +223,14 @@ function SectionTwo() {
       <div className="flex flex-col items-start gap-8">
 
         <h3 className="font-bold text-xl text-center w-full md:text-left">Featured Match</h3>
-        <div className="lg:px-12">
+        {!isLive && <span>No live matches at the moment!</span>}
+        {isLive && <div className="lg:px-12">
           <div className="bg-black text-white dark:bg-white dark:text-black rounded-full py-1 px-2 sm:px-3 md:ml-8">Live</div>
-        </div>
+        </div>}
 
       </div>
 
-      <div className="flex justify-between px-4 sm:px-8 md:px-16 lg:px-32">
+      {isLive && <div className="flex justify-between px-4 sm:px-8 md:px-16 lg:px-32">
         <div className="flex gap-4">
           <div className="flex flex-col items-center gap-2 md:gap-4">
             <Image src={flagImages[featuredMatch?.matchInfo?.team1?.imageId]} alt='india' width={36} height={24} />
@@ -250,9 +257,9 @@ function SectionTwo() {
             <div className="font-semibold text-base md:text-lg">{featuredMatch?.matchInfo?.team2?.teamName}</div>
           </div>
         </div>
-      </div>
+      </div>}
 
-      <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>
+      {isLive && <div className="text-center font-medium text-lg">{featuredMatch?.matchInfo?.status}</div>}
 
         
         {/* <div className="flex flex-row gap-8 md:gap-0 justify-between -px-2 sm:px-8 md:px-16">
@@ -277,9 +284,9 @@ function SectionTwo() {
             </div>
           </div>
         </div> */}
-        <div className="w-full flex items-center justify-center">
+        {isLive && <div className="w-full flex items-center justify-center">
           <button className="bg-black text-white dark:bg-white italic dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
-        </div>
+        </div>}
       </div>
     </>
   );
