@@ -169,6 +169,7 @@ function SectionTwo() {
         setIsLive(true)
         const team1ImageId = match.matchInfo.team1.imageId;
         const team2ImageId = match.matchInfo.team2.imageId;
+        console.log(team1ImageId, team2ImageId);
         fetchImages(team1ImageId, team2ImageId);
       }
     } catch (error) {
@@ -285,7 +286,7 @@ function SectionTwo() {
           </div>
         </div> */}
         {isLive && <div className="w-full flex items-center justify-center">
-          <button className="bg-black text-white dark:bg-white italic dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push("/analytics")}>Click here to get details</button>
+          <button className="bg-black text-white dark:bg-white italic dark:text-black rounded-lg py-1 px-2 sm:px-5 sm:py-2 w-fit" onClick={() => router.push(`/analytics?matchId=${featuredMatch?.matchInfo?.matchId}&seriesId=${featuredMatch?.matchInfo?.seriesId}&team1=${featuredMatch?.matchInfo?.team1?.imageId}&team2=${featuredMatch?.matchInfo?.team2?.imageId}`)}>Click here to get details</button>
         </div>}
       </div>
     </>
