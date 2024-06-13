@@ -16,6 +16,7 @@ import { Suspense, useEffect, useState } from "react";
 import { db } from "@/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { toast, Toaster } from "react-hot-toast";
+import { blobToPng } from "@/lib/blobtopng";
 
 function TabData() {
   const searchParams = useSearchParams();
@@ -87,7 +88,7 @@ function TabData() {
       <TabsList className="flex w-full justify-between bg-transparent overflow-x-scroll md:overflow-x-hidden overflow-y-hidden">
         <TabsTrigger className="flex-grow" variant={"outline"} value="live">Info</TabsTrigger>
         <TabsTrigger className="flex-grow" variant={"outline"} value="score">Scorecard</TabsTrigger>
-        <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Team</TabsTrigger>
+        <TabsTrigger className="flex-grow" variant={"outline"} value="summary">Summary</TabsTrigger>
         {pointsTable?.pointsTable?.length && <TabsTrigger className="flex-grow" variant={"outline"} value="table">Table</TabsTrigger>}
         {/* <TabsTrigger className="flex-grow" variant={"outline"} value="stats">Stats</TabsTrigger> */}
       </TabsList>
@@ -149,6 +150,53 @@ export default function Analytics() {
 }
 
 function MatchStats({ scoreCard, leanBack }: { scoreCard: any; leanBack: any; }) {
+  const [flagImages, setFlagImages] = useState<{ [key: string]: string }>({});
+  const searchParams = useSearchParams();
+  const team1ImgId = searchParams.get("team1");
+  const team2ImgId = searchParams.get("team2");
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const fetchImages = async (team1ImageId: number, team2ImageId: number) => {
+    const fetchImage = async (imageId: number): Promise<string | null> => {
+      try {
+        const imageUrl = `https://cricbuzz-cricket.p.rapidapi.com/img/v1/i1/c${imageId}/i.jpg`;
+
+        const options = {
+          method: 'GET',
+          url: imageUrl,
+          params: { p: 'de', d: 'high' },
+          headers: {
+            'x-rapidapi-key': 'c4a782e118msh9292a6e3b3c3e78p17d585jsnd621a07e82ae',
+            'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+          },
+          responseType: 'blob' as const
+        };
+
+        const response = await axios.request(options);
+        const blob = response.data;
+
+        return await blobToPng(blob);
+      } catch (error) {
+        // console.error(`Error fetching image for imageId ${imageId}:`, error);
+        return null;
+      }
+    };
+
+    const team1Png = await fetchImage(team1ImageId);
+    setFlagImages(prev => ({ ...prev, [team1ImageId.toString()]: team1Png! }));
+    // console.log(team1Png)
+
+    await delay(300); // Add delay of 200ms between requests
+
+    const team2Png = await fetchImage(team2ImageId);
+    setFlagImages(prev => ({ ...prev, [team2ImageId.toString()]: team2Png! }));
+  }
+
+  useEffect(() => {
+    fetchImages(Number(team1ImgId), Number(team2ImgId));
+  }, []);
+
   return (
     <div className="pt-4 sm:pt-8 md:pt-16 lg:pt-24 flex flex-col gap-12">
 
@@ -162,7 +210,7 @@ function MatchStats({ scoreCard, leanBack }: { scoreCard: any; leanBack: any; })
         <div className="flex gap-4">
           {/* img + country name */}
           <div className="flex flex-col items-center gap-2 md:gap-4">
-            <Image src="/india.png" alt='india' width={36} height={24} />
+            <Image src={flagImages[Number(team1ImgId)] ?? "/india.png"} alt='india' width={36} height={24} />
             <div className="font-semibold text-sm sm:text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[0]?.batTeamDetails?.batTeamName}</div>
           </div>
           <div className="font-medium text-sm sm:text-base md:text-lg">
@@ -175,7 +223,7 @@ function MatchStats({ scoreCard, leanBack }: { scoreCard: any; leanBack: any; })
             {scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.runs} / {scoreCard && scoreCard?.scoreCard[1]?.scoreDetails?.wickets} 
           </div>
           <div className="flex flex-col items-center gap-2 md:gap-4">
-            <Image src="/england.png" alt='india' width={36} height={24} />
+            <Image src={flagImages[Number(team2ImgId)] ?? "/england.png"} alt='india' width={36} height={24} />
             <div className="font-semibold text-sm sm:text-base md:text-lg">{scoreCard && scoreCard?.scoreCard[1]?.batTeamDetails?.batTeamName}</div>
           </div>
         </div>
